@@ -42,8 +42,6 @@ public class Jack {
 		animationPlaying = new BufferedImage[]{
 				Images.jackKeyBoard[0],
 				Images.jackKeyBoard[1],
-				Images.jackKeyBoard[0],
-				Images.jackKeyBoard[1],
 		};
 	}
 

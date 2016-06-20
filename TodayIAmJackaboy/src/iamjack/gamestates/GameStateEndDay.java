@@ -9,7 +9,6 @@ import iamjack.engine.GameStateHandler;
 import iamjack.engine.MouseHandler;
 import iamjack.engine.Window;
 import iamjack.player.PlayerData;
-import iamjack.resourceManager.Images;
 import iamjack.video.Button;
 
 public class GameStateEndDay extends GameState{
@@ -31,26 +30,15 @@ public class GameStateEndDay extends GameState{
 	public GameStateEndDay(GameStateHandler gsh) {
 		this.gsh = gsh;
 
-		PlayerData.videoMade.clear();
+		PlayerData.videoOfTheDay.clear();
 
 		text = new Font("SquareFont", Font.PLAIN, Window.scale(100));
-
 	}
 
 	@Override
 	public void draw(Graphics2D g) {
 
-		g.setColor(Color.black);
-		g.fillRect(0, 0, Window.getWidth(), Window.getHeight());
-
-		float scale = (float)Window.getWidth() / (float)Images.room.getWidth();
-		float sizeX = Images.room.getWidth() * scale;
-		float sizeY = Images.room.getHeight() * scale;
-
-		g.drawImage(Images.room, 
-				Window.getWidth()/2 - (int)sizeX/2,
-				Window.getHeight()/2 - (int)sizeY/2, 
-				(int)sizeX, (int)sizeY, null);
+		GameStateDrawHelper.drawRoom(g);
 
 		g.setColor(new Color(0f, 0f, 0f, Math.min(1, alpha)));
 		g.fillRect(0, 0, Window.getWidth(), Window.getHeight());
@@ -86,7 +74,7 @@ public class GameStateEndDay extends GameState{
 				if(b.getBox().contains(MouseHandler.mouseX , MouseHandler.mouseY)){
 					if(MouseHandler.click){
 						if(b.getName().equals("Play Another Day")){
-							gsh.changeGameState(GameStateHandler.GAME);
+							gsh.changeGameState(GameStateHandler.GAME_ENTRY);
 						}else{
 							//queue end
 						}

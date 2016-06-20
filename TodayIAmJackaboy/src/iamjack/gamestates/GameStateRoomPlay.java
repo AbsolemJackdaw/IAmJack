@@ -1,7 +1,6 @@
 package iamjack.gamestates;
 
 import java.awt.AlphaComposite;
-import java.awt.Color;
 import java.awt.Graphics2D;
 
 import iamjack.engine.GameState;
@@ -67,27 +66,18 @@ public class GameStateRoomPlay extends GameState {
 	@Override
 	public void draw(Graphics2D g) {
 
-		g.setColor(Color.black);
-		g.fillRect(0, 0, Window.getWidth(), Window.getHeight());
-
-		float scale = (float)Window.getWidth() / (float)Images.room.getWidth();
-		float sizeX = Images.room.getWidth() * scale;
-		float sizeY = Images.room.getHeight() * scale;
-
-		g.drawImage(Images.room, 
-				Window.getWidth()/2 - (int)sizeX/2,
-				Window.getHeight()/2 - (int)sizeY/2, 
-				(int)sizeX, (int)sizeY, null);
-
+		GameStateDrawHelper.drawRoom(g);
+		
 		jack.draw(g);
 
-		g.drawImage(Images.chairLow, Window.scale(824), Window.scale(272), (int)(64f*scale), (int)(64f*scale), null);
+		g.drawImage(Images.chairLow, Window.scale(824), Window.scale(272), (int)(64f*GameStateDrawHelper.scale), (int)(64f*GameStateDrawHelper.scale), null);
 
 		g.setComposite(AlphaComposite.SrcOver);
+		
 		g.drawImage(Images.roomShade, 
-				Window.getWidth()/2 - (int)sizeX/2,
-				Window.getHeight()/2 - (int)sizeY/2, 
-				(int)sizeX, (int)sizeY, null);
+				Window.getWidth()/2 - (int)(GameStateDrawHelper.sizeX/2f),
+				Window.getHeight()/2 - (int)(GameStateDrawHelper.sizeY/2f), 
+				(int)GameStateDrawHelper.sizeX, (int)GameStateDrawHelper.sizeY, null);
 
 		for(int i = 0; i < buttons[stage].length; i++){
 
@@ -120,6 +110,6 @@ public class GameStateRoomPlay extends GameState {
 		}	
 
 		if(stage >=	choices.length-1)
-			gsh.changeGameState(GameStateHandler.GAME_DONEGAMING); //end game
+			gsh.changeGameState(GameStateHandler.GAME_DONEGAMING);
 	}
 }

@@ -30,17 +30,7 @@ public class GameStateRoomDone extends GameState {
 	@Override
 	public void draw(Graphics2D g) {
 
-		g.setColor(Color.black);
-		g.fillRect(0, 0, Window.getWidth(), Window.getHeight());
-
-		float scale = (float)Window.getWidth() / (float)Images.room.getWidth();
-		float sizeX = Images.room.getWidth() * scale;
-		float sizeY = Images.room.getHeight() * scale;
-
-		g.drawImage(Images.room, 
-				Window.getWidth()/2 - (int)sizeX/2,
-				Window.getHeight()/2 - (int)sizeY/2, 
-				(int)sizeX, (int)sizeY, null);
+		GameStateDrawHelper.drawRoom(g);
 
 		jack.draw(g);
 
@@ -53,6 +43,8 @@ public class GameStateRoomDone extends GameState {
 		g.drawString(gj, Window.getWidth()/2 - g.getFontMetrics().stringWidth(gj)/2, Window.scale(70));
 		g.drawString(video + "video !", Window.getWidth()/2 - g.getFontMetrics().stringWidth(video +"video !")/2, Window.scale(100));
 
+		float scale = GameStateDrawHelper.scale;
+		
 		g.drawImage(Images.chair, Window.scale(824), Window.scale(260), (int)(64f*scale), (int)(64f*scale), null);
 
 		g.drawImage(Images.door, 0, Window.scale(160), (int)(64f*scale), (int)(64f*scale), null);
@@ -65,7 +57,7 @@ public class GameStateRoomDone extends GameState {
 
 		if(jack.getPosX() < -95){
 			PlayerData.daysPlayed++;
-			gsh.changeGameState(GameStateHandler.GAME_END);
+			gsh.changeGameState(GameStateHandler.GAME_ENDDAY);
 		}
 
 	}
@@ -75,7 +67,7 @@ public class GameStateRoomDone extends GameState {
 		String text = "";
 		int loudCounter = 0;
 
-		for(String s : PlayerData.videoMade){
+		for(String s : PlayerData.videoOfTheDay){
 			if(s.equals("Loud")){
 				loudCounter++;
 				continue;

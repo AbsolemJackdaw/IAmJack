@@ -26,11 +26,7 @@ public class GamePanel extends JFXPanel implements Runnable, KeyListener{
 	protected BufferedImage image;
 	protected Graphics2D g;
 
-	protected static int[] pixels;
-
 	private GameStateHandler ghs;
-
-	public static Cursor blankCursor;
 
 	public static GamePanel instance;
 
@@ -41,11 +37,7 @@ public class GamePanel extends JFXPanel implements Runnable, KeyListener{
 		setFocusable(true);
 		requestFocus();
 
-		// Set the blank cursor to the JFrame.
-		setCursor(blankCursor);
-
 		System.out.println("GamePanel : Initializing game");
-
 
 	}
 
@@ -73,34 +65,31 @@ public class GamePanel extends JFXPanel implements Runnable, KeyListener{
 
 	@Override
 	public void run() {
-
 		init();
-
-		//		runGameLoop();
 		runComplexLoop();
-
 	}
 
 	//finish drawing cycle
 	private void drawToScreen() {
-
-		Graphics g2 = getGraphics();
-		g2.drawImage(image, 0, 0, W, H, null);
-		g2.dispose();
-
+		if(this.hasFocus()) {
+			Graphics g2 = getGraphics();
+			g2.drawImage(image, 0, 0, W, H, null);
+			g2.dispose();
+		}
 	}
 
 	//start Drawing cycle
 	protected void draw() {
-		ghs.draw(g);
+		if(this.hasFocus()) 
+			ghs.draw(g);
 	}
 
 	protected void update() {
-		//		if(this.hasFocus()) {
-		ghs.update();
-		KeyHandler.update();
-		MouseHandler.update();
-		//		}
+		if(this.hasFocus()) {
+			ghs.update();
+			KeyHandler.update();
+			MouseHandler.update();
+		}
 	}
 
 	private void init() {
@@ -110,15 +99,9 @@ public class GamePanel extends JFXPanel implements Runnable, KeyListener{
 		image = new BufferedImage(W, H, BufferedImage.TYPE_INT_RGB);
 		g = (Graphics2D) image.getGraphics();
 
-		pixels = ((DataBufferInt)image.getRaster().getDataBuffer()).getData();
-
 		running = true;
 
 		ghs = new GameStateHandler();
-	}
-
-	public static int[] getScreenPixels(){
-		return pixels;
 	}
 
 	private void runComplexLoop() {

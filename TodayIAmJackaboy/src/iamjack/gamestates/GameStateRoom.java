@@ -1,6 +1,5 @@
 package iamjack.gamestates;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 
 import iamjack.engine.GameState;
@@ -27,18 +26,8 @@ public class GameStateRoom extends GameState {
 	@Override
 	public void draw(Graphics2D g) {
 
-		g.setColor(Color.black);
-		g.fillRect(0, 0, Window.getWidth(), Window.getHeight());
-
-		float scale = (float)Window.getWidth() / (float)Images.room.getWidth();
-		float sizeX = Images.room.getWidth() * scale;
-		float sizeY = Images.room.getHeight() * scale;
-
-		g.drawImage(Images.room, 
-				Window.getWidth()/2 - (int)sizeX/2,
-				Window.getHeight()/2 - (int)sizeY/2, 
-				(int)sizeX, (int)sizeY, null);
-
+		GameStateDrawHelper.drawRoom(g);
+		
 		jack.draw(g);
 
 		if(canGame){
@@ -48,7 +37,7 @@ public class GameStateRoom extends GameState {
 					Window.scale(64), Window.scale(64), null);
 		}
 
-		g.drawImage(Images.chair, Window.scale(824), Window.scale(260), (int)(64f*scale), (int)(64f*scale), null);
+		g.drawImage(Images.chair, Window.scale(824), Window.scale(260), (int)(64f*GameStateDrawHelper.scale), (int)(64f*GameStateDrawHelper.scale), null);
 	}
 
 	@Override

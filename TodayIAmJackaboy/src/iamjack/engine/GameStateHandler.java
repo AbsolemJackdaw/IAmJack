@@ -14,16 +14,15 @@ public class GameStateHandler {
 	public int currentGameState;
 
 	public static final int MENU = 0;
-	public static final int GAME = 1;
+	public static final int GAME_ENTRY = 1;
 	public static final int GAME_GAMING = 2;
 	public static final int GAME_DONEGAMING = 3;
-	public static final int GAME_END = 4;
+	public static final int GAME_ENDDAY = 4;
 
 	public static final GameState[] states = new GameState[20];
 
 	public GameStateHandler() {
 		currentGameState = MENU;
-
 		loadState(MENU);
 	}
 
@@ -55,7 +54,7 @@ public class GameStateHandler {
 		case MENU:
 			states[state] = new GameStateMenu(this);
 			break;
-		case GAME:
+		case GAME_ENTRY:
 			states[state] = new GameStateRoom(this);
 			break;
 		case GAME_GAMING:
@@ -64,7 +63,7 @@ public class GameStateHandler {
 		case GAME_DONEGAMING:
 			states[state] = new GameStateRoomDone(this);
 			break;
-		case GAME_END:
+		case GAME_ENDDAY:
 			states[state] = new GameStateEndDay(this);
 			break;
 		}

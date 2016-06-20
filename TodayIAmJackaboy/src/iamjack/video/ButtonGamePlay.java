@@ -13,7 +13,7 @@ public class ButtonGamePlay extends Button {
 	@Override
 	public void click(){
 		if(!name.equals("Play Game"))
-			PlayerData.videoMade.add(getVideonameFromString(name));
+			PlayerData.videoOfTheDay.add(getVideonameFromString(name));
 	}
 	
 	private String getVideonameFromString(String s){

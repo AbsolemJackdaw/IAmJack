@@ -104,7 +104,7 @@ public class GameStateMenu extends GameState {
 		
 		if(resourcesLoaded)
 			if(KeyHandler.isPressed(KeyHandler.ENTER))
-				gsh.changeGameState(GameStateHandler.GAME);
+				gsh.changeGameState(GameStateHandler.GAME_ENTRY);
 	}
 
 	private void load(){
