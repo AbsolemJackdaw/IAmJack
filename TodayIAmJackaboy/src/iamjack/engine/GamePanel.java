@@ -14,7 +14,6 @@ import java.awt.image.BufferedImage;
 import iamjack.engine.input.KeyHandler;
 import iamjack.engine.input.MouseHandler;
 import iamjack.engine.resources.ImageLoader;
-import iamjack.resourceManager.Images;
 import javafx.embed.swing.JFXPanel;
 
 @SuppressWarnings("serial")
@@ -82,25 +81,20 @@ public class GamePanel extends JFXPanel implements Runnable, KeyListener{
 
 	//finish drawing cycle
 	private void drawToScreen() {
-		if(this.hasFocus()) {
 			Graphics g2 = getGraphics();
 			g2.drawImage(image, 0, 0, W, H, null);
 			g2.dispose();
-		}
 	}
 
 	//start Drawing cycle
 	protected void draw() {
-		if(this.hasFocus()) 
 			ghs.draw(g);
 	}
 
 	protected void update() {
-		if(this.hasFocus()) {
 			ghs.update();
 			KeyHandler.update();
 			MouseHandler.update();
-		}
 	}
 
 	private void init() {

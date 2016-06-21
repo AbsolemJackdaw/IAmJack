@@ -32,7 +32,7 @@ public class ButtonGamePlay extends Button {
 			return "Original";
 
 		case "Laugh":
-			return "Friendly";
+			return "Funny";
 
 		case "Rage":
 			return "Raging";
@@ -62,6 +62,8 @@ public class ButtonGamePlay extends Button {
 		case "Energetic": SoundPool.playEnergyVoice();break;
 		case "Be Scared": SoundPool.playScaredVoice();break;
 		case "Intro": SoundPool.playIntroVoice();break;
+		case "Outro": SoundPool.playOutroVoice();break;
+
 		}
 	}
 }

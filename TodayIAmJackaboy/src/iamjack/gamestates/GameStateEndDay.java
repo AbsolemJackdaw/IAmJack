@@ -32,6 +32,8 @@ public class GameStateEndDay extends GameState{
 		this.gsh = gsh;
 
 		PlayerData.videoOfTheDay.clear();
+		PlayerData.currentlySaying="";
+		PlayerData.soundsPlayed.clear();
 
 		text = new Font("SquareFont", Font.PLAIN, Window.scale(100));
 	}
@@ -78,7 +80,8 @@ public class GameStateEndDay extends GameState{
 							gsh.changeGameState(GameStateHandler.GAME_ENTRY);
 							Music.stop("everywhere");
 						}else{
-							//queue end
+							Music.stop("everywhere");
+							gsh.changeGameState(GameStateHandler.GAME_QUIT);
 						}
 					}
 					b.isLit(true);

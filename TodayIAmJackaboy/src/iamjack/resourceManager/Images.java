@@ -11,6 +11,7 @@ public class Images {
 	
 	public static BufferedImage[] jackWalk = new BufferedImage[2];
 	public static BufferedImage[] jackKeyBoard = new BufferedImage[2];
+	public static BufferedImage[] jackTalk = new BufferedImage[5];
 
 	public static BufferedImage jack;
 	public static BufferedImage game;
@@ -43,6 +44,7 @@ public class Images {
 		
 		ImageLoader.loadImages(jackWalk, "/img/jackwalk");
 		ImageLoader.loadImages(jackKeyBoard, "/img/jackSitHit");
-		
+		ImageLoader.loadImages(jackTalk, "/img/jackTalk");
+
 	}
 }

@@ -21,12 +21,15 @@ public class Jack {
 	private int counter = 0;
 	private int animIndexWalking = 0;
 	private int animIndexKeyboard = 0;
+	private int animTalking = 0;
 
 	private boolean isSitting;
 	private boolean isPlaying;
+	private boolean isTalking;
 
 	private BufferedImage[] animation ;
 	private BufferedImage[] animationPlaying ;
+	private BufferedImage[] animationTalking ;
 
 	private double speed = Window.scale(5D);
 
@@ -48,15 +51,27 @@ public class Jack {
 				Images.jackKeyBoard[0],
 				Images.jackKeyBoard[1],
 		};
+		
+		animationTalking = new BufferedImage[]{
+				Images.jackTalk[0],
+				Images.jackTalk[1],
+				Images.jackTalk[2],
+				Images.jackTalk[3],
+				Images.jackTalk[4],
+		};
 	}
 
 	public void draw(Graphics2D g){
 
-		if(isSitting)
+		if(isSitting){
 			if(isPlaying)
 				g.drawImage(animationPlaying[animIndexKeyboard], (int)posX, (int)posY, Window.scale(128), Window.scale(128), null);
 			else
 				g.drawImage(Images.jackSit, (int)posX, (int)posY, Window.scale(128), Window.scale(128), null);
+		
+			if(isTalking)
+				g.drawImage(animationTalking[animTalking], (int)posX, (int)posY, Window.scale(128), Window.scale(128), null);
+		}
 		else
 			if(facingRight)
 				if(animated)
@@ -95,7 +110,9 @@ public class Jack {
 			if(animIndexKeyboard >= animationPlaying.length)
 				animIndexKeyboard = 0;
 		}
-
+		
+		if(counter % 4 == 0)
+			animTalking = rand.nextInt(5);
 	}
 
 	private void doMovement(){
@@ -204,5 +221,13 @@ public class Jack {
 
 	public void setAnimated(boolean animated) {
 		this.animated = animated;
+	}
+	
+	public void setTalking(boolean isTalking) {
+		this.isTalking = isTalking;
+	}
+	
+	public boolean isAnimated() {
+		return animated;
 	}
 }

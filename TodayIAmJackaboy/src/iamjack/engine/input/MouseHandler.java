@@ -32,7 +32,7 @@ public class MouseHandler extends MouseAdapter {
 	}
 
 	@Override
-	public void mouseClicked(MouseEvent e) {
+	public void mousePressed(MouseEvent e) {
 		click = true;
 		clicked = e.getPoint();
 		

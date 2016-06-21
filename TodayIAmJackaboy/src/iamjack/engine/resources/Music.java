@@ -34,8 +34,34 @@ public class Music {
 		gap = 0;
 
 	}
+	
+	public static Clip getClip(String s)
+	{
+		Clip c = null;
+		if(clips.containsKey(s))
+			c = clips.get(s);
+		return c;
+	}
+	
+	public static float getFrameRate(String s){
+		Clip c = null;
+		if(clips.containsKey(s))
+			c = clips.get(s);
+		
+		float rate = 1f;
+		if(c != null)
+			rate = c.getFormat().getFrameRate();
+		
+		if(rate == 1f && c == null)
+			System.out.println("Couldn't calculate frame rate");
+		
+		return rate;
+	}
 
 	public static void load(String s, String n) {
+		
+		System.out.println(s + " " + n);
+		
 		if (clips.get(n) != null)
 			return;
 		Clip clip = null;

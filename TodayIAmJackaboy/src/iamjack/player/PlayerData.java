@@ -1,7 +1,6 @@
 package iamjack.player;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class PlayerData {
 
@@ -10,4 +9,7 @@ public class PlayerData {
 	public static int daysPlayed = 0;
 	
 	public static ArrayList<String> soundsPlayed = new ArrayList<String>();
+	
+	public static String currentlySaying = "";
+	
 }

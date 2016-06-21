@@ -10,7 +10,6 @@ public class SoundPool {
 	private static Random rand = new Random();
 
 	public static void playEnergyVoice(){
-		
 			Music.play(findNewVoice("energy", 14));
 	}
 
@@ -39,12 +38,15 @@ public class SoundPool {
 	}
 
 	public static void playIntroVoice(){
-		Music.play("intro"+rand.nextInt(6));
+		Music.play(findNewVoice("intro", 6));
+	}
+	
+	public static void playOutroVoice(){
+		Music.play(findNewVoice("outro", 5));
 	}
 	
 	private static String findNewVoice(String type, int max){
 		
-		String t = type;
 		int i = rand.nextInt(max);
 		String song = type+i;
 		
@@ -58,6 +60,7 @@ public class SoundPool {
 		
 		//loop is done here, so add song to list
 		PlayerData.soundsPlayed.add(song);
+		PlayerData.currentlySaying = song;
 		
 		return song;
 		

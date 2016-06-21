@@ -9,7 +9,7 @@ public class Sounds {
 		
 		loadMusic("/sounds/WeasleyOldWeaselOrchestraComedyRoyaltyFreeMusicByTechnoaxe.mp3", "backgroundmusic");
 		loadMusic("/sounds/BasicReaperShrapnelRockMetalRoyaltyFreeMusic.mp3", "metal");
-		loadMusic("/sounds/TeknoAXEsRoyaltyFreeMusicRoyaltyFreeMusic198ImEverywhereDubstepFunkstepTechnoFeaturingFarisha.mp3", "everywhere");
+		loadMusic("/sounds/TeknoAXEsRoyaltyFreeMusicRoyaltyFreeMusic198ImEverywhereDubstepFunkstepTechnoFeaturingFarisha2.mp3", "everywhere");
 
 		loadMusic("/sounds/step_01.mp3", "step0");
 		loadMusic("/sounds/step_02.mp3", "step1");
@@ -120,6 +120,12 @@ public class Sounds {
 		loadMusic("/sounds/intro/intro4.mp3", "intro4");
 		loadMusic("/sounds/intro/intro5.mp3", "intro5");
 		loadMusic("/sounds/intro/intro6.mp3", "intro6");
+		
+		loadMusic("/sounds/outro/outro0.mp3", "outro0");
+		loadMusic("/sounds/outro/outro1.mp3", "outro1");
+		loadMusic("/sounds/outro/outro2.mp3", "outro2");
+		loadMusic("/sounds/outro/outro3.mp3", "outro3");
+		loadMusic("/sounds/outro/outro4.mp3", "outro4");
 
 	}
 	

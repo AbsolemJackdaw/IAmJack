@@ -6,6 +6,7 @@ import java.awt.Graphics2D;
 import iamjack.engine.input.MouseHandler;
 import iamjack.gamestates.GameStateEndDay;
 import iamjack.gamestates.GameStateMenu;
+import iamjack.gamestates.GameStateQuit;
 import iamjack.gamestates.GameStateRoom;
 import iamjack.gamestates.GameStateRoomDone;
 import iamjack.gamestates.GameStateRoomPlay;
@@ -19,6 +20,7 @@ public class GameStateHandler {
 	public static final int GAME_GAMING = 2;
 	public static final int GAME_DONEGAMING = 3;
 	public static final int GAME_ENDDAY = 4;
+	public static final int GAME_QUIT = 5;
 
 	public static final GameState[] states = new GameState[20];
 
@@ -68,6 +70,9 @@ public class GameStateHandler {
 			break;
 		case GAME_ENDDAY:
 			states[state] = new GameStateEndDay(this);
+			break;
+		case GAME_QUIT:
+			states[state] = new GameStateQuit(this);
 			break;
 		}
 	}

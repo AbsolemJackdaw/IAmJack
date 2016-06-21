@@ -26,6 +26,21 @@ public class GameStateMenu extends GameState {
 	private float textFade = 0f;
 
 	private boolean resourcesLoaded = false;
+	private int counter = 0;
+	private int tipIndex = 0;
+
+	private String tips[] = new String[]{
+			"Did you know sounds take a long time to load ?",
+			"Wasd and Zqsd are valid controls to move Jack.",
+			"This game has over 100 audio files of Jack's voice !",
+			"Interact by showing Jack the way with Sam.",
+			"Did you know sounds take a long time to load ?",
+			"Like really long ?",
+			"It took me one day to code the base.",
+			"and one day to find and edit all the sounds !",
+			"This game was made in Java exclusively."
+			
+	};
 
 	public GameStateMenu(GameStateHandler gsh) {
 		this.gsh = gsh;
@@ -92,14 +107,29 @@ public class GameStateMenu extends GameState {
 			g.drawString(start, 
 					Window.getWidth()/2 - startSizeX/2, 
 					Window.getHeight()/2 + sizeY + startSizeY);
-		}
+			
+			g.setFont(subTitle);
+			g.setColor(Color.green.darker().darker().darker());
+			int startSizeX2 = g.getFontMetrics().stringWidth(tips[tipIndex]);
+			g.drawString(tips[tipIndex], Window.getWidth()/2 - startSizeX2/2, Window.getHeight() - Window.scale(40));
 
+		}
+		
 		g.setColor(new Color(0f,0f,0f, fadeAlpha));
 		g.fillRect(0, 0, GamePanel.W, GamePanel.H);
 	}
 
 	@Override
 	public void update() {
+
+		counter++;
+
+		if(counter % 360 == 0)
+			tipIndex++;
+		
+		if(tipIndex >= tips.length)
+			tipIndex = 0;
+		
 
 		if(fadeAlpha > 0)
 			fadeAlpha -= 0.0025f;
@@ -140,6 +170,7 @@ public class GameStateMenu extends GameState {
 			protected void done() {
 				super.done();
 				resourcesLoaded = true;
+				System.out.println("done loading rsrcs");
 			}
 		}.execute();
 	}
