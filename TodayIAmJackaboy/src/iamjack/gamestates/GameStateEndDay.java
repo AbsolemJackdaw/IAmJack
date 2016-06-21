@@ -6,8 +6,9 @@ import java.awt.Graphics2D;
 
 import iamjack.engine.GameState;
 import iamjack.engine.GameStateHandler;
-import iamjack.engine.MouseHandler;
 import iamjack.engine.Window;
+import iamjack.engine.input.MouseHandler;
+import iamjack.engine.resources.Music;
 import iamjack.player.PlayerData;
 import iamjack.video.Button;
 
@@ -75,6 +76,7 @@ public class GameStateEndDay extends GameState{
 					if(MouseHandler.click){
 						if(b.getName().equals("Play Another Day")){
 							gsh.changeGameState(GameStateHandler.GAME_ENTRY);
+							Music.stop("everywhere");
 						}else{
 							//queue end
 						}

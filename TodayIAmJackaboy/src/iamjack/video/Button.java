@@ -40,7 +40,7 @@ public class Button {
 
 		g.drawImage(isLit ? Images.buttonLit : Images.button , (int)posX, (int)posY, Window.scale(128), Window.scale(128), null);
 
-		g.draw(box);
+//		g.draw(box);
 		
 		g.drawString(name, 
 				(int)posX - w/2 + Window.scale(64),

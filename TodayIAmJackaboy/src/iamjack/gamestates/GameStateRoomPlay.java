@@ -5,8 +5,9 @@ import java.awt.Graphics2D;
 
 import iamjack.engine.GameState;
 import iamjack.engine.GameStateHandler;
-import iamjack.engine.MouseHandler;
 import iamjack.engine.Window;
+import iamjack.engine.input.MouseHandler;
+import iamjack.engine.resources.Music;
 import iamjack.player.Jack;
 import iamjack.resourceManager.Images;
 import iamjack.video.ButtonGamePlay;
@@ -23,10 +24,11 @@ public class GameStateRoomPlay extends GameState {
 	private int[][] choices = new int[][]{
 		{0},
 		{1,2},
-		{5,2,4},
-		{2,3,6},
-		{8,7,2},
-		{2,4}
+		{3,5,2},
+		{7,2,8},
+		{2,6,5},
+		{4,3,2},
+		{9}
 	};
 
 	private String[] text = new String[]{
@@ -35,22 +37,27 @@ public class GameStateRoomPlay extends GameState {
 			"Yell",
 			"Be Funny",
 			"Jack TM",
-			"Be Nice",
-			"Rage a Bit",
+			"Laugh",
+			"Rage",
 			"Energetic",
-			"Be Scared"
+			"Be Scared",
+			"Outro"
 	};
 
-	private ButtonGamePlay[][] buttons = new ButtonGamePlay[6][3];
+	private ButtonGamePlay[][] buttons = new ButtonGamePlay[8][3];
 
 	public GameStateRoomPlay(GameStateHandler gsh) {
 		this.gsh = gsh;
-
+		
+		Music.play("metal");
+		
 		jack = new Jack();
 		sitX = Window.scale(820);
 		sitY = Window.scale(240);
+		
 		jack.setPosX(sitX);
 		jack.setPosY(sitY);
+		
 		jack.setSitting(true);
 		jack.setAnimated(true);
 		
@@ -109,7 +116,9 @@ public class GameStateRoomPlay extends GameState {
 				}
 		}	
 
-		if(stage >=	choices.length-1)
+		if(stage >=	choices.length){
+			Music.stop("metal");
 			gsh.changeGameState(GameStateHandler.GAME_DONEGAMING);
+		}
 	}
 }

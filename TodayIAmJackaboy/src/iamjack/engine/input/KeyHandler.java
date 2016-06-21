@@ -1,4 +1,4 @@
-package iamjack.engine;
+package iamjack.engine.input;
 
 import java.awt.event.KeyEvent;
 

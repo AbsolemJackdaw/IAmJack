@@ -1,6 +1,7 @@
 package iamjack.video;
 
 import iamjack.player.PlayerData;
+import iamjack.resourceManager.SoundPool;
 
 public class ButtonGamePlay extends Button {
 
@@ -12,8 +13,10 @@ public class ButtonGamePlay extends Button {
 	
 	@Override
 	public void click(){
-		if(!name.equals("Play Game"))
+		if(!name.equals("Play Game")){
 			PlayerData.videoOfTheDay.add(getVideonameFromString(name));
+			playSoundFromName(name);
+		}
 	}
 	
 	private String getVideonameFromString(String s){
@@ -28,10 +31,10 @@ public class ButtonGamePlay extends Button {
 		case "Jack TM":
 			return "Original";
 
-		case "Be Nice":
+		case "Laugh":
 			return "Friendly";
 
-		case "Rage a Bit":
+		case "Rage":
 			return "Raging";
 
 		case "Energetic":
@@ -45,6 +48,20 @@ public class ButtonGamePlay extends Button {
 
 		default:
 			return "";
+		}
+	}
+	
+	private void playSoundFromName(String s){
+
+		switch (s) {
+		case "Yell": SoundPool.playYellVoice(); break;
+		case "Be Funny": SoundPool.playFunnyVoice(); break;
+		case "Jack TM": SoundPool.playTradeMarkVoice();break;
+		case "Laugh": SoundPool.playLaughVoice(); break;
+		case "Rage": SoundPool.playRageVoice(); break;
+		case "Energetic": SoundPool.playEnergyVoice();break;
+		case "Be Scared": SoundPool.playScaredVoice();break;
+		case "Intro": SoundPool.playIntroVoice();break;
 		}
 	}
 }

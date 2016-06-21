@@ -1,4 +1,4 @@
-package iamjack.engine;
+package iamjack.engine.resources;
 
 
 import java.awt.image.BufferedImage;

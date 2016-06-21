@@ -9,10 +9,12 @@ import javax.swing.SwingWorker;
 import iamjack.engine.GamePanel;
 import iamjack.engine.GameState;
 import iamjack.engine.GameStateHandler;
-import iamjack.engine.KeyHandler;
 import iamjack.engine.Window;
+import iamjack.engine.input.KeyHandler;
+import iamjack.engine.input.MouseHandler;
 import iamjack.resourceManager.Fonts;
 import iamjack.resourceManager.Images;
+import iamjack.resourceManager.Sounds;
 
 public class GameStateMenu extends GameState {
 
@@ -56,30 +58,42 @@ public class GameStateMenu extends GameState {
 
 		if(resourcesLoaded){
 			g.setFont(subTitle);
-			
-			String start = "Press Enter to Start";
+
+			String start = "Press Enter, or Click, to Start";
 			int startSizeX = g.getFontMetrics().stringWidth(start);
 			int startSizeY = g.getFontMetrics().getHeight();
 
 			g.setColor(new Color(1f,1f,1f,textFade));
-			
+
 			g.drawString(start, 
 					Window.getWidth()/2 - startSizeX/2, 
 					Window.getHeight()/2 + sizeY + startSizeY);
-			
+
 			g.drawImage(
 					Images.sam,
 					Window.getWidth()/2 - (startSizeX/2) - Window.scale(32), 
 					Window.getHeight()/2 + sizeY + Window.scale(5), 
 					Window.scale(32), Window.scale(32), null);
-			
+
 			g.setColor(new Color(0f,0f,0f, 1f - textFade));
 			g.fillRect(Window.getWidth()/2 - (startSizeX/2) - Window.scale(32), 
 					Window.getHeight()/2 + sizeY + Window.scale(5), 
 					Window.scale(32), Window.scale(32));
-			
+
+		}else{
+			g.setFont(subTitle);
+
+			String start = "Loading";
+			int startSizeX = g.getFontMetrics().stringWidth(start);
+			int startSizeY = g.getFontMetrics().getHeight();
+
+			g.setColor(new Color(1f,1f,1f,textFade));
+
+			g.drawString(start, 
+					Window.getWidth()/2 - startSizeX/2, 
+					Window.getHeight()/2 + sizeY + startSizeY);
 		}
-		
+
 		g.setColor(new Color(0f,0f,0f, fadeAlpha));
 		g.fillRect(0, 0, GamePanel.W, GamePanel.H);
 	}
@@ -89,7 +103,7 @@ public class GameStateMenu extends GameState {
 
 		if(fadeAlpha > 0)
 			fadeAlpha -= 0.0025f;
-		
+
 		if(textFade >= 0.9F){
 			counting = false;
 		}
@@ -101,24 +115,27 @@ public class GameStateMenu extends GameState {
 			textFade+=.005F;
 		else
 			textFade-=.005F;
-		
+
 		if(resourcesLoaded)
-			if(KeyHandler.isPressed(KeyHandler.ENTER))
+			if(KeyHandler.isPressed(KeyHandler.ENTER) || MouseHandler.click){
+				MouseHandler.clicked = null;
 				gsh.changeGameState(GameStateHandler.GAME_ENTRY);
+			}
 	}
 
 	private void load(){
-		
+
 		new SwingWorker<Integer, Void>() {
 
 			@Override
 			protected Integer doInBackground() throws Exception {
-				
+
 				Images.loadImages();
-				
+				Sounds.loadSounds();
+
 				return null;
 			}
-			
+
 			@Override
 			protected void done() {
 				super.done();

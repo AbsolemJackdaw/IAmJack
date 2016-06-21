@@ -1,8 +1,11 @@
-package iamjack.engine;
+package iamjack.engine.input;
 
 import java.awt.MouseInfo;
+import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
+import iamjack.engine.GamePanel;
 
 public class MouseHandler extends MouseAdapter {
 
@@ -11,6 +14,8 @@ public class MouseHandler extends MouseAdapter {
 
 	public static boolean click;
 	private static boolean prevClick;
+	
+	public static Point clicked = null;
 
 	public static void update(){
 		double x = GamePanel.instance.getLocationOnScreen().getX();
@@ -29,5 +34,7 @@ public class MouseHandler extends MouseAdapter {
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		click = true;
+		clicked = e.getPoint();
+		
 	}
 }

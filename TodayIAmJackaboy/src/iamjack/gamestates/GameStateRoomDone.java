@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 import iamjack.engine.GameState;
 import iamjack.engine.GameStateHandler;
 import iamjack.engine.Window;
+import iamjack.engine.resources.Music;
 import iamjack.player.Jack;
 import iamjack.player.PlayerData;
 import iamjack.resourceManager.Images;
@@ -23,8 +24,9 @@ public class GameStateRoomDone extends GameState {
 		text = new Font("SquareFont", Font.PLAIN, Window.scale(35));
 
 		jack.facingRight = false;
-		jack.setPosX(Window.scale(750));
-
+		jack.setPosX(Window.scale(800));
+		
+		Music.play("everywhere");
 	}
 
 	@Override
@@ -55,7 +57,7 @@ public class GameStateRoomDone extends GameState {
 
 		jack.update();
 
-		if(jack.getPosX() < -95){
+		if(jack.getPosX() < -10){
 			PlayerData.daysPlayed++;
 			gsh.changeGameState(GameStateHandler.GAME_ENDDAY);
 		}
@@ -80,8 +82,9 @@ public class GameStateRoomDone extends GameState {
 		switch (loudCounter){
 		case 1:	loud = "Loud "; break;
 		case 2:	loud = "Very Loud "; break;
-		case 3:	loud = "Obnoxiously Loud "; break;
-		case 4: loud = "DEAFENING !! AAAH MY EARS !!! "; break;
+		case 3:	loud = "Way Too Loud "; break;
+		case 4:	loud = "Obnoxiously Loud "; break;
+		case 5: loud = "DEAFENING !! AAAH MY EARS !!! "; break;
 		}
 
 		return text + loud;

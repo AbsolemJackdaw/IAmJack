@@ -5,11 +5,16 @@ import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Point;
+import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
-import java.awt.image.DataBufferInt;
 
+import iamjack.engine.input.KeyHandler;
+import iamjack.engine.input.MouseHandler;
+import iamjack.engine.resources.ImageLoader;
+import iamjack.resourceManager.Images;
 import javafx.embed.swing.JFXPanel;
 
 @SuppressWarnings("serial")
@@ -36,6 +41,12 @@ public class GamePanel extends JFXPanel implements Runnable, KeyListener{
 		setPreferredSize(new Dimension(W, H));
 		setFocusable(true);
 		requestFocus();
+
+		Cursor blankCursor = Toolkit.getDefaultToolkit().createCustomCursor(
+				ImageLoader.loadSprite("/img/sam.png"), new Point(0, 0), "sam cursor");
+
+		// Set the blank cursor to the JFrame.
+		setCursor(blankCursor);
 
 		System.out.println("GamePanel : Initializing game");
 

@@ -1,0 +1,65 @@
+package iamjack.resourceManager;
+
+import java.util.Random;
+
+import iamjack.engine.resources.Music;
+import iamjack.player.PlayerData;
+
+public class SoundPool {
+
+	private static Random rand = new Random();
+
+	public static void playEnergyVoice(){
+		
+			Music.play(findNewVoice("energy", 14));
+	}
+
+	public static void playFunnyVoice(){
+		Music.play(findNewVoice("funny", 14));
+	}
+
+	public static void playLaughVoice(){
+		Music.play(findNewVoice("laugh", 6));
+	}
+
+	public static void playRageVoice(){
+		Music.play(findNewVoice("rage", 15));
+	}
+
+	public static void playScaredVoice(){
+		Music.play(findNewVoice("scared", 8));
+	}
+
+	public static void playTradeMarkVoice(){
+		Music.play(findNewVoice("tm", 19));
+	}
+
+	public static void playYellVoice(){
+		Music.play(findNewVoice("yell", 14));
+	}
+
+	public static void playIntroVoice(){
+		Music.play("intro"+rand.nextInt(6));
+	}
+	
+	private static String findNewVoice(String type, int max){
+		
+		String t = type;
+		int i = rand.nextInt(max);
+		String song = type+i;
+		
+		//as long as the song exists, try to find a new one
+		while(PlayerData.soundsPlayed.contains(song)){
+			i = rand.nextInt(max);
+			song = type+i;
+		}
+		
+		System.out.println("Found unique voice " + song + ". Playing...");
+		
+		//loop is done here, so add song to list
+		PlayerData.soundsPlayed.add(song);
+		
+		return song;
+		
+	}
+}

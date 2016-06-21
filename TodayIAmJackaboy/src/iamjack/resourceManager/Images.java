@@ -2,7 +2,7 @@ package iamjack.resourceManager;
 
 import java.awt.image.BufferedImage;
 
-import iamjack.engine.ImageLoader;
+import iamjack.engine.resources.ImageLoader;
 
 public class Images {
 

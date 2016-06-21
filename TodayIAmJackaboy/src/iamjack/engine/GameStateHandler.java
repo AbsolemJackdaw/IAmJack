@@ -3,6 +3,7 @@ package iamjack.engine;
 
 import java.awt.Graphics2D;
 
+import iamjack.engine.input.MouseHandler;
 import iamjack.gamestates.GameStateEndDay;
 import iamjack.gamestates.GameStateMenu;
 import iamjack.gamestates.GameStateRoom;
@@ -40,6 +41,8 @@ public class GameStateHandler {
 	}
 
 	public void changeGameState(int state) {
+		MouseHandler.clicked = null;
+		
 		unloadState(currentGameState);
 		currentGameState = state;
 		loadState(state);
