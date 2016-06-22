@@ -4,6 +4,7 @@ import java.util.Random;
 
 import iamjack.engine.resources.Music;
 import iamjack.player.PlayerData;
+import iamjack.player.achievements.Achievement;
 
 public class SoundPool {
 
@@ -68,6 +69,9 @@ public class SoundPool {
 		//loop is done here, so add song to list
 		PlayerData.soundsPlayed.add(song);
 		PlayerData.currentlySaying = song;
+		
+		if(song.equals("tm11") || song.equals("tm13"))
+			Achievement.trigger("likeaboss");
 		
 		return song;
 		

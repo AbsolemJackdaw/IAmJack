@@ -43,9 +43,6 @@ public class ButtonGamePlay extends Button {
 		case "Be Scared":
 			return "Scary,";
 
-		case "Intro":
-			return "Regular,";
-
 		default:
 			return "";
 		}

@@ -10,6 +10,7 @@ import iamjack.engine.Window;
 import iamjack.engine.resources.Music;
 import iamjack.player.Jack;
 import iamjack.player.PlayerData;
+import iamjack.player.achievements.Achievement;
 import iamjack.resourceManager.Images;
 
 public class GameStateRoomDone extends GameState {
@@ -67,15 +68,16 @@ public class GameStateRoomDone extends GameState {
 				int x = g.getFontMetrics().stringWidth(work);
 				g.drawString(work, Window.getWidth()/2 - x/2, Window.getHeight()/2 + Window.getHeight()/3);
 			}
-			
+
 			else if(jack.getPosX() > Window.scale(150) && jack.getPosX() < Window.scale(250)){
 				String shelf = "This is for looking at. Fan made, very Fancy stuff!";
 				int x = g.getFontMetrics().stringWidth(shelf);
 				g.drawString(shelf, Window.getWidth()/2 - x/2, Window.getHeight()/2 + Window.getHeight()/3);
 
 			}
-
 		}
+		for(Achievement a : Achievement.achievements.values())
+			a.draw(g);
 	}
 
 	@Override
@@ -88,6 +90,8 @@ public class GameStateRoomDone extends GameState {
 			gsh.changeGameState(GameStateHandler.GAME_ENDDAY);
 		}
 
+		for(Achievement a : Achievement.achievements.values())
+			a.update();
 	}
 
 	private String makeVideoText(){
@@ -127,13 +131,13 @@ public class GameStateRoomDone extends GameState {
 		case 5:	loud = "Way Too Loud,"; break;
 		case 6:	loud = "Obnoxiously Loud,"; break;
 		case 7:	loud = "EARTHSHAKING"; break;
-		case 8:	loud = "DEAFENING !! AAAH MY EARS !!! "; break;
+		case 8:	loud = "DEAFENING !! AAAH MY EARS !!! "; Achievement.trigger("loud"); break;
 		}
 
 		String energy = "";
 		switch (energyCounter) {
 		case 1: energy = "Energetic,";break;
-		case 2: energy = "Charged,";break;
+		case 2: energy = "Very Energetic,";break;
 		case 3: energy = "1200V,";break;
 		}
 
@@ -157,11 +161,16 @@ public class GameStateRoomDone extends GameState {
 		}
 		String with = "";
 		switch(withyCounter){
-		case 1 : with = "Withy,";break;
-		case 2 : with = "Positive,";break;
+		case 1 : with = "Withy";break;
+		case 2 : with = "Positive";break;
 		}
+
+		String s = text + loud + energy + origin + laugh + rage + with +"-";
+
+		if(s.equalsIgnoreCase("-very loud,energetic,original,positive-"))
+			Achievement.trigger("erryday");
 		
-		return text + loud + energy + origin + laugh + rage + with +"-";
+		return s;
 
 	}
 }

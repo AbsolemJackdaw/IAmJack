@@ -22,7 +22,14 @@ public class Images {
 	public static BufferedImage button;
 	public static BufferedImage buttonLit;
 	public static BufferedImage door;
-
+	
+	public static BufferedImage achievement;
+	public static BufferedImage ear;
+	public static BufferedImage spyglass;
+	public static BufferedImage three;
+	public static BufferedImage locked;
+	public static BufferedImage scroll;
+	public static BufferedImage yt;
 
 	//not really necesairy, but allows for more control over the loadtime
 	public static void loadImages(){
@@ -45,6 +52,15 @@ public class Images {
 		ImageLoader.loadImages(jackWalk, "/img/jackwalk");
 		ImageLoader.loadImages(jackKeyBoard, "/img/jackSitHit");
 		ImageLoader.loadImages(jackTalk, "/img/jackTalk");
+		
+		
+		achievement = ImageLoader.loadSprite("/img/achievement/achievement.png");
+		ear = ImageLoader.loadSprite("/img/achievement/deaf.png");
+		spyglass = ImageLoader.loadSprite("/img/achievement/spyglass.png");
+		three = ImageLoader.loadSprite("/img/achievement/three.png");
+		locked = ImageLoader.loadSprite("/img/achievement/locked.png");
+		scroll = ImageLoader.loadSprite("/img/achievement/scroll.png");
+		yt = ImageLoader.loadSprite("/img/achievement/yt.png");
 
 	}
 }

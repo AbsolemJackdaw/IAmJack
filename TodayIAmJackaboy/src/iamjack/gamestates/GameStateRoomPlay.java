@@ -10,6 +10,7 @@ import iamjack.engine.input.MouseHandler;
 import iamjack.engine.resources.Music;
 import iamjack.player.Jack;
 import iamjack.player.PlayerData;
+import iamjack.player.achievements.Achievement;
 import iamjack.resourceManager.Images;
 import iamjack.video.ButtonGamePlay;
 
@@ -103,6 +104,9 @@ public class GameStateRoomPlay extends GameState {
 					b.draw(g);
 				}
 			}
+		
+		for(Achievement a : Achievement.achievements.values())
+			a.draw(g);
 	}
 
 	@Override
@@ -147,5 +151,8 @@ public class GameStateRoomPlay extends GameState {
 			Music.stop("metal");
 		if(stage >=	choices.length && speakTimer <= 0d)
 			gsh.changeGameState(GameStateHandler.GAME_ROOM_VIDEO_DONE);
+		
+		for(Achievement a : Achievement.achievements.values())
+			a.update();
 	}
 }

@@ -57,8 +57,8 @@ public class GameStateEndDay extends GameState{
 		String days = "Days";
 
 		g.drawString(yt, Window.getWidth()/2 - g.getFontMetrics().stringWidth(yt)/2, Window.scale(100));
-		g.drawString(day, Window.getWidth()/2 - g.getFontMetrics().stringWidth(day)/2, Window.scale(125)+100);
-		g.drawString(days, Window.getWidth()/2 - g.getFontMetrics().stringWidth(days)/2, Window.scale(225)+100);
+		g.drawString(day, Window.getWidth()/2 - g.getFontMetrics().stringWidth(day)/2, Window.scale(100) + g.getFontMetrics().getHeight()/2+ g.getFontMetrics().getHeight()/4);
+		g.drawString(days, Window.getWidth()/2 - g.getFontMetrics().stringWidth(days)/2, Window.scale(100)+ g.getFontMetrics().getHeight()+ g.getFontMetrics().getHeight()/2);
 
 		button1.draw(g);
 		button2.draw(g);

@@ -10,6 +10,7 @@ import iamjack.engine.Window;
 import iamjack.engine.input.KeyHandler;
 import iamjack.engine.resources.Music;
 import iamjack.player.PlayerData;
+import iamjack.player.achievements.Achievement;
 
 public class GameStateQuit extends GameState {
 
@@ -41,10 +42,14 @@ public class GameStateQuit extends GameState {
 			"Art and Dev. :",
 			"Axel 'TheBelgian' C.",
 			"",
-			"TroubleShooting and Testers",
+			"Ideas and Testers",
 			"raydeejay",
 			"Hatsjer",
 			"Chloé 'FrenchFries' B.",
+			"",
+			"",
+			"",
+			"Game Completion",
 			""
 			
 	};
@@ -56,7 +61,7 @@ public class GameStateQuit extends GameState {
 		headerFont = new Font("SquareFont", Font.PLAIN, Window.scale(80));
 		creditFont = new Font("SquareFont", Font.PLAIN, Window.scale(40));
 		Music.loop("quest");
-		PlayerData.quitGame = true;
+		PlayerData.dontDoubleLoop = true;
 	}
 	
 	@Override
@@ -79,14 +84,32 @@ public class GameStateQuit extends GameState {
 			int y2 = g.getFontMetrics().getHeight() + Window.scale(2);
 			g.drawString(s, Window.getWidth()/2 - x2/2, (int)offset + y2*i);
 		}
+		for(Achievement a : Achievement.achievements.values())
+			a.draw(g);
 	}
 	
 	@Override
 	public void update() {
-		offset -= 0.5D;
 		
-		if(offset < -Window.scale(1294) || KeyHandler.isPressed(KeyHandler.ENTER)){
+		float percentPart = 100f/(float)Achievement.achievements.size();
+		float rest = (float)Achievement.achievements.size() - (float)PlayerData.achievements.size();
+		float percent = 100f - (rest*percentPart);
+		
+		credits[credits.length-1] = percent+"%";
+		offset -= 0.8D;
+		
+		if(offset < -Window.scale(1500) || KeyHandler.isPressed(KeyHandler.ENTER)){
+			PlayerData.daysPlayed = 0;
+			PlayerData.soundsPlayed.clear();
 			gsh.changeGameState(GameStateHandler.MENU);
 		}
+		
+		System.out.println(offset);
+		
+		if(offset < -Window.scale(1100)){
+			Achievement.trigger("credits");
+		}
+		for(Achievement a : Achievement.achievements.values())
+			a.update();
 	}
 }

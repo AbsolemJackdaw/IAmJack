@@ -10,6 +10,7 @@ import iamjack.engine.GamePanel;
 import iamjack.engine.GameState;
 import iamjack.engine.GameStateHandler;
 import iamjack.engine.Window;
+import iamjack.player.achievements.AchievementLoader;
 import iamjack.resourceManager.Fonts;
 import iamjack.resourceManager.Images;
 import iamjack.resourceManager.Sounds;
@@ -36,6 +37,7 @@ public class GameStateLoading extends GameState {
 			"Like really long ?",
 			"It took me one day to code the base.",
 			"and one day to find and edit all the sounds !",
+			"And two more to tweak and finalize everything.",
 			"This game was made in Java exclusively."
 			
 	};
@@ -161,7 +163,8 @@ public class GameStateLoading extends GameState {
 
 				Images.loadImages();
 				Sounds.loadSounds();
-
+				AchievementLoader.load();
+				
 				return null;
 			}
 

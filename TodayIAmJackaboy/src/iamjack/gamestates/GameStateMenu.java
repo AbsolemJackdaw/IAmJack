@@ -33,9 +33,9 @@ public class GameStateMenu extends GameState {
 
 
 		Music.play("highfive");
-		if(!PlayerData.quitGame){
+		if(!PlayerData.dontDoubleLoop){
 			Music.loop("quest");
-			PlayerData.quitGame = false;
+			PlayerData.dontDoubleLoop = false;
 		}
 	}
 
@@ -68,19 +68,17 @@ public class GameStateMenu extends GameState {
 
 			if(b != null)
 				if(b.getBox().contains(MouseHandler.mouseX , MouseHandler.mouseY)){
-					if(MouseHandler.click){
+					if(MouseHandler.click)
 						if(b.getName().equals("Start")){
 							Music.stop("quest");
 							gsh.changeGameState(GameStateHandler.GAME_ROOM);
-						}else if(b.getName().equals("Exit")){
-
+						}else if(b.getName().equals("Achievements"))
+							gsh.changeGameState(GameStateHandler.ACHIEVS);
+						else if(b.getName().equals("Exit"))
 							System.exit(0);
-						}
-					}
 					b.isLit(true);
-				}else{
+				}else
 					b.isLit(false);
-				}
 		}	
 	}
 }
