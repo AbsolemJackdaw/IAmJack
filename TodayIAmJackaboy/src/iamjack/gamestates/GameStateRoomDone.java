@@ -43,7 +43,8 @@ public class GameStateRoomDone extends GameState {
 		String gj = "Good job Jack ! Today you made a";
 
 		g.drawString(gj, Window.getWidth()/2 - g.getFontMetrics().stringWidth(gj)/2, Window.scale(70));
-		g.drawString(video + "video !", Window.getWidth()/2 - g.getFontMetrics().stringWidth(video +"video !")/2, Window.scale(100));
+		g.drawString(video, Window.getWidth()/2 - g.getFontMetrics().stringWidth(video)/2, Window.scale(100));
+		g.drawString("video !", Window.getWidth()/2 - g.getFontMetrics().stringWidth("video !")/2, Window.scale(130));
 
 		float scale = GameStateDrawHelper.scale;
 
@@ -61,10 +62,17 @@ public class GameStateRoomDone extends GameState {
 				g.drawString(bed, Window.getWidth()/2 - x/2, Window.getHeight()/2 + Window.getHeight()/3);
 			}
 
-			if(jack.getPosX() > Window.scale(750)){
+			else if(jack.getPosX() > Window.scale(750)){
 				String work = "Done for today !";
 				int x = g.getFontMetrics().stringWidth(work);
 				g.drawString(work, Window.getWidth()/2 - x/2, Window.getHeight()/2 + Window.getHeight()/3);
+			}
+			
+			else if(jack.getPosX() > Window.scale(150) && jack.getPosX() < Window.scale(250)){
+				String shelf = "This is for looking at. Fan made, very Fancy stuff!";
+				int x = g.getFontMetrics().stringWidth(shelf);
+				g.drawString(shelf, Window.getWidth()/2 - x/2, Window.getHeight()/2 + Window.getHeight()/3);
+
 			}
 
 		}
@@ -84,7 +92,7 @@ public class GameStateRoomDone extends GameState {
 
 	private String makeVideoText(){
 
-		String text = "";
+		String text = "-";
 		int loudCounter = 0;
 		int energyCounter = 0;
 		int originCounter = 0;
@@ -107,51 +115,53 @@ public class GameStateRoomDone extends GameState {
 				withyCounter++;continue;
 			}
 
-			text += s + " ";
+			text += s + "";
 		}
 
 		String loud = "";
 		switch (loudCounter){
-		case 1:	loud = "Loud "; break;
-		case 2:	loud = "Very Loud "; break;
-		case 3:	loud = "Way Too Loud "; break;
-		case 4:	loud = "Obnoxiously Loud "; break;
-		case 5:	loud = "EARTHSHAKING "; break;
-		case 6: loud = "DEAFENING !! AAAH MY EARS !!! "; break;
+		case 1:	loud = "Loud,"; break;
+		case 2:	loud = "Loud,"; break;
+		case 3:	loud = "Very Loud,"; break;
+		case 4:	loud = "Very Loud,"; break;
+		case 5:	loud = "Way Too Loud,"; break;
+		case 6:	loud = "Obnoxiously Loud,"; break;
+		case 7:	loud = "EARTHSHAKING"; break;
+		case 8:	loud = "DEAFENING !! AAAH MY EARS !!! "; break;
 		}
 
 		String energy = "";
 		switch (energyCounter) {
-		case 1: energy = "Energetic ";break;
-		case 2: energy = "Charged ";break;
-		case 3: energy = "1200V ";break;
+		case 1: energy = "Energetic,";break;
+		case 2: energy = "Charged,";break;
+		case 3: energy = "1200V,";break;
 		}
 
 		String origin = "";
 		switch(originCounter){
-		case 1 : origin = "Original ";break;
-		case 2 : origin = "Unique ";break;
+		case 1 : origin = "Original,";break;
+		case 2 : origin = "Unique,";break;
 		}
 
 		String laugh = "";
 		switch(laughCounter){
-		case 1 : laugh = "Funny ";break;
-		case 2 : laugh = "Comic ";break;
-		case 3 : laugh = "Hilarious ";break;
+		case 1 : laugh = "Funny,";break;
+		case 2 : laugh = "Comic,";break;
+		case 3 : laugh = "Hilarious,";break;
 		}
 
 		String rage = "";
 		switch(rageCounter){
-		case 1 : rage = "Raging ";break;
-		case 2 : rage = "Maddening ";break;
+		case 1 : rage = "Raging,";break;
+		case 2 : rage = "Maddening,";break;
 		}
 		String with = "";
 		switch(withyCounter){
-		case 1 : with = "Withy ";break;
-		case 2 : with = "Positive ";break;
+		case 1 : with = "Withy,";break;
+		case 2 : with = "Positive,";break;
 		}
 		
-		return text + loud + energy + origin + laugh + rage + with;
+		return text + loud + energy + origin + laugh + rage + with +"-";
 
 	}
 }

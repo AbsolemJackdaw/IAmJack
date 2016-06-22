@@ -50,11 +50,18 @@ public class SoundPool {
 		int i = rand.nextInt(max);
 		String song = type+i;
 		
+		int loops = 0;
 		//as long as the song exists, try to find a new one
 		while(PlayerData.soundsPlayed.contains(song)){
 			i = rand.nextInt(max);
 			song = type+i;
+			loops++;
+			if(loops > 18)
+				break;
 		}
+		
+		if(loops > 18)
+			song = type + rand.nextInt(6); //all categories have at least 6 sounds 
 		
 		System.out.println("Found unique voice " + song + ". Playing...");
 		

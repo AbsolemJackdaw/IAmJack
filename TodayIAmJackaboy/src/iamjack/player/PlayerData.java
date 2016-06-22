@@ -12,4 +12,7 @@ public class PlayerData {
 	
 	public static String currentlySaying = "";
 	
+	/**boolean triggered when credits roll. used to not loop the same song twice in a row*/
+	public static boolean quitGame;
+	
 }

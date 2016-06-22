@@ -41,10 +41,10 @@ public class ButtonGamePlay extends Button {
 			return "Energetic";
 
 		case "Be Scared":
-			return "Scary";
+			return "Scary,";
 
 		case "Intro":
-			return "Regular";
+			return "Regular,";
 
 		default:
 			return "";

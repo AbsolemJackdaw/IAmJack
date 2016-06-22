@@ -146,6 +146,6 @@ public class GameStateRoomPlay extends GameState {
 		if(stage ==	choices.length && speakTimer <= 120d)
 			Music.stop("metal");
 		if(stage >=	choices.length && speakTimer <= 0d)
-			gsh.changeGameState(GameStateHandler.GAME_DONEGAMING);
+			gsh.changeGameState(GameStateHandler.GAME_ROOM_VIDEO_DONE);
 	}
 }

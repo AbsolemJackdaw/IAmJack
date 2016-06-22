@@ -32,7 +32,7 @@ public class Button {
 
 	public void draw(Graphics2D g){
 		
-		g.setColor(Color.white);
+		g.setColor(isLit ? Color.green.darker() : Color.white);
 		g.setFont(text);
 
 		int h = g.getFontMetrics().getHeight();

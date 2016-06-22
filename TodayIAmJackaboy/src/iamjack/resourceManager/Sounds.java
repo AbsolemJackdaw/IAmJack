@@ -10,7 +10,8 @@ public class Sounds {
 		loadMusic("/sounds/WeasleyOldWeaselOrchestraComedyRoyaltyFreeMusicByTechnoaxe.mp3", "backgroundmusic");
 		loadMusic("/sounds/BasicReaperShrapnelRockMetalRoyaltyFreeMusic.mp3", "metal");
 		loadMusic("/sounds/TeknoAXEsRoyaltyFreeMusicRoyaltyFreeMusic198ImEverywhereDubstepFunkstepTechnoFeaturingFarisha2.mp3", "everywhere");
-
+		loadMusic("/sounds/NewChiptuneQuests8bitEightBitRoyaltyFreeMusic.mp3","quest");
+		
 		loadMusic("/sounds/step_01.mp3", "step0");
 		loadMusic("/sounds/step_02.mp3", "step1");
 		loadMusic("/sounds/step_03.mp3", "step2");
@@ -126,6 +127,8 @@ public class Sounds {
 		loadMusic("/sounds/outro/outro2.mp3", "outro2");
 		loadMusic("/sounds/outro/outro3.mp3", "outro3");
 		loadMusic("/sounds/outro/outro4.mp3", "outro4");
+		
+		loadMusic("/sounds/high_five.mp3", "highfive");
 
 	}
 	

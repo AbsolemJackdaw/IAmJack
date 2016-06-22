@@ -20,10 +20,10 @@ public class Main{
 
 		frame.requestFocusInWindow();
 
-//		//fullscreen without borders
-//		frame.setUndecorated(true);
-//		//fullscreen
-//		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		//fullscreen without borders
+		frame.setUndecorated(true);
+		//fullscreen
+		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.pack();

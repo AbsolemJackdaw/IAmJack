@@ -12,7 +12,7 @@ public class Window {
 	private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	
 	public Window(){
-		screenWidth = 1024; //screenSize.width;
+		screenWidth = screenSize.width;
 		screenHeight = screenWidth * 9 / 16;
 	}
 	

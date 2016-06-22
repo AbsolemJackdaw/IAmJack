@@ -7,6 +7,8 @@ import java.awt.Graphics2D;
 import iamjack.engine.GameState;
 import iamjack.engine.GameStateHandler;
 import iamjack.engine.Window;
+import iamjack.engine.input.KeyHandler;
+import iamjack.engine.resources.Music;
 import iamjack.player.PlayerData;
 
 public class GameStateQuit extends GameState {
@@ -22,8 +24,8 @@ public class GameStateQuit extends GameState {
 			"Tribute to JackScepticEye",
 			"and every hardworking youtuber out there",
 			"",
-			"You survived " + PlayerData.daysPlayed + " days",
-			"They do this every day to keep you entertained.",
+			"You managed to Youtube " + PlayerData.daysPlayed + " days...",
+			"But they do this every day to keep you entertained.",
 			"A sincere Thanks to all of them out there <3",
 			"",
 			"Sounds :",
@@ -42,7 +44,7 @@ public class GameStateQuit extends GameState {
 			"TroubleShooting and Testers",
 			"raydeejay",
 			"Hatsjer",
-			"Chloé 'frenchFries' B.",
+			"Chloé 'FrenchFries' B.",
 			""
 			
 	};
@@ -53,6 +55,8 @@ public class GameStateQuit extends GameState {
 		offset = Window.getHeight();
 		headerFont = new Font("SquareFont", Font.PLAIN, Window.scale(80));
 		creditFont = new Font("SquareFont", Font.PLAIN, Window.scale(40));
+		Music.loop("quest");
+		PlayerData.quitGame = true;
 	}
 	
 	@Override
@@ -61,12 +65,12 @@ public class GameStateQuit extends GameState {
 		g.setColor(Color.black);
 		g.fillRect(0, 0, Window.getWidth(), Window.getHeight());
 		
-		g.setColor(Color.green.darker().darker().darker());
+		g.setColor(Color.WHITE);
 		
 		g.setFont(headerFont);
 		int x = g.getFontMetrics().stringWidth(header);
 		g.drawString(header, Window.getWidth()/2 - x/2, (int)offset);
-		
+		g.setColor(Color.green.darker().darker().darker());
 		g.setFont(creditFont);
 		
 		for(int i = 0; i < credits.length; i++){
@@ -79,8 +83,10 @@ public class GameStateQuit extends GameState {
 	
 	@Override
 	public void update() {
+		offset -= 0.5D;
 		
-		offset -= 0.4D;
-		
+		if(offset < -Window.scale(1294) || KeyHandler.isPressed(KeyHandler.ENTER)){
+			gsh.changeGameState(GameStateHandler.MENU);
+		}
 	}
 }

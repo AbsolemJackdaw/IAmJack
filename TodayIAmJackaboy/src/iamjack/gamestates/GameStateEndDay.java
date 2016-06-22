@@ -33,7 +33,10 @@ public class GameStateEndDay extends GameState{
 
 		PlayerData.videoOfTheDay.clear();
 		PlayerData.currentlySaying="";
-		PlayerData.soundsPlayed.clear();
+		
+		//2 videos worth of sound
+		if(PlayerData.soundsPlayed.size() > 18)
+			PlayerData.soundsPlayed.clear();
 
 		text = new Font("SquareFont", Font.PLAIN, Window.scale(100));
 	}
@@ -53,9 +56,9 @@ public class GameStateEndDay extends GameState{
 		String day = ""+PlayerData.daysPlayed;
 		String days = "Days";
 
-		g.drawString(yt, Window.getWidth()/2 - g.getFontMetrics().stringWidth(yt)/2, 100);
-		g.drawString(day, Window.getWidth()/2 - g.getFontMetrics().stringWidth(day)/2, 200);
-		g.drawString(days, Window.getWidth()/2 - g.getFontMetrics().stringWidth(days)/2, 300);
+		g.drawString(yt, Window.getWidth()/2 - g.getFontMetrics().stringWidth(yt)/2, Window.scale(100));
+		g.drawString(day, Window.getWidth()/2 - g.getFontMetrics().stringWidth(day)/2, Window.scale(125)+100);
+		g.drawString(days, Window.getWidth()/2 - g.getFontMetrics().stringWidth(days)/2, Window.scale(225)+100);
 
 		button1.draw(g);
 		button2.draw(g);
@@ -77,7 +80,7 @@ public class GameStateEndDay extends GameState{
 				if(b.getBox().contains(MouseHandler.mouseX , MouseHandler.mouseY)){
 					if(MouseHandler.click){
 						if(b.getName().equals("Play Another Day")){
-							gsh.changeGameState(GameStateHandler.GAME_ENTRY);
+							gsh.changeGameState(GameStateHandler.GAME_ROOM);
 							Music.stop("everywhere");
 						}else{
 							Music.stop("everywhere");

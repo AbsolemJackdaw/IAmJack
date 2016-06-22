@@ -86,6 +86,11 @@ public class GameStateRoom extends GameState {
 				g.drawString(work, Window.getWidth()/2 - x/2, Window.getHeight()/2 + Window.getHeight()/3);
 			}
 
+			else if(once == false && PlayerData.daysPlayed == 0){
+				String work = "Hi, I'm Jack ! Welcome to mah Crib.";
+				int x = g.getFontMetrics().stringWidth(work);
+				g.drawString(work, Window.getWidth()/2 - x/2, Window.getHeight()/2 + Window.getHeight()/3);
+			}
 			else if(once == false && PlayerData.daysPlayed == 1){
 				String work = "Ah, A beautiful new day to do the Youtube !";
 				int x = g.getFontMetrics().stringWidth(work);
@@ -122,7 +127,7 @@ public class GameStateRoom extends GameState {
 
 		if(canGame && KeyHandler.isPressed(KeyHandler.ENTER)){
 			Music.stop("backgroundmusic");
-			gsh.changeGameState(GameStateHandler.GAME_GAMING);
+			gsh.changeGameState(GameStateHandler.GAME_ROOM_VIDEO);
 		}
 
 		//g.drawRect(850, 180, 64, 110);
@@ -132,9 +137,9 @@ public class GameStateRoom extends GameState {
 			double y = MouseHandler.clicked.getY();
 			System.out.println(x + " " + y);
 
-			if(x >= 850 && x <= 850+64 && y >= 180 && y <= 180+110){
+			if(x >= Window.scale(850) && x <= Window.scale(914) && y >= Window.scale(180) && y <= Window.scale(290)){
 				Music.stop("backgroundmusic");
-				gsh.changeGameState(GameStateHandler.GAME_GAMING);
+				gsh.changeGameState(GameStateHandler.GAME_ROOM_VIDEO);
 			}
 		}
 		jack.update();

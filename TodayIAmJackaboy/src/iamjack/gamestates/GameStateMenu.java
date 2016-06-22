@@ -4,174 +4,83 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 
-import javax.swing.SwingWorker;
-
-import iamjack.engine.GamePanel;
 import iamjack.engine.GameState;
 import iamjack.engine.GameStateHandler;
 import iamjack.engine.Window;
-import iamjack.engine.input.KeyHandler;
 import iamjack.engine.input.MouseHandler;
-import iamjack.resourceManager.Fonts;
-import iamjack.resourceManager.Images;
-import iamjack.resourceManager.Sounds;
+import iamjack.engine.resources.Music;
+import iamjack.player.PlayerData;
+import iamjack.video.Button;
 
 public class GameStateMenu extends GameState {
 
-	private final Font title ;
-	private final Font subTitle ;
+	private final Font titleFont ;
+	private String titleHead = "Today,";
+	private String title = "I Am Jackaboy";
 
-	private float fadeAlpha = 1f;
-	private boolean counting = false;
-	private float textFade = 0f;
-
-	private boolean resourcesLoaded = false;
-	private int counter = 0;
-	private int tipIndex = 0;
-
-	private String tips[] = new String[]{
-			"Did you know sounds take a long time to load ?",
-			"Wasd and Zqsd are valid controls to move Jack.",
-			"This game has over 100 audio files of Jack's voice !",
-			"Interact by showing Jack the way with Sam.",
-			"Did you know sounds take a long time to load ?",
-			"Like really long ?",
-			"It took me one day to code the base.",
-			"and one day to find and edit all the sounds !",
-			"This game was made in Java exclusively."
-			
-	};
+	private Button[] buttons;
 
 	public GameStateMenu(GameStateHandler gsh) {
 		this.gsh = gsh;
 
-		load();
-		Fonts.registerFont();
-		title = new Font("SquareFont", Font.PLAIN, Window.scale(100));
-		subTitle = new Font("SquareFont", Font.PLAIN, Window.scale(25));
+		titleFont = new Font("SquareFont", Font.PLAIN, Window.scale(100));
 
+		buttons = new Button[]{
+				new Button("Start", Window.getWidth()/2 - Window.scale(64), Window.getHeight()/2),
+				new Button("Achievements", Window.getWidth()/2- Window.scale(64), Window.getHeight()/2+Window.scale(64)),
+				new Button("Exit", Window.getWidth()/2- Window.scale(64), Window.getHeight()/2+Window.scale(64*2)),
+		};
+
+
+		Music.play("highfive");
+		if(!PlayerData.quitGame){
+			Music.loop("quest");
+			PlayerData.quitGame = false;
+		}
 	}
 
 	@Override
 	public void draw(Graphics2D g) {
+
 		g.setColor(Color.black);
-		g.fillRect(0, 0, GamePanel.W, GamePanel.H);
+		g.fillRect(0, 0, Window.getWidth(), Window.getHeight());
 
 		g.setColor(Color.white);
-		g.setFont(title);
-
-		String theTitleTop = "Today,";
-		String theTitle = "I am Jackaboy";
-
-		int sizeXtop = g.getFontMetrics().stringWidth(theTitleTop);
-		int sizeX = g.getFontMetrics().stringWidth(theTitle);
+		g.setFont(titleFont);
+		int sizeXtop = g.getFontMetrics().stringWidth(titleHead);
+		int sizeX = g.getFontMetrics().stringWidth(title);
 
 		int sizeY = g.getFontMetrics().getHeight();
 
-		g.drawString(theTitleTop, Window.getWidth()/2 - (sizeXtop/2), Window.getHeight()/2 - (sizeY/2) );
-		g.drawString(theTitle, Window.getWidth()/2 - (sizeX/2), Window.getHeight()/2 + (sizeY/2));
+		g.drawString(titleHead, Window.getWidth()/2 - (sizeXtop/2), Window.getHeight()/2 - (sizeY/2)*2 );
+		g.drawString(title, Window.getWidth()/2 - (sizeX/2), Window.getHeight()/2 + (sizeY/2)- (sizeY/2));
 
-		if(resourcesLoaded){
-			g.setFont(subTitle);
+		for(Button b : buttons)
+			b.draw(g);
 
-			String start = "Press Enter, or Click, to Start";
-			int startSizeX = g.getFontMetrics().stringWidth(start);
-			int startSizeY = g.getFontMetrics().getHeight();
-
-			g.setColor(new Color(1f,1f,1f,textFade));
-
-			g.drawString(start, 
-					Window.getWidth()/2 - startSizeX/2, 
-					Window.getHeight()/2 + sizeY + startSizeY);
-
-			g.drawImage(
-					Images.sam,
-					Window.getWidth()/2 - (startSizeX/2) - Window.scale(32), 
-					Window.getHeight()/2 + sizeY + Window.scale(5), 
-					Window.scale(32), Window.scale(32), null);
-
-			g.setColor(new Color(0f,0f,0f, 1f - textFade));
-			g.fillRect(Window.getWidth()/2 - (startSizeX/2) - Window.scale(32), 
-					Window.getHeight()/2 + sizeY + Window.scale(5), 
-					Window.scale(32), Window.scale(32));
-
-		}else{
-			g.setFont(subTitle);
-
-			String start = "Loading";
-			int startSizeX = g.getFontMetrics().stringWidth(start);
-			int startSizeY = g.getFontMetrics().getHeight();
-
-			g.setColor(new Color(1f,1f,1f,textFade));
-
-			g.drawString(start, 
-					Window.getWidth()/2 - startSizeX/2, 
-					Window.getHeight()/2 + sizeY + startSizeY);
-			
-			g.setFont(subTitle);
-			g.setColor(Color.green.darker().darker().darker());
-			int startSizeX2 = g.getFontMetrics().stringWidth(tips[tipIndex]);
-			g.drawString(tips[tipIndex], Window.getWidth()/2 - startSizeX2/2, Window.getHeight() - Window.scale(40));
-
-		}
-		
-		g.setColor(new Color(0f,0f,0f, fadeAlpha));
-		g.fillRect(0, 0, GamePanel.W, GamePanel.H);
 	}
 
 	@Override
 	public void update() {
 
-		counter++;
+		for(int i = 0; i < buttons.length ; i++){
+			Button b = buttons[i];
 
-		if(counter % 360 == 0)
-			tipIndex++;
-		
-		if(tipIndex >= tips.length)
-			tipIndex = 0;
-		
+			if(b != null)
+				if(b.getBox().contains(MouseHandler.mouseX , MouseHandler.mouseY)){
+					if(MouseHandler.click){
+						if(b.getName().equals("Start")){
+							Music.stop("quest");
+							gsh.changeGameState(GameStateHandler.GAME_ROOM);
+						}else if(b.getName().equals("Exit")){
 
-		if(fadeAlpha > 0)
-			fadeAlpha -= 0.0025f;
-
-		if(textFade >= 0.9F){
-			counting = false;
-		}
-		if(textFade <= 0.1F){
-			counting = true;
-		}
-
-		if(counting)
-			textFade+=.005F;
-		else
-			textFade-=.005F;
-
-		if(resourcesLoaded)
-			if(KeyHandler.isPressed(KeyHandler.ENTER) || MouseHandler.click){
-				MouseHandler.clicked = null;
-				gsh.changeGameState(GameStateHandler.GAME_ENTRY);
-			}
-	}
-
-	private void load(){
-
-		new SwingWorker<Integer, Void>() {
-
-			@Override
-			protected Integer doInBackground() throws Exception {
-
-				Images.loadImages();
-				Sounds.loadSounds();
-
-				return null;
-			}
-
-			@Override
-			protected void done() {
-				super.done();
-				resourcesLoaded = true;
-				System.out.println("done loading rsrcs");
-			}
-		}.execute();
+							System.exit(0);
+						}
+					}
+					b.isLit(true);
+				}else{
+					b.isLit(false);
+				}
+		}	
 	}
 }
