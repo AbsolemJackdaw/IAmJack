@@ -1,4 +1,4 @@
-package iamjack.gamestates;
+package iamjack.gamestates.room;
 
 import java.awt.AlphaComposite;
 import java.awt.Graphics2D;
@@ -8,6 +8,7 @@ import iamjack.engine.GameStateHandler;
 import iamjack.engine.Window;
 import iamjack.engine.input.MouseHandler;
 import iamjack.engine.resources.Music;
+import iamjack.gamestates.GameStateDrawHelper;
 import iamjack.player.Jack;
 import iamjack.player.PlayerData;
 import iamjack.player.achievements.Achievement;

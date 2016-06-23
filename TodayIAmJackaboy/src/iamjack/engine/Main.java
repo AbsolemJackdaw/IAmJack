@@ -10,7 +10,7 @@ public class Main{
 
 		new Window();
 
-		JFrame frame = new JFrame("Labyrinth");
+		JFrame frame = new JFrame("IAmJack");
 
 		gamepanel = new GamePanel();
 		frame.setContentPane(gamepanel);

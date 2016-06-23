@@ -18,5 +18,10 @@ public class PlayerData {
 	public static boolean dontDoubleLoop;
 	
 	public static ArrayList<Achievement> achievements = new ArrayList<Achievement>();
+	
+	public static int money = 0;
+	public static int fans = 0;
+	
+	public static boolean hasWorkedOut = false;
 
 }

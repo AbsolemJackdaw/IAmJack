@@ -1,7 +1,6 @@
-package iamjack.gamestates;
+package iamjack.gamestates.room;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics2D;
 
 import iamjack.engine.GameState;
@@ -10,6 +9,7 @@ import iamjack.engine.Window;
 import iamjack.engine.input.KeyHandler;
 import iamjack.engine.input.MouseHandler;
 import iamjack.engine.resources.Music;
+import iamjack.gamestates.GameStateDrawHelper;
 import iamjack.player.Jack;
 import iamjack.player.PlayerData;
 import iamjack.player.achievements.Achievement;
@@ -25,9 +25,7 @@ public class GameStateRoom extends GameState {
 	private boolean canGame;
 
 	private float alpha = 1f;
-
-	private final Font subTitle ;
-
+	
 	private boolean[] discoverRoom = new boolean[5];
 
 	/**boolean triggered after player has moved. allows for one time only intro logic*/
@@ -36,8 +34,7 @@ public class GameStateRoom extends GameState {
 	public GameStateRoom(GameStateHandler gsh) {
 		this.gsh = gsh;
 
-		Music.play("backgroundmusic");
-		subTitle = new Font("SquareFont", Font.PLAIN, Window.scale(35));
+		Music.loop("backgroundmusic");
 	}
 
 	@Override
@@ -56,65 +53,53 @@ public class GameStateRoom extends GameState {
 
 		g.drawImage(Images.chair, Window.scale(824), Window.scale(260), (int)(64f*GameStateDrawHelper.scale), (int)(64f*GameStateDrawHelper.scale), null);
 
-		g.setColor(Color.green.darker().darker().darker());
-		g.setFont(subTitle);
-
 		if(!jack.isAnimated()){
 			if(jack.getPosX() < Window.scale(20)){
-				String nope = "Nope, nothing to see here !";
-				int x = g.getFontMetrics().stringWidth(nope);
-				g.drawString(nope, Window.getWidth()/2 - x/2, Window.getHeight()/2 + Window.getHeight()/3);
+				jack.say("Nope, nothing to see here !", g);
 				discoverRoom[0] = true;
-
 			}
 			else if(jack.getPosX() > Window.scale(150) && jack.getPosX() < Window.scale(250)){
-				String shelf = "Dis ma jack-Shelf! Full of Awesome!";
-				int x = g.getFontMetrics().stringWidth(shelf);
-				g.drawString(shelf, Window.getWidth()/2 - x/2, Window.getHeight()/2 + Window.getHeight()/3);
+				jack.say("Dis ma jack-Shelf! Full of Awesome!",g);
 				discoverRoom[1] = true;
 			}
 			else if(jack.getPosX() > Window.scale(400) && jack.getPosX() < Window.scale(600)){
-				String bed = "Bed's gathering dust... SLEEP IS FOR THE WEAK !";
-				int x = g.getFontMetrics().stringWidth(bed);
-				g.drawString(bed, Window.getWidth()/2 - x/2, Window.getHeight()/2 + Window.getHeight()/3);
+				jack.say("Bed's gathering dust... SLEEP IS FOR THE WEAK !",g);
 				discoverRoom[2] = true;
 			}
 			else if(jack.getPosX() > Window.scale(700) && jack.getPosX() < Window.scale(750)){
-				String work = "This is my Beautiful Bonzaï !";
-				int x = g.getFontMetrics().stringWidth(work);
-				g.drawString(work, Window.getWidth()/2 - x/2, Window.getHeight()/2 + Window.getHeight()/3);
+				jack.say("This is my Beautiful Bonzaï !",g);
 				discoverRoom[3] = true;
 			}
 			else if(jack.getPosX() > Window.scale(800)){
-				String work = "ooh boy ! work ! :D";
-				int x = g.getFontMetrics().stringWidth(work);
-				g.drawString(work, Window.getWidth()/2 - x/2, Window.getHeight()/2 + Window.getHeight()/3);
+				jack.say("ooh boy ! work ! :D",g);
 				discoverRoom[4] = true;
 			}
 
-			else if(once == false && PlayerData.daysPlayed == 0){
-				String work = "Hi, I'm Jack ! Welcome to mah Crib.";
-				int x = g.getFontMetrics().stringWidth(work);
-				g.drawString(work, Window.getWidth()/2 - x/2, Window.getHeight()/2 + Window.getHeight()/3);
-			}
-			else if(once == false && PlayerData.daysPlayed == 1){
-				String work = "Ah, A beautiful new day to do the Youtube !";
-				int x = g.getFontMetrics().stringWidth(work);
-				g.drawString(work, Window.getWidth()/2 - x/2, Window.getHeight()/2 + Window.getHeight()/3);
-			}
-			else if(once == false && PlayerData.daysPlayed == 2){
-				String work = "Where's the funky music coming from though ?";
-				int x = g.getFontMetrics().stringWidth(work);
-				g.drawString(work, Window.getWidth()/2 - x/2, Window.getHeight()/2 + Window.getHeight()/3);
-				Achievement.trigger("3daystreak");
+			else if(once == false){
+				if(PlayerData.daysPlayed == 0)
+					jack.say("Hi, I'm Jack ! Welcome to mah Crib.",g);
+				else if(once == false && PlayerData.daysPlayed == 1)
+					jack.say("Hey, I made some Boss Coin from yesterday's video !",g);
+				else if(once == false && PlayerData.daysPlayed == 2)
+					jack.say("Ah, A beautiful new day to do the Youtube !",g);
+				else if(once == false && PlayerData.daysPlayed == 3){
+					jack.say("Where's the funky music coming from though ?",g);
+					Achievement.trigger("3daystreak");
+				}
 			}
 		}
 
-		g.setColor(new Color(0f,0f,0f,alpha));
-		g.fillRect(0, 0, Window.getWidth(), Window.getHeight());
-
+		if(PlayerData.daysPlayed > 0){
+			g.setColor(Color.green.darker().darker());
+			String money = "Boss Coin :" + PlayerData.money;
+			g.drawString(money, 0, g.getFontMetrics().getHeight());
+		}
+		
 		for(Achievement a : Achievement.achievements.values())
 			a.draw(g);
+		
+		g.setColor(new Color(0f,0f,0f,alpha));
+		g.fillRect(0, 0, Window.getWidth(), Window.getHeight());
 	}
 
 	@Override
@@ -140,12 +125,9 @@ public class GameStateRoom extends GameState {
 			gsh.changeGameState(GameStateHandler.GAME_ROOM_VIDEO);
 		}
 
-		//g.drawRect(850, 180, 64, 110);
-
 		if(canGame && MouseHandler.clicked != null && MouseHandler.click){
 			double x = MouseHandler.clicked.getX();
 			double y = MouseHandler.clicked.getY();
-			System.out.println(x + " " + y);
 
 			if(x >= Window.scale(850) && x <= Window.scale(914) && y >= Window.scale(180) && y <= Window.scale(290)){
 				Music.stop("backgroundmusic");
@@ -161,7 +143,7 @@ public class GameStateRoom extends GameState {
 		for(boolean b : discoverRoom)
 			if(b == true)
 				i++;
-		
+
 		if(i == 5)
 			Achievement.trigger("room");
 	}

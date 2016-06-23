@@ -26,4 +26,19 @@ public class GameStateDrawHelper {
 				Window.getHeight()/2 - (int)sizeY/2, 
 				(int)sizeX, (int)sizeY, null);
 	}
+	
+	public static void drawLivingRoom(Graphics2D g){
+
+		g.setColor(Color.black);
+		g.fillRect(0, 0, Window.getWidth(), Window.getHeight());
+
+		scale = (float)Window.getWidth() / (float)Images.livingroom.getWidth();
+		sizeX = Images.livingroom.getWidth() * scale;
+		sizeY = Images.livingroom.getHeight() * scale;
+
+		g.drawImage(Images.livingroom, 
+				Window.getWidth()/2 - (int)sizeX/2,
+				Window.getHeight()/2 - (int)sizeY/2, 
+				(int)sizeX, (int)sizeY, null);
+	}
 }

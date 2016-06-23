@@ -1,4 +1,4 @@
-package iamjack.gamestates;
+package iamjack.gamestates.room;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -8,6 +8,7 @@ import iamjack.engine.GameState;
 import iamjack.engine.GameStateHandler;
 import iamjack.engine.Window;
 import iamjack.engine.resources.Music;
+import iamjack.gamestates.GameStateDrawHelper;
 import iamjack.player.Jack;
 import iamjack.player.PlayerData;
 import iamjack.player.achievements.Achievement;
@@ -57,27 +58,22 @@ public class GameStateRoomDone extends GameState {
 		g.setFont(text);
 
 		if(!jack.isAnimated()){
-			if(jack.getPosX() > Window.scale(400) && jack.getPosX() < Window.scale(600)){
-				String bed = "No time to sleep yet... I should go out and Exercise !";
-				int x = g.getFontMetrics().stringWidth(bed);
-				g.drawString(bed, Window.getWidth()/2 - x/2, Window.getHeight()/2 + Window.getHeight()/3);
-			}
-
-			else if(jack.getPosX() > Window.scale(750)){
-				String work = "Done for today !";
-				int x = g.getFontMetrics().stringWidth(work);
-				g.drawString(work, Window.getWidth()/2 - x/2, Window.getHeight()/2 + Window.getHeight()/3);
-			}
-
-			else if(jack.getPosX() > Window.scale(150) && jack.getPosX() < Window.scale(250)){
-				String shelf = "This is for looking at. Fan made, very Fancy stuff!";
-				int x = g.getFontMetrics().stringWidth(shelf);
-				g.drawString(shelf, Window.getWidth()/2 - x/2, Window.getHeight()/2 + Window.getHeight()/3);
-
-			}
+			if(jack.getPosX() > Window.scale(400) && jack.getPosX() < Window.scale(600))
+				jack.say("No time to sleep yet... I should go out and Exercise !", g);
+			else if(jack.getPosX() > Window.scale(750))
+				jack.say("Done for today !", g);
+			else if(jack.getPosX() > Window.scale(150) && jack.getPosX() < Window.scale(250))
+				jack.say("This is for looking at. Fan made, very Fancy stuff!", g);
 		}
+		
 		for(Achievement a : Achievement.achievements.values())
 			a.draw(g);
+		
+		if(PlayerData.daysPlayed > 0){
+			g.setColor(Color.green.darker().darker());
+			String money = "Boss Coin :" + PlayerData.money;
+			g.drawString(money, 0, g.getFontMetrics().getHeight());
+		}
 	}
 
 	@Override
@@ -86,8 +82,8 @@ public class GameStateRoomDone extends GameState {
 		jack.update();
 
 		if(jack.getPosX() < -10){
-			PlayerData.daysPlayed++;
-			gsh.changeGameState(GameStateHandler.GAME_ENDDAY);
+			Music.stop("everywhere");
+			gsh.changeGameState(GameStateHandler.GAME_LIVING);
 		}
 
 		for(Achievement a : Achievement.achievements.values())
@@ -130,7 +126,7 @@ public class GameStateRoomDone extends GameState {
 		case 4:	loud = "Very Loud,"; break;
 		case 5:	loud = "Way Too Loud,"; break;
 		case 6:	loud = "Obnoxiously Loud,"; break;
-		case 7:	loud = "EARTHSHAKING"; break;
+		case 7:	loud = "EARTHSHAKING,"; break;
 		case 8:	loud = "DEAFENING !! AAAH MY EARS !!! "; Achievement.trigger("loud"); break;
 		}
 

@@ -79,11 +79,11 @@ public class GameStateEndDay extends GameState{
 			if(b != null)
 				if(b.getBox().contains(MouseHandler.mouseX , MouseHandler.mouseY)){
 					if(MouseHandler.click){
+						Music.stop("everywhere");
 						if(b.getName().equals("Play Another Day")){
 							gsh.changeGameState(GameStateHandler.GAME_ROOM);
-							Music.stop("everywhere");
+							PlayerData.money += 20+PlayerData.fans/4 + ((2+PlayerData.fans/2)*PlayerData.daysPlayed);
 						}else{
-							Music.stop("everywhere");
 							gsh.changeGameState(GameStateHandler.GAME_QUIT);
 						}
 					}

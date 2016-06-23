@@ -11,6 +11,7 @@ public class AchievementLoader {
 		new Achievement("likeaboss", Images.sam, "Signature Yell");
 		new Achievement("credits", Images.scroll, "Watch Credits");
 		new Achievement("erryday", Images.yt, "Everyday Video");
+		new Achievement("seat", Images.seat, "Take A Seat");
 
 	}
 }
