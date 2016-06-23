@@ -44,7 +44,7 @@ public class Sounds {
 
 		loadMusic("/sounds/high_five.mp3", "highfive");
 
-		for(int i = 0; i < 18; i++)
+		for(int i = 0; i < 19; i++)
 			loadMusic("/sounds/reps/reps"+i+".mp3", "reps"+i);
 	}
 
