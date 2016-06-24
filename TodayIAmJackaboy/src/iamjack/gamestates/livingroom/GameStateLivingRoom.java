@@ -65,8 +65,12 @@ public class GameStateLivingRoom extends GameState {
 			Music.stop(Sounds.ROOMMUSIC);
 			gsh.changeGameState(GameStateHandler.GAME_ENDDAY);
 		}
-		
+
 		jack.update();
+
+		if(!jack.isAnimated())	
+			if(jack.getPosX() > Window.scale(310) && jack.getPosX() < Window.scale(320))
+				Achievement.trigger("seat");
 
 		if(alpha > 0)
 			alpha -= 0.0025f;
@@ -108,22 +112,16 @@ public class GameStateLivingRoom extends GameState {
 				Window.scale(160), 
 				(int)(64f*GameStateDrawHelper.scale), (int)(64f*GameStateDrawHelper.scale), null);
 
-		if(!jack.isAnimated()){
-			if(jack.getPosX() > Window.scale(600) && jack.getPosX() < Window.scale(750)){
+		if(!jack.isAnimated())
+			if(jack.getPosX() > Window.scale(600) && jack.getPosX() < Window.scale(750))
 				jack.say("This is a guy from Sonsor'Anarky. Drawn by me roommate !", g);
-			}
-
-			if(jack.getPosX() > 310 && jack.getPosX() < 320)
-				Achievement.trigger("seat");
-
-		}
 
 		if(PlayerData.daysPlayed > 0){
 			g.setColor(Color.green.darker().darker());
 			String money = "Boss Coin :" + PlayerData.money;
 			g.drawString(money, 0, g.getFontMetrics().getHeight());
 		}
-		
+
 		g.setColor(new Color(0f,0f,0f,alpha));
 		g.fillRect(0, 0, Window.getWidth(), Window.getHeight());
 

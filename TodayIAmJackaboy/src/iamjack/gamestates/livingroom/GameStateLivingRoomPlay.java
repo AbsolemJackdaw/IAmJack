@@ -42,8 +42,8 @@ public class GameStateLivingRoomPlay extends GameState {
 	public GameStateLivingRoomPlay(GameStateHandler gsh) {
 		this.gsh = gsh;
 
-		jack.setPosX(850);
-		jack.setPosY(256);
+		jack.setPosX(Window.scale(850));
+		jack.setPosY(Window.scale(256));
 
 		jack.setBenchPressing(true);
 		

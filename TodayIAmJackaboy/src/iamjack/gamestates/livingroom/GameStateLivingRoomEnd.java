@@ -20,19 +20,25 @@ public class GameStateLivingRoomEnd extends GameState {
 
 	public GameStateLivingRoomEnd(GameStateHandler gsh) {
 		this.gsh = gsh;
-		
+
 		jack.facingRight = false;
 		jack.setPosX(Window.scale(800));
+
+		Music.loop(Sounds.ROOMMUSIC);
 	}
 
 	@Override
 	public void update() {
 
 		jack.update();
-		
+
+		if(!jack.isAnimated())
+			if(jack.getPosX() > Window.scale(310) && jack.getPosX() < Window.scale(320))
+				Achievement.trigger("seat");
+
 		for(Achievement a : Achievement.achievements.values())
 			a.update();
-		
+
 		if(jack.getPosX() < -10){
 			PlayerData.daysPlayed++;
 			Music.stop(Sounds.ROOMMUSIC);
@@ -44,7 +50,7 @@ public class GameStateLivingRoomEnd extends GameState {
 	public void draw(Graphics2D g) {
 
 		GameStateDrawHelper.drawLivingRoom(g);
-		
+
 		jack.draw(g);
 
 		g.drawImage(Images.livingroomChair,
@@ -61,21 +67,15 @@ public class GameStateLivingRoomEnd extends GameState {
 				Window.scale(288),
 				(int)(64f*GameStateDrawHelper.scale),(int)(32f*GameStateDrawHelper.scale), null);
 
-		
+
 		if(!jack.isAnimated()){
-			if(jack.getPosX() > Window.scale(600) && jack.getPosX() < Window.scale(750)){
+			if(jack.getPosX() > Window.scale(600) && jack.getPosX() < Window.scale(750))
 				jack.say("This is a guy from Sonsor'Anarky. Drawn by me roommate !", g);
-			}
-			
-			if(jack.getPosX() > Window.scale(750)){
+
+			if(jack.getPosX() > Window.scale(750))
 				jack.say("Awesome workout was awesome !", g);
-			}
-			
-			if(jack.getPosX() > 310 && jack.getPosX() < 320)
-				Achievement.trigger("seat");
-			
 		}
-		
+
 		g.drawImage(Images.door, 
 				0,
 				Window.scale(160), 
@@ -86,7 +86,7 @@ public class GameStateLivingRoomEnd extends GameState {
 			String money = "Boss Coin :" + PlayerData.money;
 			g.drawString(money, 0, g.getFontMetrics().getHeight());
 		}
-		
+
 		for(Achievement a : Achievement.achievements.values())
 			a.draw(g);
 	}

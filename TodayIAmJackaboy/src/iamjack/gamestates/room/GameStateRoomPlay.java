@@ -3,6 +3,7 @@ package iamjack.gamestates.room;
 import java.awt.AlphaComposite;
 import java.awt.Graphics2D;
 
+import iamjack.buttons.ButtonGamePlay;
 import iamjack.engine.GameState;
 import iamjack.engine.GameStateHandler;
 import iamjack.engine.Window;
@@ -14,7 +15,6 @@ import iamjack.player.PlayerData;
 import iamjack.player.achievements.Achievement;
 import iamjack.resourceManager.Images;
 import iamjack.resourceManager.Sounds;
-import iamjack.video.ButtonGamePlay;
 
 public class GameStateRoomPlay extends GameState {
 
@@ -106,7 +106,7 @@ public class GameStateRoomPlay extends GameState {
 					b.draw(g);
 				}
 			}
-		
+
 		for(Achievement a : Achievement.achievements.values())
 			a.draw(g);
 	}
@@ -118,19 +118,14 @@ public class GameStateRoomPlay extends GameState {
 
 		if(speakTimer <= 0 && stage < buttons.length)
 			for(ButtonGamePlay b : buttons[stage]){
-				if(b != null)
-					if(b.getBox().contains(MouseHandler.mouseX , MouseHandler.mouseY)){
-						if(MouseHandler.click){
-							b.click();
-							buttonClicked = true;
-							stage++;
-							if(!jack.isPlaying())
-								jack.setPlaying(true);
-						}
-						b.isLit(true);
-					}else{
-						b.isLit(false);
-					}
+				if(MouseHandler.click && b.isLit()){
+					b.click(gsh);
+					buttonClicked = true;
+					stage++;
+					//sets jack mashing his keyboard after first button is clicked
+					if(!jack.isPlaying())
+						jack.setPlaying(true);
+				}
 			}	
 
 		if(buttonClicked){
@@ -148,12 +143,12 @@ public class GameStateRoomPlay extends GameState {
 			speakTimer --;
 		else
 			jack.setTalking(false);
-		
+
 		if(stage ==	choices.length && speakTimer <= 120d)
 			Music.stop(Sounds.METAL);
 		if(stage >=	choices.length && speakTimer <= 0d)
 			gsh.changeGameState(GameStateHandler.GAME_ROOM_VIDEO_DONE);
-		
+
 		for(Achievement a : Achievement.achievements.values())
 			a.update();
 	}

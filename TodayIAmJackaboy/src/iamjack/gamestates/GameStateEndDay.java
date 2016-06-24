@@ -4,25 +4,24 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 
+import iamjack.buttons.Button;
+import iamjack.buttons.ButtonDay;
 import iamjack.engine.GameState;
 import iamjack.engine.GameStateHandler;
 import iamjack.engine.Window;
 import iamjack.engine.input.MouseHandler;
-import iamjack.engine.resources.Music;
 import iamjack.player.PlayerData;
-import iamjack.resourceManager.Sounds;
-import iamjack.video.Button;
 
 public class GameStateEndDay extends GameState{
 
 	private float alpha = 0f;
 
-	private Button button1 = new Button(
+	private ButtonDay button1 = new ButtonDay(
 			"Play Another Day", 
 			Window.getWidth()/2-Window.scale(64),
 			Window.scale(300));
 
-	private Button button2 = new Button(
+	private ButtonDay button2 = new ButtonDay(
 			"End Gaming", 
 			Window.getWidth()/2-Window.scale(64),
 			Window.scale(375));
@@ -34,7 +33,7 @@ public class GameStateEndDay extends GameState{
 
 		PlayerData.videoOfTheDay.clear();
 		PlayerData.currentlySaying="";
-		
+
 		//2 videos worth of sound
 		if(PlayerData.soundsPlayed.size() > 18)
 			PlayerData.soundsPlayed.clear();
@@ -76,22 +75,12 @@ public class GameStateEndDay extends GameState{
 
 		for(int i = 0; i < 2 ; i++){
 			Button b = i == 0 ? button1 : button2;
+			b.update();
 
-			if(b != null)
-				if(b.getBox().contains(MouseHandler.mouseX , MouseHandler.mouseY)){
-					if(MouseHandler.click){
-						Music.stop(Sounds.EVERYWHERE);
-						if(b.getName().equals("Play Another Day")){
-							gsh.changeGameState(GameStateHandler.GAME_ROOM);
-							PlayerData.money += 20+PlayerData.fans/4 + ((2+PlayerData.fans/2)*PlayerData.daysPlayed);
-						}else{
-							gsh.changeGameState(GameStateHandler.GAME_QUIT);
-						}
-					}
-					b.isLit(true);
-				}else{
-					b.isLit(false);
-				}
+			if(b.getBox().contains(MouseHandler.mouseX , MouseHandler.mouseY)){
+				if(MouseHandler.click && b.isLit())
+					b.click(gsh);
+			}
 		}	
 	}
 }

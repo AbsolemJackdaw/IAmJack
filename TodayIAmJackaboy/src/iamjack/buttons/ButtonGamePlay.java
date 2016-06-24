@@ -1,5 +1,6 @@
-package iamjack.video;
+package iamjack.buttons;
 
+import iamjack.engine.GameStateHandler;
 import iamjack.player.PlayerData;
 import iamjack.resourceManager.SoundPool;
 
@@ -12,7 +13,7 @@ public class ButtonGamePlay extends Button {
 	}
 	
 	@Override
-	public void click(){
+	public void click(GameStateHandler gsh){
 		if(!name.equals("Play Game")){
 			PlayerData.videoOfTheDay.add(getVideonameFromString(name));
 			playSoundFromName(name);

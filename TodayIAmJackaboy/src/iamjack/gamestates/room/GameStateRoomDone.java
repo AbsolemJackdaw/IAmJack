@@ -83,8 +83,8 @@ public class GameStateRoomDone extends GameState {
 		jack.update();
 
 		if(jack.getPosX() < -10){
-			Music.stop(Sounds.EVERYWHERE);
-			gsh.changeGameState(GameStateHandler.GAME_LIVING);
+//			Music.stop(Sounds.EVERYWHERE);
+			gsh.changeGameState(GameStateHandler.GAME_WHERETO);
 		}
 
 		for(Achievement a : Achievement.achievements.values())

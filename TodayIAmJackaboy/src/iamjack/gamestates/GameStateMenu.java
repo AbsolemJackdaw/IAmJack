@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 
+import iamjack.buttons.ButtonMenu;
 import iamjack.engine.GameState;
 import iamjack.engine.GameStateHandler;
 import iamjack.engine.Window;
@@ -11,7 +12,6 @@ import iamjack.engine.input.MouseHandler;
 import iamjack.engine.resources.Music;
 import iamjack.player.PlayerData;
 import iamjack.resourceManager.Sounds;
-import iamjack.video.Button;
 
 public class GameStateMenu extends GameState {
 
@@ -19,17 +19,17 @@ public class GameStateMenu extends GameState {
 	private String titleHead = "Today,";
 	private String title = "I Am Jackaboy";
 
-	private Button[] buttons;
+	private ButtonMenu[] buttons;
 
 	public GameStateMenu(GameStateHandler gsh) {
 		this.gsh = gsh;
 
 		titleFont = new Font("SquareFont", Font.PLAIN, Window.scale(100));
 
-		buttons = new Button[]{
-				new Button("Start", Window.getWidth()/2 - Window.scale(64), Window.getHeight()/2),
-				new Button("Achievements", Window.getWidth()/2- Window.scale(64), Window.getHeight()/2+Window.scale(64)),
-				new Button("Exit", Window.getWidth()/2- Window.scale(64), Window.getHeight()/2+Window.scale(64*2)),
+		buttons = new ButtonMenu[]{
+				new ButtonMenu("Start", Window.getWidth()/2 , Window.getHeight()/2),
+				new ButtonMenu("Achievements", Window.getWidth()/2, Window.getHeight()/2+Window.scale(64)),
+				new ButtonMenu("Exit", Window.getWidth()/2, Window.getHeight()/2+Window.scale(64*2)),
 		};
 
 		Music.play(Sounds.HIGH5);
@@ -56,7 +56,7 @@ public class GameStateMenu extends GameState {
 		g.drawString(titleHead, Window.getWidth()/2 - (sizeXtop/2), Window.getHeight()/2 - (sizeY/2)*2 );
 		g.drawString(title, Window.getWidth()/2 - (sizeX/2), Window.getHeight()/2 + (sizeY/2)- (sizeY/2));
 
-		for(Button b : buttons)
+		for(ButtonMenu b : buttons)
 			b.draw(g);
 
 	}
@@ -64,22 +64,10 @@ public class GameStateMenu extends GameState {
 	@Override
 	public void update() {
 
-		for(int i = 0; i < buttons.length ; i++){
-			Button b = buttons[i];
-
-			if(b != null)
-				if(b.getBox().contains(MouseHandler.mouseX , MouseHandler.mouseY)){
-					if(MouseHandler.click)
-						if(b.getName().equals("Start")){
-							Music.stop(Sounds.QUEST);
-							gsh.changeGameState(GameStateHandler.GAME_ROOM);
-						}else if(b.getName().equals("Achievements"))
-							gsh.changeGameState(GameStateHandler.ACHIEVS);
-						else if(b.getName().equals("Exit"))
-							System.exit(0);
-					b.isLit(true);
-				}else
-					b.isLit(false);
+		for(ButtonMenu b : buttons){
+			b.update();
+			if(MouseHandler.click && b.isLit())
+				b.click(gsh);
 		}	
 	}
 }

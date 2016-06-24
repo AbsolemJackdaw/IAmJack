@@ -9,6 +9,7 @@ import iamjack.gamestates.GameStateEndDay;
 import iamjack.gamestates.GameStateLoading;
 import iamjack.gamestates.GameStateMenu;
 import iamjack.gamestates.GameStateQuit;
+import iamjack.gamestates.GameStateWhatsNext;
 import iamjack.gamestates.livingroom.GameStateLivingRoom;
 import iamjack.gamestates.livingroom.GameStateLivingRoomEnd;
 import iamjack.gamestates.livingroom.GameStateLivingRoomPlay;
@@ -31,6 +32,7 @@ public class GameStateHandler {
 	public static final int GAME_LIVING = 8;
 	public static final int GAME_LIVING_BENCHGAME = 9;
 	public static final int GAME_LIVING_END = 10;
+	public static final int GAME_WHERETO = 11;
 
 	public static final GameState[] states = new GameState[20];
 
@@ -98,6 +100,9 @@ public class GameStateHandler {
 			break;
 		case GAME_LIVING_END:
 			states[state] = new GameStateLivingRoomEnd(this);
+			break;
+		case GAME_WHERETO:
+			states[state] = new GameStateWhatsNext(this);
 			break;
 		}
 	}

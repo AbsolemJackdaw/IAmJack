@@ -121,9 +121,9 @@ public class GamePanel extends JFXPanel implements Runnable, KeyListener{
 		int maxSkippedFrames = 5;
 		double targetUpdates = 1.0/60.0;
 
-		int updates = 0;
-		int frames = 0;
-		long timer = System.currentTimeMillis();
+//		int updates = 0;
+//		int frames = 0;
+//		long timer = System.currentTimeMillis();
 
 		while(running)
 		{
@@ -138,14 +138,14 @@ public class GamePanel extends JFXPanel implements Runnable, KeyListener{
 				// assign the time for the next update
 				lastTime += targetUpdates;
 				update();
-				updates++;
+//				updates++;
 
 				if((currTime < lastTime) || (skippedFrames > maxSkippedFrames)){
 
 					draw();
 					drawToScreen();
 					skippedFrames = 1;
-					frames++;
+//					frames++;
 				}
 				else
 					skippedFrames++;
@@ -164,13 +164,13 @@ public class GamePanel extends JFXPanel implements Runnable, KeyListener{
 				}
 			}
 
-			if(System.currentTimeMillis() - timer > 1000) {
-				timer += 1000;
-//				System.out.println(updates + " Ticks, Fps " + frames);
-				updates = 0;
-				frames = 0;
-
-			}
+//			if(System.currentTimeMillis() - timer > 1000) {
+//				timer += 1000;
+////				System.out.println(updates + " Ticks, Fps " + frames);
+//				updates = 0;
+//				frames = 0;
+//
+//			}
 		}
 	}
 }
