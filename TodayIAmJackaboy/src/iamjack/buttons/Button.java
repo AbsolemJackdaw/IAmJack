@@ -29,7 +29,7 @@ public class Button {
 
 		text = new Font("SquareFont", Font.PLAIN, Window.scale(35));
 
-		box = new Rectangle(x, y+Window.scale(64/2), Window.scale(128), Window.scale(64));
+		box = new Rectangle((int)posX - Window.scale(64), (int)posY+Window.scale(64/2), Window.scale(128), Window.scale(64));
 	}
 
 	public void draw(Graphics2D g){
@@ -45,6 +45,8 @@ public class Button {
 		g.drawString(name, 
 				((int)posX - Window.scale(64)) - w/2 + Window.scale(64),
 				(int)posY + h + Window.scale(34) );
+
+		g.draw(box);
 
 	}
 

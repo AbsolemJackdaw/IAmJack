@@ -11,6 +11,7 @@ import iamjack.engine.resources.Music;
 import iamjack.gamestates.GameStateDrawHelper;
 import iamjack.player.Jack;
 import iamjack.player.PlayerData;
+import iamjack.player.achievements.Achievement;
 import iamjack.resourceManager.Images;
 import iamjack.resourceManager.Sounds;
 
@@ -84,6 +85,9 @@ public class GameStateLivingRoomPlay extends GameState {
 
 		if(speakTimer > 0)
 			speakTimer --;
+		
+		for(Achievement a : Achievement.achievements.values())
+			a.update();
 	}
 
 	@Override
@@ -99,5 +103,8 @@ public class GameStateLivingRoomPlay extends GameState {
 
 		if(!PlayerData.hasWorkedOut && index < info.length-1)
 			jack.say(info[index], g);
+		
+		for(Achievement a : Achievement.achievements.values())
+			a.draw(g);
 	}
 }

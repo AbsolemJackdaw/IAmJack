@@ -1,5 +1,6 @@
 package iamjack.gamestates;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 
 import iamjack.buttons.ButtonPick;
@@ -16,9 +17,9 @@ public class GameStateWhatsNext extends GameState {
 		this.gsh = gsh;
 
 		buttons = new ButtonPick[]{
-				new ButtonPick("Exercise", Window.getWidth()/2, Window.getHeight()/2),
-				new ButtonPick("Shop", Window.getWidth()/2, Window.getHeight()/2),
-				new ButtonPick("End Day", Window.getWidth()/2, Window.getHeight()/2),
+				new ButtonPick("Exercise", Window.getWidth()/2, Window.getHeight()/2 - Window.scale(68)),
+//				new ButtonPick("Shop", Window.getWidth()/2, Window.getHeight()/2 - Window.scale(68)),
+				new ButtonPick("End Day", Window.getWidth()/2, Window.getHeight()/2) ,
 		};
 	}
 
@@ -34,6 +35,9 @@ public class GameStateWhatsNext extends GameState {
 	@Override
 	public void draw(Graphics2D g) {
 
+		g.setColor(Color.black);
+		g.fillRect(0, 0, Window.getWidth(), Window.getHeight());
+		
 		for(ButtonPick b : buttons)
 			b.draw(g);
 	}

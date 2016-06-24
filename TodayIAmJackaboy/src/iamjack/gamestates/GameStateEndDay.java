@@ -17,13 +17,13 @@ public class GameStateEndDay extends GameState{
 	private float alpha = 0f;
 
 	private ButtonDay button1 = new ButtonDay(
-			"Play Another Day", 
-			Window.getWidth()/2-Window.scale(64),
+			"Next Day", 
+			Window.getWidth()/2,
 			Window.scale(300));
 
 	private ButtonDay button2 = new ButtonDay(
 			"End Gaming", 
-			Window.getWidth()/2-Window.scale(64),
+			Window.getWidth()/2,
 			Window.scale(375));
 
 	private Font text;

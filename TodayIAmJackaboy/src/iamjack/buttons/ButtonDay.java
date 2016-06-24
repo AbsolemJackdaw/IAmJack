@@ -16,7 +16,7 @@ public class ButtonDay extends Button {
 	public void click(GameStateHandler gsh) {
 		Music.stop(Sounds.EVERYWHERE);
 
-		if(getName().equals("Play Another Day")){
+		if(getName().equals("Next Day")){
 			gsh.changeGameState(GameStateHandler.GAME_ROOM);
 			PlayerData.money += 20+PlayerData.fans/4 + ((2+PlayerData.fans/2)*PlayerData.daysPlayed);
 		}else

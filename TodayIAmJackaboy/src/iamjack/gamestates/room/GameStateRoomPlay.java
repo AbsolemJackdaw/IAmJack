@@ -118,13 +118,16 @@ public class GameStateRoomPlay extends GameState {
 
 		if(speakTimer <= 0 && stage < buttons.length)
 			for(ButtonGamePlay b : buttons[stage]){
-				if(MouseHandler.click && b.isLit()){
-					b.click(gsh);
-					buttonClicked = true;
-					stage++;
-					//sets jack mashing his keyboard after first button is clicked
-					if(!jack.isPlaying())
-						jack.setPlaying(true);
+				if(b!=null){
+					b.update();
+					if(MouseHandler.click && b.isLit()){
+						b.click(gsh);
+						buttonClicked = true;
+						stage++;
+						//sets jack mashing his keyboard after first button is clicked
+						if(!jack.isPlaying())
+							jack.setPlaying(true);
+					}
 				}
 			}	
 

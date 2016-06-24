@@ -39,7 +39,7 @@ public class Sounds {
 		for(int i = 0; i < 14; i++)
 			loadMusic("/sounds/energy/energy"+i+".mp3", ENERGY+i);
 
-		for(int i = 0; i < 14; i++)
+		for(int i = 0; i < 15; i++)
 			loadMusic("/sounds/funny/funny"+i+".mp3", FUNNY+i);
 
 		for(int i = 0; i < 6; i++)
