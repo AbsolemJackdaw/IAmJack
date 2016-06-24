@@ -10,6 +10,7 @@ import iamjack.engine.Window;
 import iamjack.engine.input.MouseHandler;
 import iamjack.engine.resources.Music;
 import iamjack.player.PlayerData;
+import iamjack.resourceManager.Sounds;
 import iamjack.video.Button;
 
 public class GameStateEndDay extends GameState{
@@ -79,7 +80,7 @@ public class GameStateEndDay extends GameState{
 			if(b != null)
 				if(b.getBox().contains(MouseHandler.mouseX , MouseHandler.mouseY)){
 					if(MouseHandler.click){
-						Music.stop("everywhere");
+						Music.stop(Sounds.EVERYWHERE);
 						if(b.getName().equals("Play Another Day")){
 							gsh.changeGameState(GameStateHandler.GAME_ROOM);
 							PlayerData.money += 20+PlayerData.fans/4 + ((2+PlayerData.fans/2)*PlayerData.daysPlayed);

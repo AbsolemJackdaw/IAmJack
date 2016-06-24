@@ -14,6 +14,7 @@ import iamjack.player.Jack;
 import iamjack.player.PlayerData;
 import iamjack.player.achievements.Achievement;
 import iamjack.resourceManager.Images;
+import iamjack.resourceManager.Sounds;
 
 public class GameStateRoom extends GameState {
 
@@ -34,7 +35,7 @@ public class GameStateRoom extends GameState {
 	public GameStateRoom(GameStateHandler gsh) {
 		this.gsh = gsh;
 
-		Music.loop("backgroundmusic");
+		Music.loop(Sounds.ROOMMUSIC);
 	}
 
 	@Override
@@ -121,7 +122,7 @@ public class GameStateRoom extends GameState {
 			canGame = false;
 
 		if(canGame && KeyHandler.isPressed(KeyHandler.ENTER)){
-			Music.stop("backgroundmusic");
+			Music.stop(Sounds.ROOMMUSIC);
 			gsh.changeGameState(GameStateHandler.GAME_ROOM_VIDEO);
 		}
 
@@ -130,7 +131,7 @@ public class GameStateRoom extends GameState {
 			double y = MouseHandler.clicked.getY();
 
 			if(x >= Window.scale(850) && x <= Window.scale(914) && y >= Window.scale(180) && y <= Window.scale(290)){
-				Music.stop("backgroundmusic");
+				Music.stop(Sounds.ROOMMUSIC);
 				gsh.changeGameState(GameStateHandler.GAME_ROOM_VIDEO);
 			}
 		}

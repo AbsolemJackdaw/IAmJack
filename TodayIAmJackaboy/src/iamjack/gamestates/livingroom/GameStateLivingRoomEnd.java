@@ -12,6 +12,7 @@ import iamjack.player.Jack;
 import iamjack.player.PlayerData;
 import iamjack.player.achievements.Achievement;
 import iamjack.resourceManager.Images;
+import iamjack.resourceManager.Sounds;
 
 public class GameStateLivingRoomEnd extends GameState {
 
@@ -34,7 +35,7 @@ public class GameStateLivingRoomEnd extends GameState {
 		
 		if(jack.getPosX() < -10){
 			PlayerData.daysPlayed++;
-			Music.stop("backgroundmusic");
+			Music.stop(Sounds.ROOMMUSIC);
 			gsh.changeGameState(GameStateHandler.GAME_ENDDAY);
 		}
 	}

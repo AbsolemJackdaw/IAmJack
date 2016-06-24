@@ -46,14 +46,17 @@ public class GameStateLivingRoomPlay extends GameState {
 		jack.setPosY(256);
 
 		jack.setBenchPressing(true);
+		
+		Music.loop(Sounds.METALREPS);
 	}
 
 	@Override
 	public void update() {
 
-		if(jack.repsDone() >= 5 && jack.canPress())
+		if(jack.repsDone() >= 5 && jack.canPress()){
+			Music.stop(Sounds.METALREPS);
 			gsh.changeGameState(GameStateHandler.GAME_LIVING_END);
-
+		}
 		if(MouseHandler.clicked != null && MouseHandler.click){
 			if(jack.canPress()){
 				jack.pressArms();

@@ -33,9 +33,9 @@ public class GameStateMenu extends GameState {
 		};
 
 		Music.play(Sounds.HIGH5);
-		
+
 		if(!PlayerData.dontDoubleLoop){
-			Music.loop("quest");
+			Music.loop(Sounds.QUEST);
 			PlayerData.dontDoubleLoop = false;
 		}
 	}
@@ -71,7 +71,7 @@ public class GameStateMenu extends GameState {
 				if(b.getBox().contains(MouseHandler.mouseX , MouseHandler.mouseY)){
 					if(MouseHandler.click)
 						if(b.getName().equals("Start")){
-							Music.stop("quest");
+							Music.stop(Sounds.QUEST);
 							gsh.changeGameState(GameStateHandler.GAME_ROOM);
 						}else if(b.getName().equals("Achievements"))
 							gsh.changeGameState(GameStateHandler.ACHIEVS);

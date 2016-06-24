@@ -15,6 +15,8 @@ public class Achievement {
 	protected final String name;
 	protected final BufferedImage img;
 	protected final String text;
+	
+	protected String aid;
 
 	private int offset = 0;
 	private boolean isTriggerd = false;
@@ -83,6 +85,12 @@ public class Achievement {
 		g.drawString(text, x + Window.scale(75), y+Window.scale(32)+g.getFontMetrics().getHeight()/2);
 	}
 	
+	public void drawAid(Graphics2D g, int x, int y){
+		g.setColor(Color.green.brighter());
+		g.setFont(new Font("SquareFont", Font.PLAIN, Window.scale(25)));
+		g.drawString(getAid(), x, y);
+	}
+	
 	public void update(){
 		if(isTriggerd){
 			offset--;
@@ -92,5 +100,14 @@ public class Achievement {
 			if(offset < Window.getHeight())
 				offset++;
 		}
+	}
+	
+	public Achievement setAid(String s){
+		aid = s;
+		return this;
+	}
+	
+	public String getAid(){
+		return aid;
 	}
 }

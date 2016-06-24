@@ -150,7 +150,7 @@ public class GameStateRoomPlay extends GameState {
 			jack.setTalking(false);
 		
 		if(stage ==	choices.length && speakTimer <= 120d)
-			Music.stop("metal");
+			Music.stop(Sounds.METAL);
 		if(stage >=	choices.length && speakTimer <= 0d)
 			gsh.changeGameState(GameStateHandler.GAME_ROOM_VIDEO_DONE);
 		

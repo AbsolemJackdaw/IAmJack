@@ -41,23 +41,23 @@ public class GamePanel extends JFXPanel implements Runnable, KeyListener{
 		setFocusable(true);
 		requestFocus();
 
-		Cursor blankCursor = Toolkit.getDefaultToolkit().createCustomCursor(
+		Cursor samCursor = Toolkit.getDefaultToolkit().createCustomCursor(
 				ImageLoader.loadSprite("/img/sam.png"), new Point(0, 0), "sam cursor");
-
-		// Set the blank cursor to the JFrame.
-		setCursor(blankCursor);
+		
+		setCursor(samCursor);
 
 		System.out.println("GamePanel : Initializing game");
-
 	}
 
 	@Override
 	public void addNotify() {
 		super.addNotify();
 		if (thread == null) {
+			MouseHandler mh = new MouseHandler();
 			thread = new Thread(this);
 			addKeyListener(this);
-			addMouseListener(new MouseHandler());
+			addMouseListener(mh);
+			addMouseWheelListener(mh);
 			thread.start();
 		}
 	}
@@ -166,7 +166,7 @@ public class GamePanel extends JFXPanel implements Runnable, KeyListener{
 
 			if(System.currentTimeMillis() - timer > 1000) {
 				timer += 1000;
-				System.out.println(updates + " Ticks, Fps " + frames);
+//				System.out.println(updates + " Ticks, Fps " + frames);
 				updates = 0;
 				frames = 0;
 

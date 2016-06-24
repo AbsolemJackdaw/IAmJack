@@ -14,6 +14,7 @@ import iamjack.player.Jack;
 import iamjack.player.PlayerData;
 import iamjack.player.achievements.Achievement;
 import iamjack.resourceManager.Images;
+import iamjack.resourceManager.Sounds;
 
 public class GameStateLivingRoom extends GameState {
 
@@ -31,7 +32,7 @@ public class GameStateLivingRoom extends GameState {
 
 		alpha = 1f;
 
-		Music.loop("backgroundmusic");
+		Music.loop(Sounds.ROOMMUSIC);
 	}
 
 	@Override
@@ -55,12 +56,13 @@ public class GameStateLivingRoom extends GameState {
 
 			if(x >= Window.scale(850) && x <= Window.scale(914) && y >= Window.scale(180) && y <= Window.scale(290)){
 				gsh.changeGameState(GameStateHandler.GAME_LIVING_BENCHGAME);
+				Music.stop(Sounds.ROOMMUSIC);
 			}
 		}
 
 		if(jack.getPosX() < -10){
 			PlayerData.daysPlayed++;
-			Music.stop("backgroundmusic");
+			Music.stop(Sounds.ROOMMUSIC);
 			gsh.changeGameState(GameStateHandler.GAME_ENDDAY);
 		}
 		

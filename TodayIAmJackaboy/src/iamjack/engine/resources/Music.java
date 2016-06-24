@@ -32,7 +32,6 @@ public class Music {
 	public static void init() {
 		clips = new HashMap<String, Clip>();
 		gap = 0;
-
 	}
 	
 	public static Clip getClip(String s)
