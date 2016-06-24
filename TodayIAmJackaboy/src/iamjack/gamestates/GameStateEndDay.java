@@ -35,7 +35,7 @@ public class GameStateEndDay extends GameState{
 		PlayerData.currentlySaying="";
 
 		//2 videos worth of sound
-		if(PlayerData.soundsPlayed.size() > 18)
+		if(PlayerData.soundsPlayed.size() > 25)
 			PlayerData.soundsPlayed.clear();
 
 		text = new Font("SquareFont", Font.PLAIN, Window.scale(100));

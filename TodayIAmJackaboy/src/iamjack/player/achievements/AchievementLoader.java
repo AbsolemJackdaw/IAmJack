@@ -12,7 +12,6 @@ public class AchievementLoader {
 		new Achievement("credits", Images.scroll, "Watch Credits").setAid("It's the who, how and why of the game !");
 		new Achievement("erryday", Images.yt, "Everyday Video").setAid("yell, get energetic, laugh and be yourself in a video");
 		new Achievement("seat", Images.seat, "Take A Seat").setAid("try to sit down in one of the seats in the livingroom");
-		new Achievement("happy", Images.samSmile, "Smile !").setAid("Lauch and Smile a lot in one of your videos !");
-
+		new Achievement("happy", Images.samSmile, "Smile !").setAid("Laugh and Smile a lot in one of your videos !");
 	}
 }

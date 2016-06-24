@@ -44,8 +44,8 @@ public class MouseHandler extends MouseAdapter implements MouseWheelListener {
 	@Override
 	public void mouseWheelMoved(MouseWheelEvent e) {
 		if(e.getWheelRotation() > 0)
-			wheelY +=10;
+			wheelY -=10;
 		else if(e.getWheelRotation() < 0)
-			wheelY-=10;
+			wheelY+=10;
 	}
 }

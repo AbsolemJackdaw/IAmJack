@@ -7,8 +7,10 @@ import java.awt.image.BufferedImage;
 import java.util.HashMap;
 
 import iamjack.engine.Window;
+import iamjack.engine.save.DataTag;
 import iamjack.player.PlayerData;
 import iamjack.resourceManager.Images;
+import iamjack.resourceManager.SaveManager;
 
 public class Achievement {
 
@@ -45,6 +47,7 @@ public class Achievement {
 				PlayerData.achievements.add(a);
 				a.setTriggerd(true);
 				System.out.println("trigger");
+				SaveManager.writePlayerData();
 			}
 	}
 
@@ -108,5 +111,13 @@ public class Achievement {
 	
 	public String getAid(){
 		return aid;
+	}
+	
+	public void writeData(DataTag tag){
+		tag.writeString("name", name);
+	}
+	
+	public static Achievement readData(DataTag tag){
+		return achievements.get(tag.readString("name"));
 	}
 }

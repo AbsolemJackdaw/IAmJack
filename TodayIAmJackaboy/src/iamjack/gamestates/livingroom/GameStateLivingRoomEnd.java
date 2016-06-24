@@ -40,7 +40,6 @@ public class GameStateLivingRoomEnd extends GameState {
 			a.update();
 
 		if(jack.getPosX() < -10){
-			PlayerData.daysPlayed++;
 			Music.stop(Sounds.ROOMMUSIC);
 			gsh.changeGameState(GameStateHandler.GAME_ENDDAY);
 		}

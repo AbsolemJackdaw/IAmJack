@@ -100,7 +100,6 @@ public class GameStateQuit extends GameState {
 		offset -= 0.8D;
 		
 		if(offset < -Window.scale(1500) || KeyHandler.isPressed(KeyHandler.ENTER)){
-			PlayerData.daysPlayed = 0;
 			PlayerData.soundsPlayed.clear();
 			gsh.changeGameState(GameStateHandler.MENU);
 		}

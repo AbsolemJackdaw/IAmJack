@@ -67,7 +67,6 @@ public class GameStateLivingRoom extends GameState {
 		}
 
 		if(jack.getPosX() < -10){
-			PlayerData.daysPlayed++;
 			Music.stop(Sounds.ROOMMUSIC);
 			gsh.changeGameState(GameStateHandler.GAME_ENDDAY);
 		}
@@ -121,7 +120,7 @@ public class GameStateLivingRoom extends GameState {
 		if(!jack.isAnimated()){
 			if(jack.getPosX() > Window.scale(600) && jack.getPosX() < Window.scale(750))
 				jack.say("This is a guy from Sonsor'Anarky. Drawn by me roommate !", g);
-			if(once && PlayerData.daysPlayed < 1)
+			if(!once && PlayerData.daysPlayed < 1 && jack.getPosX() < Window.scale(75) )
 				jack.say("Oh boy, workout !", g);
 		}
 		

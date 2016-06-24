@@ -31,7 +31,7 @@ public class GameStateAchievements extends GameState {
 			Rectangle r = new Rectangle(
 					Window.scale(32), 
 					(Window.scale(64) + Window.scale(70)*dex)+ MouseHandler.wheelY,
-					Window.scale(64), Window.scale(64));
+					Window.scale(256), Window.scale(64));
 			
 			if(r.contains(p))
 				a.drawAid(g, Window.scale(107), (Window.scale(90) + Window.scale(70)*dex) + MouseHandler.wheelY);

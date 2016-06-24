@@ -13,6 +13,7 @@ import iamjack.engine.Window;
 import iamjack.player.achievements.AchievementLoader;
 import iamjack.resourceManager.Fonts;
 import iamjack.resourceManager.Images;
+import iamjack.resourceManager.SaveManager;
 import iamjack.resourceManager.Sounds;
 
 public class GameStateLoading extends GameState {
@@ -138,6 +139,8 @@ public class GameStateLoading extends GameState {
 					Images.loadImages();
 					Sounds.loadSounds();
 					AchievementLoader.load();
+					SaveManager.readPlayerData();
+					
 				} catch (Exception e) {
 					System.out.println("error occured");
 					e.printStackTrace();
