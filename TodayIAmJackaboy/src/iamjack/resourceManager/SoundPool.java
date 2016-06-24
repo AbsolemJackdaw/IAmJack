@@ -11,39 +11,39 @@ public class SoundPool {
 	private static Random rand = new Random();
 
 	public static void playEnergyVoice(){
-			Music.play(findNewVoice("energy", 14));
+			Music.play(findNewVoice(Sounds.ENERGY, 14));
 	}
 
 	public static void playFunnyVoice(){
-		Music.play(findNewVoice("funny", 14));
+		Music.play(findNewVoice(Sounds.FUNNY, 14));
 	}
 
 	public static void playLaughVoice(){
-		Music.play(findNewVoice("laugh", 6));
+		Music.play(findNewVoice(Sounds.LAUGH, 6));
 	}
 
 	public static void playRageVoice(){
-		Music.play(findNewVoice("rage", 15));
+		Music.play(findNewVoice(Sounds.RAGE, 15));
 	}
 
 	public static void playScaredVoice(){
-		Music.play(findNewVoice("scared", 8));
+		Music.play(findNewVoice(Sounds.SCARED, 8));
 	}
 
 	public static void playTradeMarkVoice(){
-		Music.play(findNewVoice("tm", 19));
+		Music.play(findNewVoice(Sounds.TM, 19));
 	}
 
 	public static void playYellVoice(){
-		Music.play(findNewVoice("yell", 14));
+		Music.play(findNewVoice(Sounds.YELL, 14));
 	}
 
 	public static void playIntroVoice(){
-		Music.play(findNewVoice("intro", 6));
+		Music.play(findNewVoice(Sounds.INTRO, 6));
 	}
 	
 	public static void playOutroVoice(){
-		Music.play(findNewVoice("outro", 5));
+		Music.play(findNewVoice(Sounds.OUTRO, 5));
 	}
 	
 	private static String findNewVoice(String type, int max){
@@ -74,6 +74,5 @@ public class SoundPool {
 			Achievement.trigger("likeaboss");
 		
 		return song;
-		
 	}
 }

@@ -13,6 +13,7 @@ import iamjack.player.Jack;
 import iamjack.player.PlayerData;
 import iamjack.player.achievements.Achievement;
 import iamjack.resourceManager.Images;
+import iamjack.resourceManager.Sounds;
 
 public class GameStateRoomDone extends GameState {
 
@@ -28,7 +29,7 @@ public class GameStateRoomDone extends GameState {
 		jack.facingRight = false;
 		jack.setPosX(Window.scale(800));
 
-		Music.play("everywhere");
+		Music.loop(Sounds.EVERYWHERE);
 	}
 
 	@Override

@@ -159,11 +159,15 @@ public class GameStateLoading extends GameState {
 		new SwingWorker<Integer, Void>() {
 
 			@Override
-			protected Integer doInBackground() throws Exception {
+			protected Integer doInBackground() {
 
-				Images.loadImages();
-				Sounds.loadSounds();
-				AchievementLoader.load();
+				try {
+					Images.loadImages();
+					Sounds.loadSounds();
+					AchievementLoader.load();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 				
 				return null;
 			}

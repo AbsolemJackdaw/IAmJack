@@ -11,6 +11,7 @@ import iamjack.engine.input.KeyHandler;
 import iamjack.engine.input.MouseHandler;
 import iamjack.engine.resources.Music;
 import iamjack.resourceManager.Images;
+import iamjack.resourceManager.Sounds;
 
 public class Jack {
 
@@ -33,6 +34,7 @@ public class Jack {
 	private BufferedImage[] animation ;
 	private BufferedImage[] animationPlaying ;
 	private BufferedImage[] animationTalking ;
+	private BufferedImage[] animationRepMouth ;
 
 	private double speed = Window.scale(5D);
 
@@ -70,6 +72,14 @@ public class Jack {
 				Images.jackTalk[3],
 				Images.jackTalk[4],
 		};
+		
+		animationRepMouth = new BufferedImage[]{
+				Images.jackpressFace[0],
+				Images.jackpressFace[1],
+				Images.jackpressFace[2],
+				Images.jackpressFace[3],
+				Images.jackpressFace[4],
+		};
 	}
 
 	public void draw(Graphics2D g){
@@ -84,10 +94,17 @@ public class Jack {
 				g.drawImage(animationTalking[animTalking], (int)posX, (int)posY, Window.scale(128), Window.scale(128), null);
 
 		}else if(isBenchPressing){
-			g.drawImage(Images.jackPress, (int)posX, (int)posY, Window.scale(128), Window.scale(128), null);
-			if(armPress > 0 && canPress)
-				g.drawImage(Images.jackPressFace, (int)posX, (int)posY, Window.scale(128), Window.scale(128), null);
+			g.setColor(Color.black);
+			g.drawString(""+(5 - reps), (int)posX+1, (int)posY+1);
+			
+			g.setColor(Color.green.darker());
+			g.drawString(""+(5 - reps), (int)posX, (int)posY);
 
+			g.drawImage(Images.jackPress, (int)posX, (int)posY, Window.scale(128), Window.scale(128), null);
+			if(armPress > 0 && canPress){
+				animated = true;
+				g.drawImage(animationRepMouth[animTalking], (int)posX, (int)posY, Window.scale(128), Window.scale(128), null);
+			}
 			g.drawImage(Images.jackPressArms, (int)posX, (int)posY - (int)armPress, Window.scale(128), Window.scale(128), null);
 			
 		}else
@@ -138,12 +155,17 @@ public class Jack {
 				animIndexKeyboard = 0;
 		}
 
-		if(counter % 4 == 0)
+		if(isTalking && counter % 4 == 0)
 			animTalking = rand.nextInt(5);
-
+		
+		if(isBenchPressing && counter % 10 == 0)
+			animTalking = rand.nextInt(5);
+		
 		if(armPress > 20f){
-			if(canPress)
+			if(canPress){
 				reps++;
+				PlayerData.fans++;
+			}
 			canPress = false;
 		}
 
@@ -175,7 +197,7 @@ public class Jack {
 			animated = true;
 
 			if(counter % 5 == 0)
-				Music.play("step"+rand.nextInt(4));
+				Music.play(Sounds.WALK+rand.nextInt(4));
 
 			MouseHandler.clicked = null;
 		}
@@ -186,7 +208,7 @@ public class Jack {
 			animated = true;
 
 			if(counter % 5 == 0)
-				Music.play("step"+rand.nextInt(4));
+				Music.play(Sounds.WALK+rand.nextInt(4));
 
 			MouseHandler.clicked = null;
 		}
@@ -202,7 +224,7 @@ public class Jack {
 			animated = true;
 
 			if(counter % 5 == 0)
-				Music.play("step"+rand.nextInt(4));
+				Music.play(Sounds.WALK+rand.nextInt(4));
 
 		}
 
@@ -216,7 +238,7 @@ public class Jack {
 			animated = true;
 
 			if(counter % 5 == 0)
-				Music.play("step"+rand.nextInt(4));
+				Music.play(Sounds.WALK+rand.nextInt(4));
 		}
 
 

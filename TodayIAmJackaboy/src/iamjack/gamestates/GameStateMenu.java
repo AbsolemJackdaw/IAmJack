@@ -10,6 +10,7 @@ import iamjack.engine.Window;
 import iamjack.engine.input.MouseHandler;
 import iamjack.engine.resources.Music;
 import iamjack.player.PlayerData;
+import iamjack.resourceManager.Sounds;
 import iamjack.video.Button;
 
 public class GameStateMenu extends GameState {
@@ -31,8 +32,8 @@ public class GameStateMenu extends GameState {
 				new Button("Exit", Window.getWidth()/2- Window.scale(64), Window.getHeight()/2+Window.scale(64*2)),
 		};
 
-
-		Music.play("highfive");
+		Music.play(Sounds.HIGH5);
+		
 		if(!PlayerData.dontDoubleLoop){
 			Music.loop("quest");
 			PlayerData.dontDoubleLoop = false;

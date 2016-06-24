@@ -3,6 +3,7 @@ package iamjack.engine.resources;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.io.InputStream;
 
 import javax.imageio.ImageIO;
 
@@ -17,6 +18,8 @@ public class ImageLoader {
 
 			String path =p+"_"+i+".png";
 
+			System.out.println(path);
+			
 			BufferedImage tempImg = null;
 
 			try {
@@ -36,10 +39,16 @@ public class ImageLoader {
 
 		BufferedImage tempImg = null;
 
+		System.out.println(path);
+
+		InputStream is = ImageLoader.class.getClass().getResourceAsStream(path);
+		
+		if(is == null){
+			
+		}
 		try {
-			tempImg = ImageIO.read(ImageLoader.class.getClass().getResourceAsStream(path));
+			tempImg = ImageIO.read(is);
 		} catch (IOException e) {
-			System.out.println(path);
 			e.printStackTrace();
 		}
 

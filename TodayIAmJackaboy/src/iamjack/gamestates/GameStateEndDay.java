@@ -44,7 +44,7 @@ public class GameStateEndDay extends GameState{
 	@Override
 	public void draw(Graphics2D g) {
 
-		GameStateDrawHelper.drawRoom(g);
+		GameStateDrawHelper.drawLivingRoom(g);
 
 		g.setColor(new Color(0f, 0f, 0f, Math.min(1, alpha)));
 		g.fillRect(0, 0, Window.getWidth(), Window.getHeight());

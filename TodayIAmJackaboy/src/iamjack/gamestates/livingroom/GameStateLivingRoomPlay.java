@@ -1,19 +1,26 @@
 package iamjack.gamestates.livingroom;
 
 import java.awt.Graphics2D;
+import java.util.Random;
 
 import iamjack.engine.GameState;
 import iamjack.engine.GameStateHandler;
 import iamjack.engine.Window;
 import iamjack.engine.input.MouseHandler;
+import iamjack.engine.resources.Music;
 import iamjack.gamestates.GameStateDrawHelper;
 import iamjack.player.Jack;
 import iamjack.player.PlayerData;
 import iamjack.resourceManager.Images;
+import iamjack.resourceManager.Sounds;
 
 public class GameStateLivingRoomPlay extends GameState {
 
 	private Jack jack = new Jack();
+
+	private double speakTimer = 0;
+
+	private Random rand = new Random();
 
 	private String[] info = new String []{
 			"To get buff, mash the mouse like a boss !",
@@ -21,6 +28,12 @@ public class GameStateLivingRoomPlay extends GameState {
 			"This will keep Jack healthy and fit.",
 			"It will also give him more fans",
 			"because being buff is boss as hell !",
+			"",
+			"",
+			"",
+			"Offcourse, you don't have to do reps.",
+			"you can leave the living room before doing reps.",
+			""
 	};
 
 	private int counter = 0;
@@ -38,13 +51,23 @@ public class GameStateLivingRoomPlay extends GameState {
 	@Override
 	public void update() {
 
-		if(jack.repsDone() >= 5 && jack.canPress()){
+		if(jack.repsDone() >= 5 && jack.canPress())
 			gsh.changeGameState(GameStateHandler.GAME_LIVING_END);
-		}
-		
+
 		if(MouseHandler.clicked != null && MouseHandler.click){
-			if(jack.canPress())
+			if(jack.canPress()){
 				jack.pressArms();
+
+				if(speakTimer <= 0){
+					String song = Sounds.REPS+rand.nextInt(19);
+					Music.play(song);
+
+					int songlength = Music.getFrames(song);
+					float secs = (float)songlength/Music.getFrameRate(song);
+					double frames = ((double)secs) * 60d;
+					speakTimer = Math.floor(frames); 
+				}
+			}
 		}
 
 		jack.update();
@@ -55,6 +78,9 @@ public class GameStateLivingRoomPlay extends GameState {
 				if(counter % 180 == 0)
 					index++;
 		}
+
+		if(speakTimer > 0)
+			speakTimer --;
 	}
 
 	@Override

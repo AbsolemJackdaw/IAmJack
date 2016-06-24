@@ -66,6 +66,10 @@ public class GameStateLivingRoomEnd extends GameState {
 				jack.say("This is a guy from Sonsor'Anarky. Drawn by me roommate !", g);
 			}
 			
+			if(jack.getPosX() > Window.scale(750)){
+				jack.say("Awesome workout was awesome !", g);
+			}
+			
 			if(jack.getPosX() > 310 && jack.getPosX() < 320)
 				Achievement.trigger("seat");
 			

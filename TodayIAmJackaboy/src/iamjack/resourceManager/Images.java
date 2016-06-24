@@ -11,11 +11,12 @@ public class Images {
 	public static BufferedImage[] jackWalk = new BufferedImage[2];
 	public static BufferedImage[] jackKeyBoard = new BufferedImage[2];
 	public static BufferedImage[] jackTalk = new BufferedImage[5];
+	public static BufferedImage[] jackpressFace = new BufferedImage[5];
+
 	public static BufferedImage jack;
 	public static BufferedImage jackSit;
 	public static BufferedImage jackPress;
 	public static BufferedImage jackPressArms;
-	public static BufferedImage jackPressFace;
 
 	public static BufferedImage game;
 	public static BufferedImage workout;
@@ -61,7 +62,6 @@ public class Images {
 		jackSit = ImageLoader.loadSprite("/img/jack/jackSit.png");
 		jackPress = ImageLoader.loadSprite("/img/jack/jackpress2.png");
 		jackPressArms = ImageLoader.loadSprite("/img/jack/jackpress.png");
-		jackPressFace = ImageLoader.loadSprite("/img/jack/jackpressface.png");
 
 		button = ImageLoader.loadSprite("/img/button.png");
 		buttonLit = ImageLoader.loadSprite("/img/buttonLit.png");
@@ -69,6 +69,7 @@ public class Images {
 		ImageLoader.loadImages(jackWalk, "/img/jack/jackwalk");
 		ImageLoader.loadImages(jackKeyBoard, "/img/jack/jackSitHit");
 		ImageLoader.loadImages(jackTalk, "/img/jack/jackTalk");
+		ImageLoader.loadImages(jackpressFace, "/img/jack/jackpressface");
 
 		achievement = ImageLoader.loadSprite("/img/achievement/achievement.png");
 		ear = ImageLoader.loadSprite("/img/achievement/deaf.png");

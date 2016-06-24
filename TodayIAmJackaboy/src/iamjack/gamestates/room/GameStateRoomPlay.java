@@ -13,6 +13,7 @@ import iamjack.player.Jack;
 import iamjack.player.PlayerData;
 import iamjack.player.achievements.Achievement;
 import iamjack.resourceManager.Images;
+import iamjack.resourceManager.Sounds;
 import iamjack.video.ButtonGamePlay;
 
 public class GameStateRoomPlay extends GameState {
@@ -59,7 +60,7 @@ public class GameStateRoomPlay extends GameState {
 	public GameStateRoomPlay(GameStateHandler gsh) {
 		this.gsh = gsh;
 
-		Music.play("metal");
+		Music.loop(Sounds.METAL);
 
 		jack = new Jack();
 		sitX = Window.scale(820);
