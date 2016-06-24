@@ -46,8 +46,6 @@ public class Button {
 				((int)posX - Window.scale(64)) - w/2 + Window.scale(64),
 				(int)posY + h + Window.scale(34) );
 
-		g.draw(box);
-
 	}
 
 	public void update(){

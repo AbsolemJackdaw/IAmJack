@@ -62,6 +62,7 @@ public class GameStateLivingRoomEnd extends GameState {
 				Window.scale(732),
 				Window.scale(288),
 				(int)(64f*GameStateDrawHelper.scale),(int)(32f*GameStateDrawHelper.scale), null);
+		
 		g.drawImage(Images.livingroomBenchPressWeight,
 				Window.scale(732),
 				Window.scale(288),

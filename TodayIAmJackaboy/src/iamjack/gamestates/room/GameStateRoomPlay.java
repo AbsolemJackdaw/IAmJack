@@ -102,9 +102,9 @@ public class GameStateRoomPlay extends GameState {
 
 				ButtonGamePlay b = buttons[stage][i];
 
-				if(b != null){
+				if(b != null)
 					b.draw(g);
-				}
+				
 			}
 
 		for(Achievement a : Achievement.achievements.values())

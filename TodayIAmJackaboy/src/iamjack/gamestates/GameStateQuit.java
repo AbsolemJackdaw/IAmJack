@@ -105,8 +105,6 @@ public class GameStateQuit extends GameState {
 			gsh.changeGameState(GameStateHandler.MENU);
 		}
 		
-		System.out.println(offset);
-		
 		if(offset < -Window.scale(1100)){
 			Achievement.trigger("credits");
 		}

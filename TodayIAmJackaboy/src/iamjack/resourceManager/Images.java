@@ -44,6 +44,7 @@ public class Images {
 	public static BufferedImage scroll;
 	public static BufferedImage yt;
 	public static BufferedImage seat;
+	public static BufferedImage samSmile;
 
 	//not really necesairy, but allows for more control over the loadtime
 	public static void loadImages(){
@@ -79,6 +80,7 @@ public class Images {
 		scroll = ImageLoader.loadSprite("/img/achievement/scroll.png");
 		yt = ImageLoader.loadSprite("/img/achievement/yt.png");
 		seat = ImageLoader.loadSprite("/img/achievement/seat.png");
+		samSmile = ImageLoader.loadSprite("/img/achievement/samsmile.png");
 
 		livingroom = ImageLoader.loadSprite("/img/room/livingroom.png");
 		livingroomBenchPress = ImageLoader.loadSprite("/img/room/livingroomBenchPress.png");

@@ -26,6 +26,9 @@ public class GameStateLivingRoom extends GameState {
 	private boolean canWorkout;
 
 	private float alpha;
+	
+	/**boolean triggered after player has moved. allows for one time only intro logic*/
+	private boolean once = false;
 
 	public GameStateLivingRoom(GameStateHandler gsh) {
 		this.gsh = gsh;
@@ -41,6 +44,9 @@ public class GameStateLivingRoom extends GameState {
 		bobCounter += 0.025D;
 		bobbing = Math.cos(bobCounter)*20;
 
+		if(jack.isAnimated() && !once)
+			once = true;
+		
 		if(jack.getPosX() > Window.scale(750))
 			canWorkout = true;
 		else
@@ -112,10 +118,13 @@ public class GameStateLivingRoom extends GameState {
 				Window.scale(160), 
 				(int)(64f*GameStateDrawHelper.scale), (int)(64f*GameStateDrawHelper.scale), null);
 
-		if(!jack.isAnimated())
+		if(!jack.isAnimated()){
 			if(jack.getPosX() > Window.scale(600) && jack.getPosX() < Window.scale(750))
 				jack.say("This is a guy from Sonsor'Anarky. Drawn by me roommate !", g);
-
+			if(once && PlayerData.daysPlayed < 1)
+				jack.say("Oh boy, workout !", g);
+		}
+		
 		if(PlayerData.daysPlayed > 0){
 			g.setColor(Color.green.darker().darker());
 			String money = "Boss Coin :" + PlayerData.money;

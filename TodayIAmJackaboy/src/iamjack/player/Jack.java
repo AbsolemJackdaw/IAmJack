@@ -72,7 +72,7 @@ public class Jack {
 				Images.jackTalk[3],
 				Images.jackTalk[4],
 		};
-		
+
 		animationRepMouth = new BufferedImage[]{
 				Images.jackpressFace[0],
 				Images.jackpressFace[1],
@@ -83,42 +83,12 @@ public class Jack {
 	}
 
 	public void draw(Graphics2D g){
-
 		if(isSitting){
-			if(isPlaying)
-				g.drawImage(animationPlaying[animIndexKeyboard], (int)posX, (int)posY, Window.scale(128), Window.scale(128), null);
-			else
-				g.drawImage(Images.jackSit, (int)posX, (int)posY, Window.scale(128), Window.scale(128), null);
-
-			if(isTalking)
-				g.drawImage(animationTalking[animTalking], (int)posX, (int)posY, Window.scale(128), Window.scale(128), null);
-
+			drawSitting(g);
 		}else if(isBenchPressing){
-			g.setColor(Color.black);
-			g.drawString(""+(5 - reps), (int)posX+1, (int)posY+1);
-			
-			g.setColor(Color.green.darker());
-			g.drawString(""+(5 - reps), (int)posX, (int)posY);
-
-			g.drawImage(Images.jackPress, (int)posX, (int)posY, Window.scale(128), Window.scale(128), null);
-			if(armPress > 0 && canPress){
-				animated = true;
-				g.drawImage(animationRepMouth[animTalking], (int)posX, (int)posY, Window.scale(128), Window.scale(128), null);
-			}
-			g.drawImage(Images.jackPressArms, (int)posX, (int)posY - (int)armPress, Window.scale(128), Window.scale(128), null);
-			
+			drawBenchPressing(g);
 		}else
-			if(facingRight)
-				if(animated)
-					g.drawImage(animation[animIndexWalking], (int)posX - Window.scale(32), (int)posY, Window.scale(128), Window.scale(128), null);
-				else
-					g.drawImage(Images.jack, (int)posX- Window.scale(32), (int)posY, Window.scale(128), Window.scale(128), null);
-			else
-				if(animated)
-					g.drawImage(animation[animIndexWalking], (int)posX+Window.scale(128)- Window.scale(32), (int)posY, -Window.scale(128), Window.scale(128), null);
-				else
-					g.drawImage(Images.jack, (int)posX+Window.scale(128)- Window.scale(32), (int)posY, -Window.scale(128), Window.scale(128), null);
-
+			drawWalking(g);
 	}
 
 	public void say(String sentence, Graphics2D g){
@@ -127,7 +97,6 @@ public class Jack {
 
 		int x = g.getFontMetrics().stringWidth(sentence);
 		g.drawString(sentence, Window.getWidth()/2 - x/2, Window.getHeight()/2 + Window.getHeight()/3);
-
 	}
 
 	public void update(){
@@ -135,11 +104,10 @@ public class Jack {
 		if(!isSitting && !isBenchPressing)
 			doMovement();
 
-		if(animated){
+		if(animated)
 			counter++;
-		}else{
+		else
 			counter = 0;
-		}
 
 		if(counter % 2 == 0){
 			animIndexWalking++;
@@ -157,10 +125,10 @@ public class Jack {
 
 		if(isTalking && counter % 4 == 0)
 			animTalking = rand.nextInt(5);
-		
+
 		if(isBenchPressing && counter % 10 == 0)
 			animTalking = rand.nextInt(5);
-		
+
 		if(armPress > 20f){
 			if(canPress){
 				reps++;
@@ -225,7 +193,6 @@ public class Jack {
 
 			if(counter % 5 == 0)
 				Music.play(Sounds.WALK+rand.nextInt(4));
-
 		}
 
 		if(MouseHandler.clicked != null && posX < MouseHandler.clicked.getX() && posX < Window.getWidth() - Window.scale(175)){
@@ -240,11 +207,45 @@ public class Jack {
 			if(counter % 5 == 0)
 				Music.play(Sounds.WALK+rand.nextInt(4));
 		}
-
-
-		if(!KeyHandler.keyState[KeyHandler.RIGHT] && !KeyHandler.keyState[KeyHandler.LEFT] && MouseHandler.clicked == null){
+		if(!KeyHandler.keyState[KeyHandler.RIGHT] && !KeyHandler.keyState[KeyHandler.LEFT] && MouseHandler.clicked == null)
 			animated = false;
+	}
+
+	private void drawBenchPressing(Graphics2D g){
+		g.setColor(Color.black);
+		g.drawString(""+(5 - reps), (int)posX+1, (int)posY+1);
+
+		g.setColor(Color.green.darker());
+		g.drawString(""+(5 - reps), (int)posX, (int)posY);
+
+		g.drawImage(Images.jackPress, (int)posX, (int)posY, Window.scale(128), Window.scale(128), null);
+		if(armPress > 0 && canPress){
+			animated = true;
+			g.drawImage(animationRepMouth[animTalking], (int)posX, (int)posY, Window.scale(128), Window.scale(128), null);
 		}
+		g.drawImage(Images.jackPressArms, (int)posX, (int)posY - (int)armPress, Window.scale(128), Window.scale(128), null);
+	}
+
+	private void drawSitting(Graphics2D g){
+		if(isPlaying)
+			g.drawImage(animationPlaying[animIndexKeyboard], (int)posX, (int)posY, Window.scale(128), Window.scale(128), null);
+		else
+			g.drawImage(Images.jackSit, (int)posX, (int)posY, Window.scale(128), Window.scale(128), null);
+		if(isTalking)
+			g.drawImage(animationTalking[animTalking], (int)posX, (int)posY, Window.scale(128), Window.scale(128), null);
+	}
+
+	private void drawWalking(Graphics2D g){
+		if(facingRight)
+			if(animated)
+				g.drawImage(animation[animIndexWalking], (int)posX - Window.scale(32), (int)posY, Window.scale(128), Window.scale(128), null);
+			else
+				g.drawImage(Images.jack, (int)posX- Window.scale(32), (int)posY, Window.scale(128), Window.scale(128), null);
+		else
+			if(animated)
+				g.drawImage(animation[animIndexWalking], (int)posX+Window.scale(128)- Window.scale(32), (int)posY, -Window.scale(128), Window.scale(128), null);
+			else
+				g.drawImage(Images.jack, (int)posX+Window.scale(128)- Window.scale(32), (int)posY, -Window.scale(128), Window.scale(128), null);
 	}
 
 	public double getPosX() {

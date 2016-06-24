@@ -21,7 +21,6 @@ public class Achievement {
 	private int offset = 0;
 	private boolean isTriggerd = false;
 
-	//	public static ArrayList<Achievement> achievements = new ArrayList<Achievement>();
 	public static HashMap<String, Achievement> achievements = new HashMap<String, Achievement>();
 
 	public Achievement(String name, BufferedImage img, String text) {

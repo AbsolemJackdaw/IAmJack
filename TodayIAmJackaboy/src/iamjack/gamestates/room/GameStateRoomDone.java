@@ -83,7 +83,6 @@ public class GameStateRoomDone extends GameState {
 		jack.update();
 
 		if(jack.getPosX() < -10){
-//			Music.stop(Sounds.EVERYWHERE);
 			gsh.changeGameState(GameStateHandler.GAME_WHERETO);
 		}
 
@@ -166,6 +165,8 @@ public class GameStateRoomDone extends GameState {
 
 		if(s.equalsIgnoreCase("-very loud,energetic,original,positive-"))
 			Achievement.trigger("erryday");
+		if(s.contains("Hilarious") && s.contains("Positive"))
+			Achievement.trigger("happy");
 		
 		return s;
 

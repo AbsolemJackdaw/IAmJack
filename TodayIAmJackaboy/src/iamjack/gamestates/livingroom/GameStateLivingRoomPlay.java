@@ -58,6 +58,7 @@ public class GameStateLivingRoomPlay extends GameState {
 			Music.stop(Sounds.METALREPS);
 			gsh.changeGameState(GameStateHandler.GAME_LIVING_END);
 		}
+		
 		if(MouseHandler.clicked != null && MouseHandler.click){
 			if(jack.canPress()){
 				jack.pressArms();

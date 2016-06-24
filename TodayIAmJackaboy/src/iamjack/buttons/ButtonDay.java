@@ -11,7 +11,6 @@ public class ButtonDay extends Button {
 		super(name, x, y);
 	}
 
-
 	@Override
 	public void click(GameStateHandler gsh) {
 		Music.stop(Sounds.EVERYWHERE);

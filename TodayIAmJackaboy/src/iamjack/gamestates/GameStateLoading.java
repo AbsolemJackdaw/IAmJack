@@ -39,7 +39,7 @@ public class GameStateLoading extends GameState {
 			"and one day to find and edit all the sounds !",
 			"And two more to tweak and finalize everything.",
 			"This game was made in Java exclusively."
-			
+
 	};
 
 	public GameStateLoading(GameStateHandler gsh) {
@@ -71,31 +71,8 @@ public class GameStateLoading extends GameState {
 		g.drawString(theTitleTop, Window.getWidth()/2 - (sizeXtop/2), Window.getHeight()/2 - (sizeY/2)*2 );
 		g.drawString(theTitle, Window.getWidth()/2 - (sizeX/2), Window.getHeight()/2 + (sizeY/2)- (sizeY/2));
 
-		if(resourcesLoaded){
-//			g.setFont(subTitle);
-//
-//			String start = "Press Enter, or Click, to Start";
-//			int startSizeX = g.getFontMetrics().stringWidth(start);
-//			int startSizeY = g.getFontMetrics().getHeight();
-//
-//			g.setColor(new Color(1f,1f,1f,textFade));
-//
-//			g.drawString(start, 
-//					Window.getWidth()/2 - startSizeX/2, 
-//					Window.getHeight()/2 + sizeY + startSizeY);
-//
-//			g.drawImage(
-//					Images.sam,
-//					Window.getWidth()/2 - (startSizeX/2) - Window.scale(32), 
-//					Window.getHeight()/2 + sizeY + Window.scale(5), 
-//					Window.scale(32), Window.scale(32), null);
-//
-//			g.setColor(new Color(0f,0f,0f, 1f - textFade));
-//			g.fillRect(Window.getWidth()/2 - (startSizeX/2) - Window.scale(32), 
-//					Window.getHeight()/2 + sizeY + Window.scale(5), 
-//					Window.scale(32), Window.scale(32));
-
-		}else{
+		if(!resourcesLoaded){
+			
 			g.setFont(subTitle);
 
 			String start = "Loading";
@@ -107,14 +84,14 @@ public class GameStateLoading extends GameState {
 			g.drawString(start, 
 					Window.getWidth()/2 - startSizeX/2, 
 					Window.getHeight()/2 + sizeY + startSizeY);
-			
+
 			g.setFont(subTitle);
 			g.setColor(Color.green.darker().darker().darker());
 			int startSizeX2 = g.getFontMetrics().stringWidth(tips[tipIndex]);
 			g.drawString(tips[tipIndex], Window.getWidth()/2 - startSizeX2/2, Window.getHeight() - Window.scale(40));
 
 		}
-		
+
 		g.setColor(new Color(0f,0f,0f, fadeAlpha));
 		g.fillRect(0, 0, GamePanel.W, GamePanel.H);
 	}
@@ -126,10 +103,10 @@ public class GameStateLoading extends GameState {
 
 		if(counter % 360 == 0)
 			tipIndex++;
-		
+
 		if(tipIndex >= tips.length)
 			tipIndex = 0;
-		
+
 
 		if(fadeAlpha > 0)
 			fadeAlpha -= 0.0025f;
@@ -148,10 +125,6 @@ public class GameStateLoading extends GameState {
 
 		if(resourcesLoaded)
 			gsh.changeGameState(GameStateHandler.MENU);
-//			if(KeyHandler.isPressed(KeyHandler.ENTER) || MouseHandler.click){
-//				MouseHandler.clicked = null;
-//				gsh.changeGameState(GameStateHandler.GAME_ROOM);
-//			}
 	}
 
 	private void load(){
@@ -166,9 +139,10 @@ public class GameStateLoading extends GameState {
 					Sounds.loadSounds();
 					AchievementLoader.load();
 				} catch (Exception e) {
+					System.out.println("error occured");
 					e.printStackTrace();
 				}
-				
+
 				return null;
 			}
 

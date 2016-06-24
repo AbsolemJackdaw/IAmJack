@@ -87,6 +87,12 @@ public class GameStateRoom extends GameState {
 					jack.say("Where's the funky music coming from though ?",g);
 					Achievement.trigger("3daystreak");
 				}
+				else if(once == false && PlayerData.daysPlayed == 4)
+					jack.say("Beer, Clovers and More Beer Lads!",g);
+				else if(once == false && PlayerData.daysPlayed == 5)
+					jack.say("Just Had IceCream BreakFast. Life is awesome!",g);
+				else if(once == false && PlayerData.daysPlayed == 6)
+					jack.say("Be more positive!",g);
 			}
 		}
 
@@ -106,7 +112,7 @@ public class GameStateRoom extends GameState {
 	@Override
 	public void update() {
 
-		if(jack.isAnimated())
+		if(jack.isAnimated() && !once)
 			once = true;
 
 		if(alpha > 0)
