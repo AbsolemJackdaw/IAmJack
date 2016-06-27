@@ -15,14 +15,14 @@ import iamjack.player.achievements.Achievement;
 import iamjack.resourceManager.Images;
 import iamjack.resourceManager.Sounds;
 
-public class GameStateRoomDone extends GameState {
+public class GameStateRoomEnd extends GameState {
 
 	private Jack jack = new Jack();
 
 	private final Font text;
 
-	public GameStateRoomDone(GameStateHandler gsh) {
-		this.gsh = gsh;
+	public GameStateRoomEnd(GameStateHandler gsh) {
+		super(gsh);
 
 		text = new Font("SquareFont", Font.PLAIN, Window.scale(35));
 
@@ -69,12 +69,9 @@ public class GameStateRoomDone extends GameState {
 		
 		for(Achievement a : Achievement.achievements.values())
 			a.draw(g);
-		
-		if(PlayerData.daysPlayed > 0){
-			g.setColor(Color.green.darker().darker());
-			String money = "Boss Coin :" + PlayerData.money;
-			g.drawString(money, 0, g.getFontMetrics().getHeight());
-		}
+
+		GameStateDrawHelper.drawBossCoinCounter(g);
+
 	}
 
 	@Override

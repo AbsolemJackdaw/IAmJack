@@ -26,15 +26,14 @@ public class GameStateRoom extends GameState {
 	private boolean canGame;
 
 	private float alpha = 1f;
-	
+
 	private boolean[] discoverRoom = new boolean[5];
 
 	/**boolean triggered after player has moved. allows for one time only intro logic*/
 	private boolean once = false;
 
 	public GameStateRoom(GameStateHandler gsh) {
-		this.gsh = gsh;
-
+		super(gsh);
 		Music.loop(Sounds.ROOMMUSIC);
 	}
 
@@ -77,34 +76,30 @@ public class GameStateRoom extends GameState {
 			}
 
 			else if(once == false){
-				if(PlayerData.daysPlayed == 0)
+				if(PlayerData.daysPlayed == 1)
 					jack.say("Hi, I'm Jack ! Welcome to mah Crib.",g);
-				else if(once == false && PlayerData.daysPlayed == 1)
-					jack.say("Hey, I made some Boss Coin from yesterday's video !",g);
 				else if(once == false && PlayerData.daysPlayed == 2)
-					jack.say("Ah, A beautiful new day to do the Youtube !",g);
+					jack.say("Hey, I made some Boss Coin from yesterday's video !",g);
 				else if(once == false && PlayerData.daysPlayed == 3){
-					jack.say("Where's the funky music coming from though ?",g);
+					jack.say("Ah, A beautiful new day to do the Youtube !",g);
 					Achievement.trigger("3daystreak");
+				}else if(once == false && PlayerData.daysPlayed == 4){
+					jack.say("Where's the funky music coming from though ?",g);
 				}
-				else if(once == false && PlayerData.daysPlayed == 4)
-					jack.say("Beer, Clovers and More Beer Lads!",g);
 				else if(once == false && PlayerData.daysPlayed == 5)
-					jack.say("Just Had IceCream BreakFast. Life is awesome!",g);
+					jack.say("Beer, Clovers and More Beer Lads!",g);
 				else if(once == false && PlayerData.daysPlayed == 6)
+					jack.say("Just Had IceCream BreakFast. Life is awesome!",g);
+				else if(once == false && PlayerData.daysPlayed == 7)
 					jack.say("Be more positive!",g);
 			}
 		}
 
-		if(PlayerData.daysPlayed > 0){
-			g.setColor(Color.green.darker().darker());
-			String money = "Boss Coin :" + PlayerData.money;
-			g.drawString(money, 0, g.getFontMetrics().getHeight());
-		}
-		
+		GameStateDrawHelper.drawBossCoinCounter(g);
+
 		for(Achievement a : Achievement.achievements.values())
 			a.draw(g);
-		
+
 		g.setColor(new Color(0f,0f,0f,alpha));
 		g.fillRect(0, 0, Window.getWidth(), Window.getHeight());
 	}

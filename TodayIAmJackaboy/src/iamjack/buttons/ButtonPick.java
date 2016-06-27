@@ -19,8 +19,7 @@ public class ButtonPick extends Button{
 			//augments money and day count when you exit the living room
 			SaveManager.writePlayerData();
 			gsh.changeGameState(GameStateHandler.GAME_LIVING);break;
-		case "Shop": break;
-		
+		case "Shop": gsh.changeGameState(GameStateHandler.GAME_SHOP); break;
 		case "End Day":
 			SaveManager.writePlayerData();
 			gsh.changeGameState(GameStateHandler.GAME_ENDDAY);

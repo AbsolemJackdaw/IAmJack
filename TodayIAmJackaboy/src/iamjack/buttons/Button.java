@@ -16,11 +16,11 @@ public class Button {
 	protected double posY;
 	protected final String name;
 
-	private Font text;
+	protected Font text;
 
 	private Rectangle box;
 
-	private boolean isLit;
+	protected boolean isLit;
 
 	public Button(String name, int x, int y) {
 		this.name = name;

@@ -29,7 +29,7 @@ public class GameStateEndDay extends GameState{
 	private Font text;
 
 	public GameStateEndDay(GameStateHandler gsh) {
-		this.gsh = gsh;
+		super(gsh);
 
 		PlayerData.videoOfTheDay.clear();
 		PlayerData.currentlySaying="";
@@ -43,8 +43,6 @@ public class GameStateEndDay extends GameState{
 
 	@Override
 	public void draw(Graphics2D g) {
-
-		GameStateDrawHelper.drawLivingRoom(g);
 
 		g.setColor(new Color(0f, 0f, 0f, Math.min(1, alpha)));
 		g.fillRect(0, 0, Window.getWidth(), Window.getHeight());

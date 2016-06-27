@@ -23,6 +23,7 @@ public class Sounds {
 	public static final String INTRO = "intro"; 
 	public static final String OUTRO = "outro"; 
 	public static final String REPS = "reps"; 
+	public static final String SHOP = "shop"; 
 
 	public static void loadSounds(){
 		Music.init();
@@ -32,23 +33,24 @@ public class Sounds {
 		loadMusic("/sounds/TeknoAXEsRoyaltyFreeMusicRoyaltyFreeMusic198ImEverywhereDubstepFunkstepTechnoFeaturingFarisha2.mp3", EVERYWHERE);
 		loadMusic("/sounds/NewChiptuneQuests8bitEightBitRoyaltyFreeMusic.mp3",QUEST);
 		loadMusic("/sounds/TeknoAXEsRoyaltyFreeMusicRoyaltyFreeCheapHairMetalRockSong.mp3", METALREPS);
+		loadMusic("/sounds/SpaceDockDancePartyElectroHouseRoyaltyFreeMusic.mp3", SHOP);
 		
 		for(int i = 1; i < 5; i++)
 			loadMusic("/sounds/step_0"+i+".mp3", WALK+(i-1));
 
-		for(int i = 0; i < 14; i++)
+		for(int i = 0; i < 19; i++)
 			loadMusic("/sounds/energy/energy"+i+".mp3", ENERGY+i);
 
-		for(int i = 0; i < 15; i++)
+		for(int i = 0; i < 17; i++)
 			loadMusic("/sounds/funny/funny"+i+".mp3", FUNNY+i);
 
-		for(int i = 0; i < 6; i++)
+		for(int i = 0; i < 11; i++)
 			loadMusic("/sounds/laugh/laugh"+i+".mp3", LAUGH+i);
 
-		for(int i = 0; i < 15; i++)
+		for(int i = 0; i < 17; i++)
 			loadMusic("/sounds/rage/rage"+i+".mp3", RAGE+i);
 
-		for(int i = 0; i < 8; i++)
+		for(int i = 0; i < 12; i++)
 			loadMusic("/sounds/scared/scared"+i+".mp3", SCARED+i);
 
 		for(int i = 0; i < 19; i++)
@@ -57,7 +59,7 @@ public class Sounds {
 		for(int i = 0; i < 14; i++)
 			loadMusic("/sounds/yell/yell"+i+".mp3", YELL+i);
 
-		for(int i = 0; i < 7; i++)
+		for(int i = 0; i < 8; i++)
 			loadMusic("/sounds/intro/intro"+i+".mp3", INTRO+i);
 
 		for(int i = 0; i < 5; i++)
@@ -65,7 +67,7 @@ public class Sounds {
 
 		loadMusic("/sounds/high_five.mp3", HIGH5);
 
-		for(int i = 0; i < 19; i++)
+		for(int i = 0; i < 20; i++)
 			loadMusic("/sounds/reps/reps"+i+".mp3", REPS+i);
 	}
 

@@ -10,6 +10,7 @@ import iamjack.engine.GamePanel;
 import iamjack.engine.GameState;
 import iamjack.engine.GameStateHandler;
 import iamjack.engine.Window;
+import iamjack.gamestates.shop.ShopItems;
 import iamjack.player.achievements.AchievementLoader;
 import iamjack.resourceManager.Fonts;
 import iamjack.resourceManager.Images;
@@ -29,6 +30,9 @@ public class GameStateLoading extends GameState {
 	private int counter = 0;
 	private int tipIndex = 0;
 
+	/**coutns how many ticks it took to load all resources*/
+	private int loadTime = 0;
+
 	private String tips[] = new String[]{
 			"Did you know sounds take a long time to load ?",
 			"Wasd and Zqsd are valid controls to move Jack.",
@@ -44,7 +48,7 @@ public class GameStateLoading extends GameState {
 	};
 
 	public GameStateLoading(GameStateHandler gsh) {
-		this.gsh = gsh;
+		super(gsh);
 
 		load();
 		Fonts.registerFont();
@@ -73,7 +77,7 @@ public class GameStateLoading extends GameState {
 		g.drawString(theTitle, Window.getWidth()/2 - (sizeX/2), Window.getHeight()/2 + (sizeY/2)- (sizeY/2));
 
 		if(!resourcesLoaded){
-			
+
 			g.setFont(subTitle);
 
 			String start = "Loading";
@@ -124,8 +128,15 @@ public class GameStateLoading extends GameState {
 		else
 			textFade-=.005F;
 
-		if(resourcesLoaded)
+		if(loadTime > 0 && !resourcesLoaded)
+			loadTime++;
+		
+		if(resourcesLoaded){
 			gsh.changeGameState(GameStateHandler.MENU);
+			System.out.println("took " + loadTime + " ticks to load resources");
+		}
+
+
 	}
 
 	private void load(){
@@ -134,13 +145,16 @@ public class GameStateLoading extends GameState {
 
 			@Override
 			protected Integer doInBackground() {
-
+				loadTime = 1;
 				try {
 					Images.loadImages();
 					Sounds.loadSounds();
+
 					AchievementLoader.load();
+					ShopItems.load();
+
 					SaveManager.readPlayerData();
-					
+
 				} catch (Exception e) {
 					System.out.println("error occured");
 					e.printStackTrace();

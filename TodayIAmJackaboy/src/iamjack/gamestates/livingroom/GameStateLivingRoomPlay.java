@@ -1,5 +1,6 @@
 package iamjack.gamestates.livingroom;
 
+import java.awt.AlphaComposite;
 import java.awt.Graphics2D;
 import java.util.Random;
 
@@ -41,7 +42,7 @@ public class GameStateLivingRoomPlay extends GameState {
 	private int index = 0;
 
 	public GameStateLivingRoomPlay(GameStateHandler gsh) {
-		this.gsh = gsh;
+		super(gsh);
 
 		jack.setPosX(Window.scale(850));
 		jack.setPosY(Window.scale(256));
@@ -64,7 +65,7 @@ public class GameStateLivingRoomPlay extends GameState {
 				jack.pressArms();
 
 				if(speakTimer <= 0){
-					String song = Sounds.REPS+rand.nextInt(19);
+					String song = Sounds.REPS+rand.nextInt(20);
 					Music.play(song);
 
 					int songlength = Music.getFrames(song);
@@ -101,6 +102,13 @@ public class GameStateLivingRoomPlay extends GameState {
 				(int)(64f*GameStateDrawHelper.scale),(int)(32f*GameStateDrawHelper.scale), null);
 
 		jack.draw(g);
+
+		g.setComposite(AlphaComposite.SrcOver);
+
+		g.drawImage(Images.livingRoomShade, 
+				Window.getWidth()/2 - (int)(GameStateDrawHelper.sizeX/2f),
+				Window.getHeight()/2 - (int)(GameStateDrawHelper.sizeY/2f), 
+				(int)GameStateDrawHelper.sizeX, (int)GameStateDrawHelper.sizeY, null);
 
 		if(!PlayerData.hasWorkedOut && index < info.length-1)
 			jack.say(info[index], g);

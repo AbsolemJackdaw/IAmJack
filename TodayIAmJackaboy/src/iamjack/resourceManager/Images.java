@@ -24,6 +24,7 @@ public class Images {
 	public static BufferedImage chair;
 	public static BufferedImage chairLow;	
 	public static BufferedImage roomShade;
+	public static BufferedImage livingRoomShade;
 	public static BufferedImage door;
 	public static BufferedImage room;
 
@@ -46,6 +47,8 @@ public class Images {
 	public static BufferedImage seat;
 	public static BufferedImage samSmile;
 
+	public static BufferedImage clothes;
+
 	//not really necesairy, but allows for more control over the loadtime
 	public static void loadImages(){
 
@@ -54,6 +57,7 @@ public class Images {
 		chairLow = ImageLoader.loadSprite("/img/room/chairLow.png");
 		roomShade = ImageLoader.loadSprite("/img/room/jacksroomshadow.png");
 		door = ImageLoader.loadSprite("/img/room/door.png");
+		livingRoomShade = ImageLoader.loadSprite("/img/room/livingroomshade.png");
 
 		sam = ImageLoader.loadSprite("/img/sam.png");
 		game = ImageLoader.loadSprite("/img/game.png");
@@ -88,5 +92,6 @@ public class Images {
 		livingroomChair = ImageLoader.loadSprite("/img/room/livingroomchair.png");
 		livingroomDoor = ImageLoader.loadSprite("/img/room/livingroomdoor.png");
 
+		clothes = ImageLoader.loadSprite("/img/workoutclothes.png");
 	}
 }

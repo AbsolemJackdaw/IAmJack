@@ -11,23 +11,23 @@ public class SoundPool {
 	private static Random rand = new Random();
 
 	public static void playEnergyVoice(){
-			Music.play(findNewVoice(Sounds.ENERGY, 14));
+			Music.play(findNewVoice(Sounds.ENERGY, 19));
 	}
 
 	public static void playFunnyVoice(){
-		Music.play(findNewVoice(Sounds.FUNNY, 14));
+		Music.play(findNewVoice(Sounds.FUNNY, 17));
 	}
 
 	public static void playLaughVoice(){
-		Music.play(findNewVoice(Sounds.LAUGH, 6));
+		Music.play(findNewVoice(Sounds.LAUGH, 11));
 	}
 
 	public static void playRageVoice(){
-		Music.play(findNewVoice(Sounds.RAGE, 15));
+		Music.play(findNewVoice(Sounds.RAGE, 17));
 	}
 
 	public static void playScaredVoice(){
-		Music.play(findNewVoice(Sounds.SCARED, 8));
+		Music.play(findNewVoice(Sounds.SCARED, 12));
 	}
 
 	public static void playTradeMarkVoice(){
@@ -39,7 +39,7 @@ public class SoundPool {
 	}
 
 	public static void playIntroVoice(){
-		Music.play(findNewVoice(Sounds.INTRO, 6));
+		Music.play(findNewVoice(Sounds.INTRO, 8));
 	}
 	
 	public static void playOutroVoice(){

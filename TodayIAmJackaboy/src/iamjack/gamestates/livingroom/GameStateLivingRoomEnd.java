@@ -1,6 +1,5 @@
 package iamjack.gamestates.livingroom;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 
 import iamjack.engine.GameState;
@@ -19,7 +18,7 @@ public class GameStateLivingRoomEnd extends GameState {
 	private Jack jack = new Jack();
 
 	public GameStateLivingRoomEnd(GameStateHandler gsh) {
-		this.gsh = gsh;
+		super(gsh);
 
 		jack.facingRight = false;
 		jack.setPosX(Window.scale(800));
@@ -41,6 +40,8 @@ public class GameStateLivingRoomEnd extends GameState {
 
 		if(jack.getPosX() < -10){
 			Music.stop(Sounds.ROOMMUSIC);
+			if(!PlayerData.hasWorkedOut)
+				PlayerData.hasWorkedOut = true;
 			gsh.changeGameState(GameStateHandler.GAME_ENDDAY);
 		}
 	}
@@ -81,11 +82,7 @@ public class GameStateLivingRoomEnd extends GameState {
 				Window.scale(160), 
 				(int)(64f*GameStateDrawHelper.scale), (int)(64f*GameStateDrawHelper.scale), null);
 
-		if(PlayerData.daysPlayed > 0){
-			g.setColor(Color.green.darker().darker());
-			String money = "Boss Coin :" + PlayerData.money;
-			g.drawString(money, 0, g.getFontMetrics().getHeight());
-		}
+		GameStateDrawHelper.drawBossCoinCounter(g);
 
 		for(Achievement a : Achievement.achievements.values())
 			a.draw(g);

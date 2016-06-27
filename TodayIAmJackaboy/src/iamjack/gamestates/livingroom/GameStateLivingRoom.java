@@ -31,7 +31,7 @@ public class GameStateLivingRoom extends GameState {
 	private boolean once = false;
 
 	public GameStateLivingRoom(GameStateHandler gsh) {
-		this.gsh = gsh;
+		super(gsh);
 
 		alpha = 1f;
 
@@ -124,11 +124,7 @@ public class GameStateLivingRoom extends GameState {
 				jack.say("Oh boy, workout !", g);
 		}
 		
-		if(PlayerData.daysPlayed > 0){
-			g.setColor(Color.green.darker().darker());
-			String money = "Boss Coin :" + PlayerData.money;
-			g.drawString(money, 0, g.getFontMetrics().getHeight());
-		}
+		GameStateDrawHelper.drawBossCoinCounter(g);
 
 		g.setColor(new Color(0f,0f,0f,alpha));
 		g.fillRect(0, 0, Window.getWidth(), Window.getHeight());

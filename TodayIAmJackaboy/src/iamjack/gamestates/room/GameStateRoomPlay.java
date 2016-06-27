@@ -58,8 +58,8 @@ public class GameStateRoomPlay extends GameState {
 	private ButtonGamePlay[][] buttons = new ButtonGamePlay[10][3];
 
 	public GameStateRoomPlay(GameStateHandler gsh) {
-		this.gsh = gsh;
-
+		super(gsh);
+		
 		Music.loop(Sounds.METAL);
 
 		jack = new Jack();

@@ -26,7 +26,7 @@ public class GameStateQuit extends GameState {
 			"Tribute to JackScepticEye",
 			"and every hardworking youtuber out there",
 			"",
-			"You managed to Youtube " + PlayerData.daysPlayed + " days...",
+			"You managed to Youtube " + (PlayerData.daysPlayed-1) + " days...",
 			"But they do this every day to keep you entertained.",
 			"A sincere Thanks to all of them out there <3",
 			"",
@@ -56,7 +56,7 @@ public class GameStateQuit extends GameState {
 	};
 	
 	public GameStateQuit(GameStateHandler gsh) {
-		this.gsh = gsh;
+		super(gsh);
 		
 		offset = Window.getHeight();
 		headerFont = new Font("SquareFont", Font.PLAIN, Window.scale(80));

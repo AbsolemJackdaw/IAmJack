@@ -14,11 +14,11 @@ public class GameStateWhatsNext extends GameState {
 	private ButtonPick[] buttons;
 
 	public GameStateWhatsNext(GameStateHandler gsh) {
-		this.gsh = gsh;
+		super(gsh);
 
 		buttons = new ButtonPick[]{
-				new ButtonPick("Exercise", Window.getWidth()/2, Window.getHeight()/2 - Window.scale(68)),
-//				new ButtonPick("Shop", Window.getWidth()/2, Window.getHeight()/2 - Window.scale(68)),
+				new ButtonPick("Exercise", Window.getWidth()/2, Window.getHeight()/2 - Window.scale(68*2)),
+				new ButtonPick("Shop", Window.getWidth()/2, Window.getHeight()/2 - Window.scale(68)),
 				new ButtonPick("End Day", Window.getWidth()/2, Window.getHeight()/2) ,
 		};
 	}

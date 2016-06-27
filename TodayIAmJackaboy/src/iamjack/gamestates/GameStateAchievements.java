@@ -15,7 +15,7 @@ import iamjack.player.achievements.Achievement;
 public class GameStateAchievements extends GameState {
 
 	public GameStateAchievements(GameStateHandler gsh) {
-		this.gsh = gsh;
+		super(gsh);
 	}
 
 	@Override

@@ -22,7 +22,7 @@ public class GameStateMenu extends GameState {
 	private ButtonMenu[] buttons;
 
 	public GameStateMenu(GameStateHandler gsh) {
-		this.gsh = gsh;
+		super(gsh);
 
 		titleFont = new Font("SquareFont", Font.PLAIN, Window.scale(100));
 
