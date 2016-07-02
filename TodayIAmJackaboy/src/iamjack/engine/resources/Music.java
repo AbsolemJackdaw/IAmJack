@@ -25,6 +25,11 @@ public class Music {
 		return clips.get(s).getFrameLength();
 	}
 
+	public static void stopAll(){
+		for(Clip c : clips.values())
+			c.stop();
+	}
+	
 	public static int getPosition(String s) {
 		return clips.get(s).getFramePosition();
 	}

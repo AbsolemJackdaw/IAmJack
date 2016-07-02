@@ -8,7 +8,6 @@ import iamjack.buttons.ButtonMenu;
 import iamjack.engine.GameState;
 import iamjack.engine.GameStateHandler;
 import iamjack.engine.Window;
-import iamjack.engine.input.MouseHandler;
 import iamjack.engine.resources.Music;
 import iamjack.player.PlayerData;
 import iamjack.resourceManager.Sounds;
@@ -42,6 +41,7 @@ public class GameStateMenu extends GameState {
 
 	@Override
 	public void draw(Graphics2D g) {
+		super.draw(g);
 
 		g.setColor(Color.black);
 		g.fillRect(0, 0, Window.getWidth(), Window.getHeight());
@@ -63,11 +63,9 @@ public class GameStateMenu extends GameState {
 
 	@Override
 	public void update() {
+		super.update();
 
-		for(ButtonMenu b : buttons){
-			b.update();
-			if(MouseHandler.click && b.isLit())
-				b.click(gsh);
-		}	
+		for(ButtonMenu b : buttons)
+			b.update(gsh);
 	}
 }

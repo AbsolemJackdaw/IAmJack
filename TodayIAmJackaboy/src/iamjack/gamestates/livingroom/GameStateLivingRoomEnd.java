@@ -28,15 +28,13 @@ public class GameStateLivingRoomEnd extends GameState {
 
 	@Override
 	public void update() {
-
+		super.update();
+		
 		jack.update();
 
 		if(!jack.isAnimated())
 			if(jack.getPosX() > Window.scale(310) && jack.getPosX() < Window.scale(320))
 				Achievement.trigger("seat");
-
-		for(Achievement a : Achievement.achievements.values())
-			a.update();
 
 		if(jack.getPosX() < -10){
 			Music.stop(Sounds.ROOMMUSIC);
@@ -50,7 +48,7 @@ public class GameStateLivingRoomEnd extends GameState {
 	public void draw(Graphics2D g) {
 
 		GameStateDrawHelper.drawLivingRoom(g);
-
+		super.draw(g);
 		jack.draw(g);
 
 		g.drawImage(Images.livingroomChair,
@@ -83,8 +81,5 @@ public class GameStateLivingRoomEnd extends GameState {
 				(int)(64f*GameStateDrawHelper.scale), (int)(64f*GameStateDrawHelper.scale), null);
 
 		GameStateDrawHelper.drawBossCoinCounter(g);
-
-		for(Achievement a : Achievement.achievements.values())
-			a.draw(g);
 	}
 }

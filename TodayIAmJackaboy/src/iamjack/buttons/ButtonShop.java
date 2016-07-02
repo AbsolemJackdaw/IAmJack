@@ -8,6 +8,7 @@ import iamjack.engine.GameStateHandler;
 import iamjack.engine.Window;
 import iamjack.gamestates.shop.ShopItems;
 import iamjack.player.PlayerData;
+import iamjack.resourceManager.Images;
 
 public class ButtonShop extends Button {
 
@@ -25,21 +26,19 @@ public class ButtonShop extends Button {
 
 	@Override
 	public void draw(Graphics2D g) {
-		g.setColor(isLit ? Color.green.darker() : Color.white);
+		
 		g.setFont(text);
-
+		
 		int h = g.getFontMetrics().getHeight();
-		int w = g.getFontMetrics().stringWidth(name);
-		
-		g.drawImage(img, (int)posX- Window.scale(64), (int)posY+ Window.scale(32), Window.scale(64), Window.scale(64), null);
-		
-		g.setColor(canBuy() ? Color.WHITE : Color.red.darker().darker());
-		g.drawString(name + ": " + price + " BC", 
-				((int)posX),
-				(int)posY + h + Window.scale(34) );
-		
-		g.draw(getBox());
+		g.drawImage(isLit && canBuy() ? Images.buttonLit : Images.button , (int)posX- Window.scale(64), (int)posY, Window.scale(128), Window.scale(128), null);
 
+		g.drawImage(img, (int)posX - Window.scale(40), (int)posY+ Window.scale(20), Window.scale(64), Window.scale(64), null);
+		
+		g.setColor(isLit && canBuy() ? Color.green.darker() : canBuy() ? Color.WHITE : Color.red.darker());
+		
+		g.drawString(itemName(), 
+				(int)posX + Window.scale(64),
+				(int)posY + h + Window.scale(35) );
 	}
 
 	@Override
@@ -52,5 +51,18 @@ public class ButtonShop extends Button {
 	
 	public boolean canBuy(){
 		return PlayerData.money >= price && !PlayerData.itemsBought.contains(name);
+	}
+	
+	public String itemName(){
+		
+		String s = "";
+		
+		if(PlayerData.itemsBought.contains(this.name))
+			s = "Already Owned";
+
+		else
+			s = this.name + ": " + price + " BC";
+		
+		return s;
 	}
 }

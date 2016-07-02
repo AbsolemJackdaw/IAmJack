@@ -24,17 +24,20 @@ public class Jack {
 	private int counter = 0;
 	private int animIndexWalking = 0;
 	private int animIndexKeyboard = 0;
+	private int animIndexSportsing = 0;
 	private int animTalking = 0;
 
 	private boolean isSitting;
 	private boolean isPlaying;
 	private boolean isTalking;
 	private boolean isBenchPressing;
+	private boolean isSportsing;
 
 	private BufferedImage[] animation ;
 	private BufferedImage[] animationPlaying ;
 	private BufferedImage[] animationTalking ;
 	private BufferedImage[] animationRepMouth ;
+	private BufferedImage[] animationSportsing ;
 
 	private double speed = Window.scale(5D);
 
@@ -80,6 +83,14 @@ public class Jack {
 				Images.jackpressFace[3],
 				Images.jackpressFace[4],
 		};
+
+		animationSportsing = new BufferedImage[]{
+				Images.jackSportsing,
+				Images.jackSport[0],
+				Images.jackSportsing,
+				Images.jackSport[1]
+		};
+
 	}
 
 	public void draw(Graphics2D g){
@@ -87,7 +98,9 @@ public class Jack {
 			drawSitting(g);
 		}else if(isBenchPressing){
 			drawBenchPressing(g);
-		}else
+		}else if(isSportsing)
+			drawSportsing(g);
+		else
 			drawWalking(g);
 	}
 
@@ -121,6 +134,13 @@ public class Jack {
 
 			if(animIndexKeyboard >= animationPlaying.length)
 				animIndexKeyboard = 0;
+		}
+
+		if(counter % 4 == 0){
+			animIndexSportsing++;
+
+			if(animIndexSportsing >= animationSportsing.length)
+				animIndexSportsing = 0;
 		}
 
 		if(isTalking && counter % 4 == 0)
@@ -183,9 +203,8 @@ public class Jack {
 
 		if(MouseHandler.clicked != null && posX > MouseHandler.clicked.getX() && posX > -100){
 			double speedMod = speed;
-			if(posX - MouseHandler.clicked.getX() < speed){
+			if(posX - MouseHandler.clicked.getX() < speed)
 				speedMod =  posX - MouseHandler.clicked.getX();
-			}
 
 			posX -= speedMod;
 			facingRight = false;
@@ -197,9 +216,8 @@ public class Jack {
 
 		if(MouseHandler.clicked != null && posX < MouseHandler.clicked.getX() && posX < Window.getWidth() - Window.scale(175)){
 			double speedMod = speed;
-			if(MouseHandler.clicked.getX() - posX < speed){
+			if(MouseHandler.clicked.getX() - posX < speed)
 				speedMod =  MouseHandler.clicked.getX() - posX;
-			}
 			posX += speedMod;
 			facingRight = true;
 			animated = true;
@@ -218,34 +236,44 @@ public class Jack {
 		g.setColor(Color.green.darker());
 		g.drawString(""+(5 - reps), (int)posX, (int)posY);
 
-		g.drawImage(Images.jackPress, (int)posX, (int)posY, Window.scale(128), Window.scale(128), null);
+		drawJack(Images.jackPress, g);
+
 		if(armPress > 0 && canPress){
 			animated = true;
-			g.drawImage(animationRepMouth[animTalking], (int)posX, (int)posY, Window.scale(128), Window.scale(128), null);
+			drawJack(animationRepMouth[animTalking], g);
 		}
-		g.drawImage(Images.jackPressArms, (int)posX, (int)posY - (int)armPress, Window.scale(128), Window.scale(128), null);
+
+		g.drawImage(Images.jackPressArms, (int)posX - Window.scale(32), (int)posY - (int)armPress, Window.scale(128), Window.scale(128), null);
 	}
 
 	private void drawSitting(Graphics2D g){
 		if(isPlaying)
-			g.drawImage(animationPlaying[animIndexKeyboard], (int)posX, (int)posY, Window.scale(128), Window.scale(128), null);
+			drawJack(animationPlaying[animIndexKeyboard], g);
 		else
-			g.drawImage(Images.jackSit, (int)posX, (int)posY, Window.scale(128), Window.scale(128), null);
+			drawJack(Images.jackSit, g);
 		if(isTalking)
-			g.drawImage(animationTalking[animTalking], (int)posX, (int)posY, Window.scale(128), Window.scale(128), null);
+			drawJack(animationTalking[animTalking], g);
 	}
 
 	private void drawWalking(Graphics2D g){
-		if(facingRight)
-			if(animated)
-				g.drawImage(animation[animIndexWalking], (int)posX - Window.scale(32), (int)posY, Window.scale(128), Window.scale(128), null);
-			else
-				g.drawImage(Images.jack, (int)posX- Window.scale(32), (int)posY, Window.scale(128), Window.scale(128), null);
+		if(animated)
+			drawJack(animation[animIndexWalking], g);
 		else
-			if(animated)
-				g.drawImage(animation[animIndexWalking], (int)posX+Window.scale(128)- Window.scale(32), (int)posY, -Window.scale(128), Window.scale(128), null);
-			else
-				g.drawImage(Images.jack, (int)posX+Window.scale(128)- Window.scale(32), (int)posY, -Window.scale(128), Window.scale(128), null);
+			drawJack(Images.jack, g);
+	}
+
+	private void drawSportsing(Graphics2D g){
+		if(animated)
+			drawJack(animationSportsing[animIndexSportsing], g);
+		else
+			drawJack(Images.jackSportsing, g);
+	}
+
+	private void drawJack(BufferedImage img, Graphics2D g){
+		if(facingRight)
+			g.drawImage(img, (int)posX - Window.scale(32), (int)posY, Window.scale(128), Window.scale(128), null);
+		else
+			g.drawImage(img, (int)posX+Window.scale(128)- Window.scale(32), (int)posY, -Window.scale(128), Window.scale(128), null);
 	}
 
 	public double getPosX() {
@@ -300,8 +328,16 @@ public class Jack {
 		return isBenchPressing;
 	}
 
+	public boolean isSportsing() {
+		return isSportsing;
+	}
+
+	public void setSportsing(boolean isSportsing) {
+		this.isSportsing = isSportsing;
+	}
+
 	public void pressArms(){
-		armPress +=1f;
+		armPress += (1f + ((float)PlayerData.exercised / 20f));
 	}
 
 	public boolean canPress(){

@@ -20,9 +20,6 @@ public class GameStateRoom extends GameState {
 
 	private Jack jack = new Jack();
 
-	private double bobCounter;
-	private double bobbing;
-
 	private boolean canGame;
 
 	private float alpha = 1f;
@@ -41,14 +38,13 @@ public class GameStateRoom extends GameState {
 	public void draw(Graphics2D g) {
 
 		GameStateDrawHelper.drawRoom(g);
-
+		
+		super.draw(g);
+		
 		jack.draw(g);
 
 		if(canGame){
-			g.drawImage(Images.game, 
-					Window.scale(850),
-					Window.scale(200) + (int)bobbing,
-					Window.scale(64), Window.scale(64), null);
+			GameStateDrawHelper.drawBobbingImg(g, Images.bubbleGame);
 		}
 
 		g.drawImage(Images.chair, Window.scale(824), Window.scale(260), (int)(64f*GameStateDrawHelper.scale), (int)(64f*GameStateDrawHelper.scale), null);
@@ -97,25 +93,21 @@ public class GameStateRoom extends GameState {
 
 		GameStateDrawHelper.drawBossCoinCounter(g);
 
-		for(Achievement a : Achievement.achievements.values())
-			a.draw(g);
-
 		g.setColor(new Color(0f,0f,0f,alpha));
 		g.fillRect(0, 0, Window.getWidth(), Window.getHeight());
 	}
 
 	@Override
 	public void update() {
-
+		super.update();
+		
 		if(jack.isAnimated() && !once)
 			once = true;
 
 		if(alpha > 0)
 			alpha -= 0.0025f;
 
-		bobCounter += 0.025D;
-		bobbing = Math.cos(bobCounter)*20;
-
+		GameStateDrawHelper.updateBobbingImage();
 
 		if(jack.getPosX() > Window.scale(800))
 			canGame = true;
@@ -138,8 +130,6 @@ public class GameStateRoom extends GameState {
 		}
 		jack.update();
 
-		for(Achievement a : Achievement.achievements.values())
-			a.update();
 
 		int i = 0;
 		for(boolean b : discoverRoom)

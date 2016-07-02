@@ -9,11 +9,13 @@ import iamjack.resourceManager.Images;
 public class ShopItems {
 
 	public static ArrayList<ButtonShop> items = new ArrayList<ButtonShop>();
+
+	public static final String workout = "Work-Out Clothes";
 	
 	public ShopItems() {
 	}
 
 	public static void load(){
-		new ButtonShop(Images.workout, 200, "Work-Out Clothes", Window.scale(64), Window.scale(32));
+		new ButtonShop(Images.clothes, 20, workout, Window.scale(64), Window.scale(32));
 	}
 }

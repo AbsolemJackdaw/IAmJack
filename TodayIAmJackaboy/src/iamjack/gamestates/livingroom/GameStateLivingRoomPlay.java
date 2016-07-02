@@ -12,7 +12,6 @@ import iamjack.engine.resources.Music;
 import iamjack.gamestates.GameStateDrawHelper;
 import iamjack.player.Jack;
 import iamjack.player.PlayerData;
-import iamjack.player.achievements.Achievement;
 import iamjack.resourceManager.Images;
 import iamjack.resourceManager.Sounds;
 
@@ -44,22 +43,23 @@ public class GameStateLivingRoomPlay extends GameState {
 	public GameStateLivingRoomPlay(GameStateHandler gsh) {
 		super(gsh);
 
-		jack.setPosX(Window.scale(850));
+		jack.setPosX(Window.scale(882));
 		jack.setPosY(Window.scale(256));
 
 		jack.setBenchPressing(true);
-		
+
 		Music.loop(Sounds.METALREPS);
 	}
 
 	@Override
 	public void update() {
-
+		super.update();
 		if(jack.repsDone() >= 5 && jack.canPress()){
+			PlayerData.exercised += 5;
 			Music.stop(Sounds.METALREPS);
 			gsh.changeGameState(GameStateHandler.GAME_LIVING_END);
 		}
-		
+
 		if(MouseHandler.clicked != null && MouseHandler.click){
 			if(jack.canPress()){
 				jack.pressArms();
@@ -87,15 +87,12 @@ public class GameStateLivingRoomPlay extends GameState {
 
 		if(speakTimer > 0)
 			speakTimer --;
-		
-		for(Achievement a : Achievement.achievements.values())
-			a.update();
 	}
 
 	@Override
 	public void draw(Graphics2D g) {
 		GameStateDrawHelper.drawLivingRoom(g);
-
+		super.draw(g);
 		g.drawImage(Images.livingroomBenchPress,
 				Window.scale(732),
 				Window.scale(288),
@@ -112,8 +109,5 @@ public class GameStateLivingRoomPlay extends GameState {
 
 		if(!PlayerData.hasWorkedOut && index < info.length-1)
 			jack.say(info[index], g);
-		
-		for(Achievement a : Achievement.achievements.values())
-			a.draw(g);
 	}
 }

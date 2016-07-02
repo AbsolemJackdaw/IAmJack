@@ -12,7 +12,6 @@ import iamjack.engine.resources.Music;
 import iamjack.gamestates.GameStateDrawHelper;
 import iamjack.player.Jack;
 import iamjack.player.PlayerData;
-import iamjack.player.achievements.Achievement;
 import iamjack.resourceManager.Images;
 import iamjack.resourceManager.Sounds;
 
@@ -63,7 +62,7 @@ public class GameStateRoomPlay extends GameState {
 		Music.loop(Sounds.METAL);
 
 		jack = new Jack();
-		sitX = Window.scale(820);
+		sitX = Window.scale(852);
 		sitY = Window.scale(240);
 
 		jack.setPosX(sitX);
@@ -85,7 +84,8 @@ public class GameStateRoomPlay extends GameState {
 	public void draw(Graphics2D g) {
 
 		GameStateDrawHelper.drawRoom(g);
-
+		super.draw(g);
+		
 		jack.draw(g);
 
 		g.drawImage(Images.chairLow, Window.scale(824), Window.scale(272), (int)(64f*GameStateDrawHelper.scale), (int)(64f*GameStateDrawHelper.scale), null);
@@ -106,22 +106,19 @@ public class GameStateRoomPlay extends GameState {
 					b.draw(g);
 				
 			}
-
-		for(Achievement a : Achievement.achievements.values())
-			a.draw(g);
 	}
 
 	@Override
 	public void update() {
-
+		super.update();
+		
 		jack.update();
 
 		if(speakTimer <= 0 && stage < buttons.length)
 			for(ButtonGamePlay b : buttons[stage]){
 				if(b!=null){
-					b.update();
+					b.update(gsh);
 					if(MouseHandler.click && b.isLit()){
-						b.click(gsh);
 						buttonClicked = true;
 						stage++;
 						//sets jack mashing his keyboard after first button is clicked
@@ -151,8 +148,5 @@ public class GameStateRoomPlay extends GameState {
 			Music.stop(Sounds.METAL);
 		if(stage >=	choices.length && speakTimer <= 0d)
 			gsh.changeGameState(GameStateHandler.GAME_ROOM_VIDEO_DONE);
-
-		for(Achievement a : Achievement.achievements.values())
-			a.update();
 	}
 }

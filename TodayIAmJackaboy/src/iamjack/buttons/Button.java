@@ -48,11 +48,14 @@ public class Button {
 
 	}
 
-	public void update(){
+	public void update(GameStateHandler gsh){
 		if(getBox().contains(MouseHandler.mouseX , MouseHandler.mouseY))
 			setLit(true);
 		else
 			setLit(false);
+		
+		if(MouseHandler.click && isLit())
+			click(gsh);
 	}
 
 	public void click(GameStateHandler gsh){};

@@ -22,13 +22,16 @@ public class PlayerData {
 	public static int money = 0;
 	public static int fans = 0;
 	public static int daysPlayed = 1;
+	public static int exercised = 0;
 
-
+	
+	
 	public static void writeToSave(DataTag tag){
-		System.out.println(daysPlayed);
+
 		tag.writeInt("money", money);
 		tag.writeInt("fans", fans);
 		tag.writeInt("daysPlayed", daysPlayed);
+		tag.writeInt("exercised", exercised);
 		tag.writeBoolean("hasWorkedOut", hasWorkedOut);
 
 		DataList list = new DataList();
@@ -40,9 +43,10 @@ public class PlayerData {
 		tag.writeList("achievements", list);
 
 		DataList list2 = new DataList();
-		for(String s : itemsBought){
+		for(int i = 0; i < itemsBought.size();i++){
+			String s = itemsBought.get(i);
 			DataTag t = new DataTag();
-			tag.writeString("name", s);
+			t.writeString("name"+i, s);
 			list2.write(t);
 		}
 		tag.writeList("itemsBought", list2);
@@ -52,6 +56,7 @@ public class PlayerData {
 		money = tag.readInt("money");
 		fans = tag.readInt("fans");
 		daysPlayed = tag.readInt("daysPlayed");
+		exercised = tag.readInt("exercised");
 		hasWorkedOut = tag.readBoolean("hasWorkedOut");
 
 		DataList list = tag.readList("achievements");
@@ -63,7 +68,7 @@ public class PlayerData {
 		DataList list2 = tag.readList("itemsBought");
 		for(int i = 0; i < list2.data().length(); i++){
 			DataTag dt = list2.readArray(i);
-			itemsBought.add(dt.readString("name"));
+			itemsBought.add(dt.readString("name"+i));
 		}
 	}
 }

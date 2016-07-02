@@ -9,7 +9,6 @@ import iamjack.buttons.ButtonDay;
 import iamjack.engine.GameState;
 import iamjack.engine.GameStateHandler;
 import iamjack.engine.Window;
-import iamjack.engine.input.MouseHandler;
 import iamjack.player.PlayerData;
 
 public class GameStateEndDay extends GameState{
@@ -43,6 +42,7 @@ public class GameStateEndDay extends GameState{
 
 	@Override
 	public void draw(Graphics2D g) {
+		super.draw(g);
 
 		g.setColor(new Color(0f, 0f, 0f, Math.min(1, alpha)));
 		g.fillRect(0, 0, Window.getWidth(), Window.getHeight());
@@ -65,7 +65,8 @@ public class GameStateEndDay extends GameState{
 
 	@Override
 	public void update() {
-
+		super.update();
+		
 		if(alpha < 1f)
 			alpha += 0.025f;
 		else
@@ -73,12 +74,7 @@ public class GameStateEndDay extends GameState{
 
 		for(int i = 0; i < 2 ; i++){
 			Button b = i == 0 ? button1 : button2;
-			b.update();
-
-			if(b.getBox().contains(MouseHandler.mouseX , MouseHandler.mouseY)){
-				if(MouseHandler.click && b.isLit())
-					b.click(gsh);
-			}
+			b.update(gsh);
 		}	
 	}
 }

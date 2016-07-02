@@ -9,7 +9,8 @@ public class Sounds {
 	public static final String ROOMMUSIC = "roomMusic"; 
 	public static final String EVERYWHERE = "everywhere"; 
 	public static final String METALREPS = "metalreps"; 
-	
+	public static final String WORKOUT = "workout"; 
+
 	public static final String HIGH5 = "high5"; 
 
 	public static final String WALK = "step"; 
@@ -34,6 +35,7 @@ public class Sounds {
 		loadMusic("/sounds/NewChiptuneQuests8bitEightBitRoyaltyFreeMusic.mp3",QUEST);
 		loadMusic("/sounds/TeknoAXEsRoyaltyFreeMusicRoyaltyFreeCheapHairMetalRockSong.mp3", METALREPS);
 		loadMusic("/sounds/SpaceDockDancePartyElectroHouseRoyaltyFreeMusic.mp3", SHOP);
+		loadMusic("/sounds/TeknoAXEsRoyaltyFreeMusicBackground34TraditionalCelticFestivitiesWorldFestive.mp3", WORKOUT);
 		
 		for(int i = 1; i < 5; i++)
 			loadMusic("/sounds/step_0"+i+".mp3", WALK+(i-1));

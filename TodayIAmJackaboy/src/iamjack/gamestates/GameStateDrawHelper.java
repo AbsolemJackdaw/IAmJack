@@ -3,6 +3,7 @@ package iamjack.gamestates;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 
 import iamjack.engine.Window;
 import iamjack.player.PlayerData;
@@ -45,6 +46,21 @@ public class GameStateDrawHelper {
 				(int)sizeX, (int)sizeY, null);
 	}
 	
+	public static void drawExterior(Graphics2D g){
+
+		g.setColor(Color.black);
+		g.fillRect(0, 0, Window.getWidth(), Window.getHeight());
+
+		scale = (float)Window.getWidth() / (float)Images.exterior.getWidth();
+		sizeX = Images.exterior.getWidth() * scale;
+		sizeY = Images.exterior.getHeight() * scale;
+
+		g.drawImage(Images.exterior, 
+				Window.getWidth()/2 - (int)sizeX/2,
+				Window.getHeight()/2 - (int)sizeY/2, 
+				(int)sizeX, (int)sizeY, null);
+	}
+	
 	public static void drawBossCoinCounter(Graphics2D g){
 		if(PlayerData.daysPlayed > 1){
 			g.setFont(font);
@@ -52,5 +68,21 @@ public class GameStateDrawHelper {
 			String money = "Boss Coin :" + PlayerData.money;
 			g.drawString(money, 0, g.getFontMetrics().getHeight());
 		}
+	}
+	
+	private static double bobCounter;
+	private static double bobbing;
+	
+	public static void drawBobbingImg(Graphics2D g, BufferedImage img){
+		g.drawImage(img, 
+				Window.scale(850),
+				Window.scale(200) + (int)bobbing,
+				Window.scale(64), Window.scale(64), null);
+	}
+	
+	public static void updateBobbingImage(){
+		bobCounter += 0.025D;
+		bobbing = Math.cos(bobCounter)*20;
+
 	}
 }

@@ -13,6 +13,9 @@ import iamjack.gamestates.GameStateWhatsNext;
 import iamjack.gamestates.livingroom.GameStateLivingRoom;
 import iamjack.gamestates.livingroom.GameStateLivingRoomEnd;
 import iamjack.gamestates.livingroom.GameStateLivingRoomPlay;
+import iamjack.gamestates.outside.GameStateOutside;
+import iamjack.gamestates.outside.GameStateOutsideEnd;
+import iamjack.gamestates.outside.GameStateWorkout;
 import iamjack.gamestates.room.GameStateRoom;
 import iamjack.gamestates.room.GameStateRoomEnd;
 import iamjack.gamestates.room.GameStateRoomPlay;
@@ -23,19 +26,26 @@ public class GameStateHandler {
 	public int currentGameState;
 
 	public static final int LOAD = 0;
+	
 	public static final int GAME_ROOM = 1;
 	public static final int GAME_ROOM_VIDEO = 2;
 	public static final int GAME_ROOM_VIDEO_DONE = 3;
+	
 	public static final int GAME_ENDDAY = 4;
 	public static final int GAME_QUIT = 5;
 	public static final int MENU = 6;
 	public static final int ACHIEVS = 7;
+	public static final int GAME_WHERETO = 11;
+	public static final int GAME_SHOP = 12;
+	
 	public static final int GAME_LIVING = 8;
 	public static final int GAME_LIVING_BENCHGAME = 9;
 	public static final int GAME_LIVING_END = 10;
-	public static final int GAME_WHERETO = 11;
-	public static final int GAME_SHOP = 12;
-
+	
+	public static final int GAME_WORKOUT = 13;
+	public static final int GAME_EXTERIOR = 14;
+	public static final int GAME_EXTERIOR_END = 15;
+	
 	public static final GameState[] states = new GameState[20];
 
 	public GameStateHandler() {
@@ -108,6 +118,15 @@ public class GameStateHandler {
 			break;
 		case GAME_SHOP:
 			states[state] = new GameStateShop(this);
+			break;
+		case GAME_WORKOUT:
+			states[state] = new GameStateWorkout(this);
+			break;
+		case GAME_EXTERIOR:
+			states[state] = new GameStateOutside(this);
+			break;
+		case GAME_EXTERIOR_END:
+			states[state] = new GameStateOutsideEnd(this);
 			break;
 		}
 	}

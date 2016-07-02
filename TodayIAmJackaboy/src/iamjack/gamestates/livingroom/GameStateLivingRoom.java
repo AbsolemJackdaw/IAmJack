@@ -20,9 +20,6 @@ public class GameStateLivingRoom extends GameState {
 
 	private Jack jack = new Jack();
 
-	private double bobCounter;
-	private double bobbing;
-
 	private boolean canWorkout;
 
 	private float alpha;
@@ -40,9 +37,9 @@ public class GameStateLivingRoom extends GameState {
 
 	@Override
 	public void update() {
-
-		bobCounter += 0.025D;
-		bobbing = Math.cos(bobCounter)*20;
+		super.update();
+		
+		GameStateDrawHelper.updateBobbingImage();
 
 		if(jack.isAnimated() && !once)
 			once = true;
@@ -80,21 +77,16 @@ public class GameStateLivingRoom extends GameState {
 		if(alpha > 0)
 			alpha -= 0.0025f;
 
-		for(Achievement a : Achievement.achievements.values())
-			a.update();
 	}
 
 	@Override
 	public void draw(Graphics2D g) {
-
+		super.draw(g);
+		
 		GameStateDrawHelper.drawLivingRoom(g);
 
-		if(canWorkout){
-			g.drawImage(Images.workout, 
-					Window.scale(850),
-					Window.scale(200) + (int)bobbing,
-					Window.scale(64), Window.scale(64), null);
-		}
+		if(canWorkout)
+			GameStateDrawHelper.drawBobbingImg(g, Images.bubbleWorkout);
 
 		jack.draw(g);
 
@@ -128,8 +120,5 @@ public class GameStateLivingRoom extends GameState {
 
 		g.setColor(new Color(0f,0f,0f,alpha));
 		g.fillRect(0, 0, Window.getWidth(), Window.getHeight());
-
-		for(Achievement a : Achievement.achievements.values())
-			a.draw(g);
 	}
 }

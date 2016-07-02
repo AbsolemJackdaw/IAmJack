@@ -36,7 +36,8 @@ public class GameStateRoomEnd extends GameState {
 	public void draw(Graphics2D g) {
 
 		GameStateDrawHelper.drawRoom(g);
-
+		super.draw(g);
+		
 		jack.draw(g);
 
 		g.setFont(text);g.setColor(Color.white);
@@ -67,24 +68,18 @@ public class GameStateRoomEnd extends GameState {
 				jack.say("This is for looking at. Fan made, very Fancy stuff!", g);
 		}
 		
-		for(Achievement a : Achievement.achievements.values())
-			a.draw(g);
-
 		GameStateDrawHelper.drawBossCoinCounter(g);
-
 	}
 
 	@Override
 	public void update() {
-
+		super.update();
+		
 		jack.update();
 
 		if(jack.getPosX() < -10){
 			gsh.changeGameState(GameStateHandler.GAME_WHERETO);
 		}
-
-		for(Achievement a : Achievement.achievements.values())
-			a.update();
 	}
 
 	private String makeVideoText(){

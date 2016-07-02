@@ -67,6 +67,7 @@ public class GameStateQuit extends GameState {
 	
 	@Override
 	public void draw(Graphics2D g) {
+		super.draw(g);
 		
 		g.setColor(Color.black);
 		g.fillRect(0, 0, Window.getWidth(), Window.getHeight());
@@ -85,19 +86,18 @@ public class GameStateQuit extends GameState {
 			int y2 = g.getFontMetrics().getHeight() + Window.scale(2);
 			g.drawString(s, Window.getWidth()/2 - x2/2, (int)offset + y2*i);
 		}
-		for(Achievement a : Achievement.achievements.values())
-			a.draw(g);
 	}
 	
 	@Override
 	public void update() {
+		super.update();
 		
 		float percentPart = 100f/(float)Achievement.achievements.size();
 		float rest = (float)Achievement.achievements.size() - (float)PlayerData.achievements.size();
 		float percent = 100f - (rest*percentPart);
 		
 		credits[credits.length-1] = percent+"%";
-		offset -= 0.8D;
+		offset -= 1D;
 		
 		if(offset < -Window.scale(1500) || KeyHandler.isPressed(KeyHandler.ENTER)){
 			PlayerData.soundsPlayed.clear();
@@ -107,7 +107,5 @@ public class GameStateQuit extends GameState {
 		if(offset < -Window.scale(1100)){
 			Achievement.trigger("credits");
 		}
-		for(Achievement a : Achievement.achievements.values())
-			a.update();
 	}
 }
