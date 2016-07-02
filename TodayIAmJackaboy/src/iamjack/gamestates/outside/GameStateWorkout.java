@@ -76,10 +76,10 @@ public class GameStateWorkout extends GameState{
 		
 		super.draw(g);
 		
-		jack.draw(g);
-
 		for(EntityPickUps e : pickups)
 			e.draw(g);
+		
+		jack.draw(g);
 
 		g.setColor(Color.green.darker().darker());
 		g.drawString(""+(timer/60), Window.scale(100), Window.scale(100));
