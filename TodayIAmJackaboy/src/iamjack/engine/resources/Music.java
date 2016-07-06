@@ -113,10 +113,12 @@ public class Music {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
+		}finally{
+			if(clip != null)
+				clips.put(n, clip);
 		}
 
-		if(clip != null)
-			clips.put(n, clip);
+		
 	}
 
 	public static void loop(String s) {
