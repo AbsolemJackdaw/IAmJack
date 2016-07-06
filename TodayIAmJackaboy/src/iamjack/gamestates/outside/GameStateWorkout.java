@@ -12,9 +12,13 @@ import iamjack.engine.GameStateHandler;
 import iamjack.engine.Window;
 import iamjack.engine.input.KeyHandler;
 import iamjack.engine.input.MouseHandler;
+import iamjack.engine.resources.Music;
+import iamjack.gamestates.GameStateDrawHelper;
+import iamjack.gamestates.shop.ShopItems;
 import iamjack.player.Jack;
 import iamjack.player.PlayerData;
 import iamjack.resourceManager.Images;
+import iamjack.resourceManager.Sounds;
 
 public class GameStateWorkout extends GameState{
 
@@ -39,8 +43,11 @@ public class GameStateWorkout extends GameState{
 
 	private final Random rand = new Random();
 
-	private int timer; //30 seconds * ticktime
-	private int flagTimer;
+	private int timer;
+	private int flagPositionX;
+	private boolean playedCheerOnce;
+
+	private float alphaFinish = 0f;
 
 	public GameStateWorkout(GameStateHandler gsh) {
 		super(gsh);
@@ -55,8 +62,8 @@ public class GameStateWorkout extends GameState{
 		drawHeight = Window.getHeight()/2 - scaledImgHeight/2;
 		drawWidth = Window.getWidth()/2 - scaledImgWidth/2;
 
-		timer = (int)((30f + (float)PlayerData.exercised / 25f)*60f);
-		flagTimer = timer * 4;
+		timer = (int)((32f + (float)PlayerData.exercised / 25f)*60f); //32 seconds * ticktime and a bonus
+		flagPositionX = (timer * 4) - ((2*60)*4); // same as timer, but leaves out the last 2 seconds after the finish
 
 		jackbox = new Rectangle(0, 0, Window.scale(64), Window.scale(16));
 
@@ -73,29 +80,56 @@ public class GameStateWorkout extends GameState{
 		g.fillRect(0, 0, Window.getWidth(), Window.getHeight());
 
 		drawBackground(g);
-		
-		super.draw(g);
-		
+		GameStateDrawHelper.drawBossCoinCounter(g);
+
 		for(EntityPickUps e : pickups)
-			e.draw(g);
-		
+			if(jack.getPosY() >= e.posY + Window.scale(32) && e.imgIndex == 3)
+				e.draw(g);
+			else 
+				e.draw(g);
+
+		int scaled = (int)(64 * scale);
+		g.drawImage(Images.flag, Window.scale(50) + (flagPositionX), (int)drawHeight, scaled, scaled, null);
+
 		jack.draw(g);
+		
+		//double drawing for front and back apparition of billy
+		for(EntityPickUps e : pickups)
+			if(jack.getPosY() + Window.scale(128) < e.posY + Window.scale(32) && e.imgIndex == 3)
+				e.draw(g);
 
 		g.setColor(Color.green.darker().darker());
 		g.drawString(""+(timer/60), Window.scale(100), Window.scale(100));
 
-		int scaled = (int)(64 * scale);
-		g.drawImage(Images.flag, Window.scale(50) + (flagTimer), (int)drawHeight, scaled, scaled, null);
+		g.setColor(new Color(0, 0, 0, alphaFinish));
+		g.fillRect(0, 0, Window.getWidth(), Window.getHeight());
+		
+		super.draw(g);
+
 	}
 
 	@Override
 	public void update() {
 		super.update();
-		
-		timer --;
-		flagTimer -= 4;
 
-		if(pickups.size() < 6)
+		timer --;
+		flagPositionX -= 4;
+
+		//5 seconds left
+		if(flagPositionX <= jack.getPosX() && !playedCheerOnce){
+			Music.play(Sounds.CHEER);
+			playedCheerOnce = true;
+			pickups.add(new EntityPopoff(EntityPopoff.PLUS1BICEPS, (int)jack.getPosX(), (int)jack.getPosY(), 3.5d));
+		}
+
+		if(flagPositionX < jack.getPosX())
+			alphaFinish += (1f/(2.5f*60f)); 
+
+		if(alphaFinish >= 1f)
+			alphaFinish = 1f;
+
+		if(pickups.size() < 6 && flagPositionX > Window.getWidth()) 
+			//renew pickups if there are less then 6 pickups and the flag is off screen
 			generatePickUps();
 
 		vecX = 4;
@@ -112,15 +146,19 @@ public class GameStateWorkout extends GameState{
 		if(posXStreet >= Window.getWidth())
 			posXStreet = 0;
 
-		if(MouseHandler.mouseY > drawHeight && MouseHandler.mouseY < (drawHeight + scaledImgHeight - Window.scale(128))){ //128 is jacks size
+		if(MouseHandler.mouseY > drawHeight && MouseHandler.mouseY < (drawHeight + scaledImgHeight - Window.scale(128))) //128 is jacks size
 			jack.setPosY(MouseHandler.mouseY);
-		}
-
-		jackbox = new Rectangle(0, 0, Window.scale(64), Window.scale(16));
+		//queue failsaifs : if mouse moved to fast out of the update region, set pos to max
+		else if(MouseHandler.mouseY < drawHeight)
+			jack.setPosY(drawHeight);
+		else if(MouseHandler.mouseY > (drawHeight + scaledImgHeight - Window.scale(128)))
+			jack.setPosY(drawHeight + scaledImgHeight - Window.scale(128));
 
 		jackbox.setLocation((int)jack.getPosX(), (int)jack.getPosY()+Window.scale(110));
 
+		//queue right to trigger walk animation
 		KeyHandler.keyState[KeyHandler.RIGHT] = true;
+		//set jack back to initial position, or he will effectively run to the right
 		jack.setPosX(200);
 
 		jack.update();
@@ -157,6 +195,9 @@ public class GameStateWorkout extends GameState{
 		}
 	}
 
+	/////////////////////////////////////////////////////////////////////////////////////////////
+	/////////////////////////////////////////////////////////////////////////////////////////////
+
 	private void drawBackground(Graphics2D g){
 
 		g.drawImage(sky, 
@@ -185,11 +226,16 @@ public class GameStateWorkout extends GameState{
 		for(int i = 0; i < loop; i++){
 
 			int r = rand.nextInt(3);
-			if (rand.nextInt(6) == 0)
+			if (rand.nextInt(PlayerData.itemsBought.contains(ShopItems.billyPotion) ? 20 : 6) == 0)
 				r = EntityPickUps.BILLY;
 
+			int x = Window.getWidth() + rand.nextInt(1000);
+
+			if(x > flagPositionX)
+				continue;//dont set pickups after flag
+
 			e = new EntityPickUps(r,
-					Window.getWidth() + rand.nextInt(1000),
+					x,
 					(Window.scale(64)+Window.getHeight() / 2 - (int)scaledImgHeight/2) + (rand.nextInt((int)scaledImgHeight-Window.scale(128))), 
 					4d);
 			pickups.add(e);

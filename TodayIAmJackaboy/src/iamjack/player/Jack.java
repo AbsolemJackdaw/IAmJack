@@ -48,6 +48,7 @@ public class Jack {
 	private float armPress = 0f;
 	private boolean canPress = true;
 	private int reps = 0;
+	int totalreps = 5;
 
 	public Jack() {
 
@@ -90,7 +91,8 @@ public class Jack {
 				Images.jackSportsing,
 				Images.jackSport[1]
 		};
-
+		
+		totalreps = (int) (5f + ((float)PlayerData.exercised / 10f));
 	}
 
 	public void draw(Graphics2D g){
@@ -161,7 +163,7 @@ public class Jack {
 			canPress = true;
 
 		if(armPress > 0f)
-			armPress -= canPress ? 0.05 : 0.2f;
+			armPress -= canPress ? 0.05 : (0.2f + (float)PlayerData.exercised/200f);
 	}
 
 	private void doMovement(){
@@ -231,10 +233,10 @@ public class Jack {
 
 	private void drawBenchPressing(Graphics2D g){
 		g.setColor(Color.black);
-		g.drawString(""+(5 - reps), (int)posX+1, (int)posY+1);
+		g.drawString(""+(totalreps - reps), (int)posX+1, (int)posY+1);
 
 		g.setColor(Color.green.darker());
-		g.drawString(""+(5 - reps), (int)posX, (int)posY);
+		g.drawString(""+(totalreps - reps), (int)posX, (int)posY);
 
 		drawJack(Images.jackPress, g);
 
@@ -279,7 +281,7 @@ public class Jack {
 	public double getPosX() {
 		return posX;
 	}
-
+	
 	public void setPosX(double posX) {
 		this.posX = posX;
 	}

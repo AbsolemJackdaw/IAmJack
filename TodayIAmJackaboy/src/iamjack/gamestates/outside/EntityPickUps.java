@@ -6,9 +6,13 @@ import java.awt.image.BufferedImage;
 import java.util.Random;
 
 import iamjack.engine.Window;
+import iamjack.engine.resources.Music;
 import iamjack.player.Jack;
 import iamjack.player.PlayerData;
+import iamjack.player.achievements.Achievement;
+import iamjack.player.achievements.AchievementLoader;
 import iamjack.resourceManager.Images;
+import iamjack.resourceManager.Sounds;
 
 public class EntityPickUps {
 
@@ -31,7 +35,11 @@ public class EntityPickUps {
 		posX = startX;
 		posY = startY;
 		this.moveSpeed = moveSpeed;
-		box = new Rectangle(startX, startY, Window.scale(64), Window.scale(64));
+
+		if(index != BILLY)
+			box = new Rectangle(startX, startY, Window.scale(64), Window.scale(64));
+		else
+			box = new Rectangle(startX, startY+ Window.scale(32), Window.scale(64), Window.scale(32));
 
 	}
 
@@ -43,15 +51,20 @@ public class EntityPickUps {
 		if(imgIndex == BILLY){
 			billyTimer++;
 			if(billyTimer % 2 == 0){
-				if(posY  > jack.getPosY()+ Window.scale(70))
+				if(posY  > jack.getPosY() + Window.scale(70))
 					posY--;
 				else 
 					posY++;
+				box.setLocation((int)posX, (int)posY+Window.scale(32));
 			}
 		}
 	}
 
 	public void draw(Graphics2D g){
+		
+//		g.setColor(Color.black);
+//		g.draw(getBox());
+		
 		g.drawImage(getImg(), (int)posX, (int)posY, Window.scale(64), Window.scale(64), null);
 	}
 
@@ -84,6 +97,8 @@ public class EntityPickUps {
 				PlayerData.money += rand.nextInt(8) + 1; 
 			break;
 		case BILLY :
+			Achievement.trigger(AchievementLoader.billy);
+			Music.play(Sounds.screwyoubilly);
 			PlayerData.money -= rand.nextInt(17)+3;
 			PlayerData.fans -= rand.nextInt(17)+3;
 			break;

@@ -12,6 +12,7 @@ public class Sounds {
 	public static final String WORKOUT = "workout"; 
 
 	public static final String HIGH5 = "high5"; 
+	public static final String screwyoubilly = "screwyoubilly"; 
 
 	public static final String WALK = "step"; 
 	public static final String ENERGY = "energy"; 
@@ -25,6 +26,7 @@ public class Sounds {
 	public static final String OUTRO = "outro"; 
 	public static final String REPS = "reps"; 
 	public static final String SHOP = "shop"; 
+	public static final String CHEER = "cheer"; 
 
 	public static void loadSounds(){
 		Music.init();
@@ -52,7 +54,7 @@ public class Sounds {
 		for(int i = 0; i < 17; i++)
 			loadMusic("/sounds/rage/rage"+i+".mp3", RAGE+i);
 
-		for(int i = 0; i < 12; i++)
+		for(int i = 0; i < 13; i++)
 			loadMusic("/sounds/scared/scared"+i+".mp3", SCARED+i);
 
 		for(int i = 0; i < 19; i++)
@@ -67,10 +69,14 @@ public class Sounds {
 		for(int i = 0; i < 5; i++)
 			loadMusic("/sounds/outro/outro"+i+".mp3", OUTRO+i);
 
-		loadMusic("/sounds/high_five.mp3", HIGH5);
-
 		for(int i = 0; i < 20; i++)
 			loadMusic("/sounds/reps/reps"+i+".mp3", REPS+i);
+		
+		loadMusic("/sounds/high_five.mp3", HIGH5);
+		loadMusic("/sounds/childrencheer.mp3", CHEER);
+		
+		loadMusic("/sounds/billy/screwyoubilly1.mp3", screwyoubilly);
+
 	}
 
 	private static void loadMusic(String path, String name){

@@ -16,7 +16,8 @@ public class KeyHandler {
 	public static int ENTER = 5;
 	public static int BACKSPACE = 6;
 	public static int SHIFT = 7;
-	public static int AnyOtherKey = 8;
+	public static int ESCAPE = 8;
+	public static int AnyOtherKey = 9;
 
 	public static boolean anyKeyPress() {
 		for (int i = 0; i < NUM_KEYS; i++)
@@ -51,6 +52,8 @@ public class KeyHandler {
 			keyState[BACKSPACE] = b;
 		}else if (i == KeyEvent.VK_SHIFT){
 			keyState[SHIFT] = b;
+		}else if (i == KeyEvent.VK_ESCAPE){
+			keyState[ESCAPE] = b;
 		}else{
 			keyState[AnyOtherKey] = b;
 			if(b)

@@ -29,13 +29,16 @@ public class Images {
 	public static BufferedImage roomShade;
 	public static BufferedImage door;
 	public static BufferedImage room;
-	
+	public static BufferedImage tank;
+
 	public static BufferedImage sky;
 	public static BufferedImage street;
 	public static BufferedImage exterior;
+	public static BufferedImage exteriorNight;
 	public static BufferedImage exteriorDoor;
 
 	public static BufferedImage livingroom;
+	public static BufferedImage livingroomNight;
 	public static BufferedImage livingRoomShade;
 	public static BufferedImage livingroomDoor;
 	public static BufferedImage livingroomChair;
@@ -54,8 +57,15 @@ public class Images {
 	public static BufferedImage yt;
 	public static BufferedImage seat;
 	public static BufferedImage samSmile;
+	public static BufferedImage billyAchievement;
+	public static BufferedImage bosscoin;
+	public static BufferedImage ten;
+	public static BufferedImage scary;
+	public static BufferedImage rage;
 
 	public static BufferedImage clothes;
+	public static BufferedImage potion;
+
 	public static BufferedImage spud;
 	public static BufferedImage clover;
 	public static BufferedImage beer;
@@ -72,11 +82,12 @@ public class Images {
 		roomShade = ImageLoader.loadSprite("/img/room/jacksroomshadow.png");
 		door = ImageLoader.loadSprite("/img/room/door.png");
 		livingRoomShade = ImageLoader.loadSprite("/img/room/livingroomshade.png");
-		
+
 		sky = ImageLoader.loadSprite("/img/street/sky.png");
 		street = ImageLoader.loadSprite("/img/street/street.png");
 		exterior = ImageLoader.loadSprite("/img/street/house.png");
-		exteriorDoor = ImageLoader.loadSprite("/img/street/outsideDoor.png");
+		exteriorNight = ImageLoader.loadSprite("/img/street/housenight.png");
+		exteriorDoor = ImageLoader.loadSprite("/img/street/outsidedoor.png");
 
 		sam = ImageLoader.loadSprite("/img/sam.png");
 		bubbleGame = ImageLoader.loadSprite("/img/game.png");
@@ -102,24 +113,34 @@ public class Images {
 		ear = ImageLoader.loadSprite("/img/achievement/deaf.png");
 		spyglass = ImageLoader.loadSprite("/img/achievement/spyglass.png");
 		three = ImageLoader.loadSprite("/img/achievement/three.png");
+		ten = ImageLoader.loadSprite("/img/achievement/ten.png");
 		locked = ImageLoader.loadSprite("/img/achievement/locked.png");
 		scroll = ImageLoader.loadSprite("/img/achievement/scroll.png");
 		yt = ImageLoader.loadSprite("/img/achievement/yt.png");
 		seat = ImageLoader.loadSprite("/img/achievement/seat.png");
 		samSmile = ImageLoader.loadSprite("/img/achievement/samsmile.png");
+		billyAchievement = ImageLoader.loadSprite("/img/achievement/billy.png");
+		bosscoin = ImageLoader.loadSprite("/img/achievement/bc.png");
+		scary = ImageLoader.loadSprite("/img/achievement/scary.png");
+		rage = ImageLoader.loadSprite("/img/achievement/rage.png");
 
 		livingroom = ImageLoader.loadSprite("/img/room/livingroom.png");
+		livingroomNight = ImageLoader.loadSprite("/img/room/livingroomnight.png");
 		livingroomBenchPress = ImageLoader.loadSprite("/img/room/livingroomBenchPress.png");
 		livingroomBenchPressWeight = ImageLoader.loadSprite("/img/room/livingroomBenchPressWeight.png");
 		livingroomChair = ImageLoader.loadSprite("/img/room/livingroomchair.png");
 		livingroomDoor = ImageLoader.loadSprite("/img/room/livingroomdoor.png");
 
-		clothes = ImageLoader.loadSprite("/img/workoutclothes.png");
+		clothes = ImageLoader.loadSprite("/img/shop/workoutclothes.png");
+		potion = ImageLoader.loadSprite("/img/shop/billypotion.png");
+
 		spud = ImageLoader.loadSprite("/img/street/spud.png");
 		clover = ImageLoader.loadSprite("/img/street/clover.png");
 		beer = ImageLoader.loadSprite("/img/street/beer.png");
 		flag = ImageLoader.loadSprite("/img/street/flag.png");
 		billy = ImageLoader.loadSprite("/img/street/billy.png");
+
+		tank = ImageLoader.loadSprite("/img/tank.png");
 
 	}
 }

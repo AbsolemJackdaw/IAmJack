@@ -5,6 +5,7 @@ import java.util.Random;
 import iamjack.engine.resources.Music;
 import iamjack.player.PlayerData;
 import iamjack.player.achievements.Achievement;
+import iamjack.player.achievements.AchievementLoader;
 
 public class SoundPool {
 
@@ -27,7 +28,7 @@ public class SoundPool {
 	}
 
 	public static void playScaredVoice(){
-		Music.play(findNewVoice(Sounds.SCARED, 12));
+		Music.play(findNewVoice(Sounds.SCARED, 13));
 	}
 
 	public static void playTradeMarkVoice(){
@@ -57,11 +58,13 @@ public class SoundPool {
 			i = rand.nextInt(max);
 			song = type+i;
 			loops++;
-			if(loops > 18)
+			if(loops > 70) //entire size + marging
 				break;
 		}
 		
-		if(loops > 18)
+		System.out.println(loops + " loops to find song" );
+		
+		if(loops > 70)
 			song = type + rand.nextInt(6); //all categories have at least 6 sounds 
 		
 		System.out.println("Found unique voice " + song + ". Playing...");
@@ -71,7 +74,7 @@ public class SoundPool {
 		PlayerData.currentlySaying = song;
 		
 		if(song.equals("tm11") || song.equals("tm13"))
-			Achievement.trigger("likeaboss");
+			Achievement.trigger(AchievementLoader.likeaboss);
 		
 		return song;
 	}

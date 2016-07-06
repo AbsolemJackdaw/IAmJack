@@ -41,11 +41,9 @@ public class GameStateMenu extends GameState {
 
 	@Override
 	public void draw(Graphics2D g) {
-		super.draw(g);
-
 		g.setColor(Color.black);
 		g.fillRect(0, 0, Window.getWidth(), Window.getHeight());
-
+		
 		g.setColor(Color.white);
 		g.setFont(titleFont);
 		int sizeXtop = g.getFontMetrics().stringWidth(titleHead);

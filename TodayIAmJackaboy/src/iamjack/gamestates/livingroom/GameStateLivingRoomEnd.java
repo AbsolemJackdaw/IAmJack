@@ -10,6 +10,7 @@ import iamjack.gamestates.GameStateDrawHelper;
 import iamjack.player.Jack;
 import iamjack.player.PlayerData;
 import iamjack.player.achievements.Achievement;
+import iamjack.player.achievements.AchievementLoader;
 import iamjack.resourceManager.Images;
 import iamjack.resourceManager.Sounds;
 
@@ -29,12 +30,12 @@ public class GameStateLivingRoomEnd extends GameState {
 	@Override
 	public void update() {
 		super.update();
-		
+
 		jack.update();
 
 		if(!jack.isAnimated())
 			if(jack.getPosX() > Window.scale(310) && jack.getPosX() < Window.scale(320))
-				Achievement.trigger("seat");
+				Achievement.trigger(AchievementLoader.seat);
 
 		if(jack.getPosX() < -10){
 			Music.stop(Sounds.ROOMMUSIC);
@@ -47,8 +48,7 @@ public class GameStateLivingRoomEnd extends GameState {
 	@Override
 	public void draw(Graphics2D g) {
 
-		GameStateDrawHelper.drawLivingRoom(g);
-		super.draw(g);
+		GameStateDrawHelper.drawLivingRoom(g,1);
 		jack.draw(g);
 
 		g.drawImage(Images.livingroomChair,
@@ -60,7 +60,7 @@ public class GameStateLivingRoomEnd extends GameState {
 				Window.scale(732),
 				Window.scale(288),
 				(int)(64f*GameStateDrawHelper.scale),(int)(32f*GameStateDrawHelper.scale), null);
-		
+
 		g.drawImage(Images.livingroomBenchPressWeight,
 				Window.scale(732),
 				Window.scale(288),
@@ -81,5 +81,8 @@ public class GameStateLivingRoomEnd extends GameState {
 				(int)(64f*GameStateDrawHelper.scale), (int)(64f*GameStateDrawHelper.scale), null);
 
 		GameStateDrawHelper.drawBossCoinCounter(g);
+		GameStateDrawHelper.drawBicepsCounter(g);
+		
+		super.draw(g);
 	}
 }

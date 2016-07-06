@@ -96,7 +96,7 @@ public class Achievement {
 	public void update(){
 		if(isTriggerd){
 			offset--;
-			if(offset <= Window.getHeight() - 128)
+			if(offset <= Window.getHeight() - 220)
 				isTriggerd = false;
 		}else{
 			if(offset < Window.getHeight())

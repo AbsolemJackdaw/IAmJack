@@ -35,16 +35,16 @@ public class GameStateLoading extends GameState {
 
 	private String tips[] = new String[]{
 			"Did you know sounds take a long time to load ?",
-			"Wasd and Zqsd are valid controls to move Jack.",
-			"This game has over 100 audio files of Jack's voice !",
+			"This game has over 125 audio files of Jack's voice !",
 			"Interact by showing Jack the way with Sam.",
+			"Fans determine part of your salary",
+			"Hold escape in game for a handy menu",
 			"Did you know sounds take a long time to load ?",
 			"Like really long ?",
 			"It took me one day to code the base.",
 			"and one day to find and edit all the sounds !",
-			"And two more to tweak and finalize everything.",
-			"This game was made in Java exclusively."
-
+			"And two weaks to tweak and finalize everything.",
+			"This game was made in Java exclusively.",
 	};
 
 	public GameStateLoading(GameStateHandler gsh) {
@@ -106,7 +106,7 @@ public class GameStateLoading extends GameState {
 
 		counter++;
 
-		if(counter % 360 == 0)
+		if(counter % 240 == 0)
 			tipIndex++;
 
 		if(tipIndex >= tips.length)
@@ -130,7 +130,7 @@ public class GameStateLoading extends GameState {
 
 		if(loadTime > 0 && !resourcesLoaded)
 			loadTime++;
-		
+
 		if(resourcesLoaded){
 			gsh.changeGameState(GameStateHandler.MENU);
 			System.out.println("took " + loadTime + " ticks to load resources");
@@ -146,19 +146,17 @@ public class GameStateLoading extends GameState {
 			@Override
 			protected Integer doInBackground() {
 				loadTime = 1;
-				try {
-					Images.loadImages();
-					Sounds.loadSounds();
 
-					AchievementLoader.load();
-					ShopItems.load();
+				Images.loadImages();
+				Sounds.loadSounds();
 
-					SaveManager.readPlayerData();
+				AchievementLoader.load();
+				ShopItems.load();
 
-				} catch (Exception e) {
-					System.out.println("error occured");
-					e.printStackTrace();
-				}
+				SaveManager.readPlayerData();
+
+				//initialize scale for room drawing
+				new GameStateDrawHelper();
 
 				return null;
 			}

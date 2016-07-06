@@ -1,6 +1,7 @@
 package iamjack.engine.resources;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 
 import javax.sound.sampled.AudioFormat;
@@ -29,7 +30,7 @@ public class Music {
 		for(Clip c : clips.values())
 			c.stop();
 	}
-	
+
 	public static int getPosition(String s) {
 		return clips.get(s).getFramePosition();
 	}
@@ -38,7 +39,7 @@ public class Music {
 		clips = new HashMap<String, Clip>();
 		gap = 0;
 	}
-	
+
 	public static Clip getClip(String s)
 	{
 		Clip c = null;
@@ -46,37 +47,53 @@ public class Music {
 			c = clips.get(s);
 		return c;
 	}
-	
+
 	public static float getFrameRate(String s){
 		Clip c = null;
 		if(clips.containsKey(s))
 			c = clips.get(s);
-		
+
 		float rate = 1f;
 		if(c != null)
 			rate = c.getFormat().getFrameRate();
-		
+
 		if(rate == 1f && c == null)
 			System.out.println("Couldn't calculate frame rate");
-		
+
 		return rate;
 	}
 
 	public static void load(String s, String n) {
-		
+
 		System.out.println(s + " " + n);
-		
+
 		if (clips.get(n) != null)
 			return;
+
 		Clip clip = null;
 		AudioInputStream ais = null;
+		InputStream is = null;
+
 		try {
-			ais = AudioSystem.getAudioInputStream(Music.class.getClass().getResourceAsStream(s));
-		} catch (UnsupportedAudioFileException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
+			is = Music.class.getClass().getResourceAsStream(s);
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
+
+		if(is == null){
+			System.out.println(s + " is not a valid directory or file !");
+			System.out.println("skipping file for name " + n);
+			return;
+		}else{
+			System.out.println(is);
+		}
+		
+		try {
+			ais = AudioSystem.getAudioInputStream(is);
+		} catch (UnsupportedAudioFileException | IOException e1) {
+			e1.printStackTrace();
+		}
+
 		final AudioFormat baseFormat = ais.getFormat();
 		final AudioFormat decodeFormat = new AudioFormat(
 				AudioFormat.Encoding.PCM_SIGNED,
@@ -97,7 +114,9 @@ public class Music {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		clips.put(n, clip);
+
+		if(clip != null)
+			clips.put(n, clip);
 	}
 
 	public static void loop(String s) {

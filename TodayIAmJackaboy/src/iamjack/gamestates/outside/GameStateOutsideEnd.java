@@ -25,10 +25,18 @@ public class GameStateOutsideEnd extends GameState {
 
 	@Override
 	public void draw(Graphics2D g) {
-		GameStateDrawHelper.drawExterior(g);
-		super.draw(g);
+		GameStateDrawHelper.drawExterior(g,1);
+		GameStateDrawHelper.drawBossCoinCounter(g);
+		GameStateDrawHelper.drawBicepsCounter(g);
+
 		jack.draw(g);
 		g.drawImage(Images.exteriorDoor, Window.scale(15), Window.scale(148), (int)(64*GameStateDrawHelper.scale),  (int)(64*GameStateDrawHelper.scale), null);
+		
+		if(jack.getPosX() > Window.scale(750))
+			jack.say("Gosh I'm so tired right now !", g);
+		
+		super.draw(g);
+
 	}
 
 	@Override

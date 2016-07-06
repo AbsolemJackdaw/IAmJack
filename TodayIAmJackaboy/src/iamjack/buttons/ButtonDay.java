@@ -4,7 +4,6 @@ import iamjack.engine.GameStateHandler;
 import iamjack.engine.resources.Music;
 import iamjack.player.PlayerData;
 import iamjack.resourceManager.SaveManager;
-import iamjack.resourceManager.Sounds;
 
 public class ButtonDay extends Button {
 
@@ -14,18 +13,23 @@ public class ButtonDay extends Button {
 
 	@Override
 	public void click(GameStateHandler gsh) {
-		Music.stop(Sounds.EVERYWHERE);
-		
+		Music.stopAll();
 		if(getName().equals("Next Day")){
-			PlayerData.money += 20+PlayerData.fans/4 + ((2+PlayerData.fans/2)*PlayerData.daysPlayed);
+			PlayerData.money += payOut();
+			PlayerData.fans += PlayerData.daysPlayed/5;
 			PlayerData.daysPlayed++;
 			SaveManager.writePlayerData();
 			gsh.changeGameState(GameStateHandler.GAME_ROOM);
 		}else{
-			PlayerData.money += 20+PlayerData.fans/4 + ((2+PlayerData.fans/2)*PlayerData.daysPlayed);
+			PlayerData.money += payOut();
+			PlayerData.fans += PlayerData.daysPlayed/5;
 			PlayerData.daysPlayed++;
 			SaveManager.writePlayerData();
 			gsh.changeGameState(GameStateHandler.GAME_QUIT);
 		}
+	}
+	
+	private int payOut(){
+		return (int)(20f+(float)PlayerData.fans/20f + ((2f+(float)PlayerData.fans/10f)*((float)PlayerData.daysPlayed/5f)));
 	}
 }

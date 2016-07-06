@@ -2,6 +2,7 @@ package iamjack.gamestates.livingroom;
 
 import java.awt.AlphaComposite;
 import java.awt.Graphics2D;
+import java.util.ArrayList;
 import java.util.Random;
 
 import iamjack.engine.GameState;
@@ -10,6 +11,7 @@ import iamjack.engine.Window;
 import iamjack.engine.input.MouseHandler;
 import iamjack.engine.resources.Music;
 import iamjack.gamestates.GameStateDrawHelper;
+import iamjack.gamestates.outside.EntityPopoff;
 import iamjack.player.Jack;
 import iamjack.player.PlayerData;
 import iamjack.resourceManager.Images;
@@ -25,21 +27,25 @@ public class GameStateLivingRoomPlay extends GameState {
 
 	private String[] info = new String []{
 			"To get buff, mash the mouse like a boss !",
-			"You can do up to 5 reps a day.",
+			"You can do a couple of reps a day.",
 			"This will keep Jack healthy and fit.",
 			"It will also give him more fans",
 			"because being buff is boss as hell !",
-			"",
-			"",
-			"",
-			"Offcourse, you don't have to do reps.",
-			"you can leave the living room before doing reps.",
-			""
+			"The more you exercice, the more reps you can do"
 	};
 
 	private int counter = 0;
 	private int index = 0;
+	
+	private int totalReps = 0;
+	
+	private int currentReps = 0;
+	private int prevReps = 0;
+	private boolean rep;
+	private boolean prevRep;
 
+	private ArrayList<EntityPopoff> popoffs = new ArrayList<EntityPopoff>();
+	
 	public GameStateLivingRoomPlay(GameStateHandler gsh) {
 		super(gsh);
 
@@ -49,13 +55,31 @@ public class GameStateLivingRoomPlay extends GameState {
 		jack.setBenchPressing(true);
 
 		Music.loop(Sounds.METALREPS);
+		
+		totalReps = (int) (5f + ((float)PlayerData.exercised / 10f)); //every 2 days of exercise, 1 rep is added
 	}
 
 	@Override
 	public void update() {
 		super.update();
-		if(jack.repsDone() >= 5 && jack.canPress()){
-			PlayerData.exercised += 5;
+		
+		prevRep = rep;
+		
+		if(jack.canPress())
+			rep = true;
+		else
+			rep = false;
+		
+		if(prevRep && rep == false)
+			currentReps++;
+
+		if(prevReps < currentReps){
+			prevReps++;
+			popoffs.add(new EntityPopoff(EntityPopoff.PLUS1BICEPS, (int)jack.getPosX(), (int)jack.getPosY()+ Window.scale(64), 4d));
+		}
+		
+		if(jack.repsDone() >= totalReps && jack.canPress()){
+			PlayerData.exercised += totalReps;
 			Music.stop(Sounds.METALREPS);
 			gsh.changeGameState(GameStateHandler.GAME_LIVING_END);
 		}
@@ -87,12 +111,19 @@ public class GameStateLivingRoomPlay extends GameState {
 
 		if(speakTimer > 0)
 			speakTimer --;
+		
+		for(EntityPopoff pop : popoffs){
+			pop.update(jack);
+			if(pop.getLifetime() <= 0){
+				popoffs.remove(pop);
+				break;
+			}
+		}
 	}
 
 	@Override
 	public void draw(Graphics2D g) {
-		GameStateDrawHelper.drawLivingRoom(g);
-		super.draw(g);
+		GameStateDrawHelper.drawLivingRoom(g,0);
 		g.drawImage(Images.livingroomBenchPress,
 				Window.scale(732),
 				Window.scale(288),
@@ -109,5 +140,11 @@ public class GameStateLivingRoomPlay extends GameState {
 
 		if(!PlayerData.hasWorkedOut && index < info.length-1)
 			jack.say(info[index], g);
+		
+		for(EntityPopoff pop : popoffs)
+			pop.draw(g);
+		
+		super.draw(g);
+
 	}
 }

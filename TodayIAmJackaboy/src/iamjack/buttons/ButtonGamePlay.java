@@ -26,7 +26,7 @@ public class ButtonGamePlay extends Button {
 		case "Yell":
 			return "Loud";
 
-		case "Be Funny":
+		case "Funny":
 			return "Withy";
 
 		case "Jack TM":
@@ -38,10 +38,10 @@ public class ButtonGamePlay extends Button {
 		case "Rage":
 			return "Raging";
 
-		case "Energetic":
+		case "Energy":
 			return "Energetic";
 
-		case "Be Scared":
+		case "Scared":
 			return "Scary,";
 
 		default:
@@ -53,12 +53,12 @@ public class ButtonGamePlay extends Button {
 
 		switch (s) {
 		case "Yell": SoundPool.playYellVoice(); break;
-		case "Be Funny": SoundPool.playFunnyVoice(); break;
+		case "Funny": SoundPool.playFunnyVoice(); break;
 		case "Jack TM": SoundPool.playTradeMarkVoice();break;
 		case "Laugh": SoundPool.playLaughVoice(); break;
 		case "Rage": SoundPool.playRageVoice(); break;
-		case "Energetic": SoundPool.playEnergyVoice();break;
-		case "Be Scared": SoundPool.playScaredVoice();break;
+		case "Energy": SoundPool.playEnergyVoice();break;
+		case "Scared": SoundPool.playScaredVoice();break;
 		case "Intro": SoundPool.playIntroVoice();break;
 		case "Outro": SoundPool.playOutroVoice();break;
 

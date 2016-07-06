@@ -12,6 +12,7 @@ import iamjack.gamestates.GameStateDrawHelper;
 import iamjack.player.Jack;
 import iamjack.player.PlayerData;
 import iamjack.player.achievements.Achievement;
+import iamjack.player.achievements.AchievementLoader;
 import iamjack.resourceManager.Images;
 import iamjack.resourceManager.Sounds;
 
@@ -36,7 +37,6 @@ public class GameStateRoomEnd extends GameState {
 	public void draw(Graphics2D g) {
 
 		GameStateDrawHelper.drawRoom(g);
-		super.draw(g);
 		
 		jack.draw(g);
 
@@ -69,6 +69,8 @@ public class GameStateRoomEnd extends GameState {
 		}
 		
 		GameStateDrawHelper.drawBossCoinCounter(g);
+		
+		super.draw(g);
 	}
 
 	@Override
@@ -91,6 +93,7 @@ public class GameStateRoomEnd extends GameState {
 		int laughCounter = 0;
 		int rageCounter = 0;
 		int withyCounter = 0;
+		int scaredCounter = 0;
 
 		for(String s : PlayerData.videoOfTheDay){
 			if(s.equals("Loud")){
@@ -105,11 +108,13 @@ public class GameStateRoomEnd extends GameState {
 				rageCounter++;continue;
 			}else if(s.equals("Withy")){
 				withyCounter++;continue;
+			}else if(s.equals("Scary")){
+				scaredCounter++;continue;
 			}
 
 			text += s + "";
 		}
-
+		
 		String loud = "";
 		switch (loudCounter){
 		case 1:	loud = "Loud,"; break;
@@ -133,6 +138,7 @@ public class GameStateRoomEnd extends GameState {
 		switch(originCounter){
 		case 1 : origin = "Original,";break;
 		case 2 : origin = "Unique,";break;
+		case 3 : origin = "Unique,";break;
 		}
 
 		String laugh = "";
@@ -146,19 +152,31 @@ public class GameStateRoomEnd extends GameState {
 		switch(rageCounter){
 		case 1 : rage = "Raging,";break;
 		case 2 : rage = "Maddening,";break;
+		case 3 : rage = "Infuriating,";break;
+		case 4 : rage = "Head Boiling";break;
 		}
 		String with = "";
 		switch(withyCounter){
 		case 1 : with = "Withy";break;
 		case 2 : with = "Positive";break;
+		case 3 : with = "Pleasant";break;
 		}
-
-		String s = text + loud + energy + origin + laugh + rage + with +"-";
+		String scare = "";
+		switch(scaredCounter){
+		case 1 : scare = "Scary";break;
+		case 2 : scare = "Haunting";break;
+		case 3 : scare = "Scared Shitless";break;
+		}
+		String s = text + scare + loud + energy + origin + laugh + rage + with +"-";
 
 		if(s.equalsIgnoreCase("-very loud,energetic,original,positive-"))
-			Achievement.trigger("erryday");
+			Achievement.trigger(AchievementLoader.erryday);
 		if(s.contains("Hilarious") && s.contains("Positive"))
-			Achievement.trigger("happy");
+			Achievement.trigger(AchievementLoader.happy);
+		if(s.equalsIgnoreCase("-scary,loud,comic,maddening,-"))
+			Achievement.trigger(AchievementLoader.scary);
+		if(s.contains("1200V") && s.contains("Head Boiling"))
+			Achievement.trigger(AchievementLoader.rage);
 		
 		return s;
 

@@ -7,9 +7,11 @@ import iamjack.buttons.ButtonGamePlay;
 import iamjack.engine.GameState;
 import iamjack.engine.GameStateHandler;
 import iamjack.engine.Window;
+import iamjack.engine.input.KeyHandler;
 import iamjack.engine.input.MouseHandler;
 import iamjack.engine.resources.Music;
 import iamjack.gamestates.GameStateDrawHelper;
+import iamjack.gamestates.shop.ShopItems;
 import iamjack.player.Jack;
 import iamjack.player.PlayerData;
 import iamjack.resourceManager.Images;
@@ -42,23 +44,23 @@ public class GameStateRoomPlay extends GameState {
 	};
 
 	private String[] text = new String[]{
-			"Play Game",
-			"Intro",
-			"Yell",
-			"Be Funny",
-			"Jack TM",
-			"Laugh",
-			"Rage",
-			"Energetic",
-			"Be Scared",
-			"Outro"
+			"Play Game",//0
+			"Intro",//1
+			"Yell",//2
+			"Funny",//3
+			"Jack TM",//4
+			"Laugh",//5
+			"Rage",//6
+			"Energy",//7
+			"Scared",//8
+			"Outro"//9
 	};
 
 	private ButtonGamePlay[][] buttons = new ButtonGamePlay[10][3];
 
 	public GameStateRoomPlay(GameStateHandler gsh) {
 		super(gsh);
-		
+
 		Music.loop(Sounds.METAL);
 
 		jack = new Jack();
@@ -70,6 +72,34 @@ public class GameStateRoomPlay extends GameState {
 
 		jack.setSitting(true);
 		jack.setAnimated(true);
+
+		//if new set of choices bought
+		if(PlayerData.itemsBought.contains(ShopItems.voices))
+			choices = new int[][]{
+			{0},
+			{1,6},
+			{4,7,5},
+			{8,2,6},
+			{7,5,3},
+			{4,6,2},
+			{5,8,7},
+			{6,2,3},
+			{4,8,5},
+			{9}
+		};
+		else
+			choices = new int[][]{
+			{0},
+			{1,2},
+			{3,5,2},
+			{7,2,8},
+			{2,6,5},
+			{4,3,2},
+			{5,2,7},
+			{2,6,8},
+			{4,3,2},
+			{9}
+		};
 
 		for(int j = 0; j < choices.length; j++)
 			for(int i = 0; i < choices[j].length; i++){
@@ -84,8 +114,7 @@ public class GameStateRoomPlay extends GameState {
 	public void draw(Graphics2D g) {
 
 		GameStateDrawHelper.drawRoom(g);
-		super.draw(g);
-		
+
 		jack.draw(g);
 
 		g.drawImage(Images.chairLow, Window.scale(824), Window.scale(272), (int)(64f*GameStateDrawHelper.scale), (int)(64f*GameStateDrawHelper.scale), null);
@@ -104,15 +133,27 @@ public class GameStateRoomPlay extends GameState {
 
 				if(b != null)
 					b.draw(g);
-				
+
 			}
+
+		if(KeyHandler.isHeld(KeyHandler.ESCAPE))
+			GameStateDrawHelper.drawMenu(g);
+		
+		super.draw(g);
 	}
 
 	@Override
 	public void update() {
 		super.update();
-		
+
 		jack.update();
+
+		//check for click before button clicked
+		if(MouseHandler.click && stage >= choices.length ){
+			Music.stop(PlayerData.currentlySaying);
+			Music.stop(Sounds.METAL);
+			gsh.changeGameState(GameStateHandler.GAME_ROOM_VIDEO_DONE);
+		}
 
 		if(speakTimer <= 0 && stage < buttons.length)
 			for(ButtonGamePlay b : buttons[stage]){

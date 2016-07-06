@@ -3,10 +3,17 @@ package iamjack.gamestates;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
+import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
+import iamjack.buttons.ButtonDay;
+import iamjack.engine.GameStateHandler;
 import iamjack.engine.Window;
+import iamjack.engine.input.MouseHandler;
+import iamjack.gamestates.shop.ShopItems;
 import iamjack.player.PlayerData;
+import iamjack.player.achievements.Achievement;
 import iamjack.resourceManager.Images;
 
 public class GameStateDrawHelper {
@@ -16,57 +23,110 @@ public class GameStateDrawHelper {
 	public static float sizeY;
 	private static Font font = new Font("SquareFont", Font.PLAIN, Window.scale(35));
 	
+	public GameStateDrawHelper() {
+		BufferedImage img = Images.room; //standard size
+		scale = (float)Window.getWidth() / (float)img.getWidth();
+		sizeX = img.getWidth() * scale;
+		sizeY = img.getHeight() * scale;
+	}
+	
 	public static void drawRoom(Graphics2D g){
 
 		g.setColor(Color.black);
 		g.fillRect(0, 0, Window.getWidth(), Window.getHeight());
 
-		scale = (float)Window.getWidth() / (float)Images.room.getWidth();
-		sizeX = Images.room.getWidth() * scale;
-		sizeY = Images.room.getHeight() * scale;
-
 		g.drawImage(Images.room, 
 				Window.getWidth()/2 - (int)sizeX/2,
 				Window.getHeight()/2 - (int)sizeY/2, 
 				(int)sizeX, (int)sizeY, null);
+		
+		if(PlayerData.itemsBought.contains(ShopItems.tank))
+			g.drawImage(Images.tank, Window.scale(300), Window.scale(200),(int)(54*scale), (int)(54*scale), null);
+		
 	}
 	
-	public static void drawLivingRoom(Graphics2D g){
+	public static void drawLivingRoom(Graphics2D g, int daynight){
 
+		BufferedImage img = daynight == 0 ? Images.livingroom : Images.livingroomNight;
+		
 		g.setColor(Color.black);
 		g.fillRect(0, 0, Window.getWidth(), Window.getHeight());
 
-		scale = (float)Window.getWidth() / (float)Images.livingroom.getWidth();
-		sizeX = Images.livingroom.getWidth() * scale;
-		sizeY = Images.livingroom.getHeight() * scale;
-
-		g.drawImage(Images.livingroom, 
+		g.drawImage(img, 
 				Window.getWidth()/2 - (int)sizeX/2,
 				Window.getHeight()/2 - (int)sizeY/2, 
 				(int)sizeX, (int)sizeY, null);
 	}
 	
-	public static void drawExterior(Graphics2D g){
+	public static void drawExterior(Graphics2D g, int daynight){
+
+		BufferedImage img = daynight == 0 ? Images.exterior : Images.exteriorNight;
 
 		g.setColor(Color.black);
 		g.fillRect(0, 0, Window.getWidth(), Window.getHeight());
 
-		scale = (float)Window.getWidth() / (float)Images.exterior.getWidth();
-		sizeX = Images.exterior.getWidth() * scale;
-		sizeY = Images.exterior.getHeight() * scale;
-
-		g.drawImage(Images.exterior, 
+		g.drawImage(img, 
 				Window.getWidth()/2 - (int)sizeX/2,
 				Window.getHeight()/2 - (int)sizeY/2, 
 				(int)sizeX, (int)sizeY, null);
+	}
+	
+	private static ButtonDay b = new ButtonDay("Quit Game", Window.getWidth() - Window.scale(250), Window.scale(25));
+	
+	public static void drawMenu(Graphics2D g){
+
+		drawAchievements(g);
+		
+		b.draw(g);
+	}
+	
+	public static void updateMenu(GameStateHandler gsh){
+		b.update(gsh);
+	}
+	
+	public static void drawAchievements(Graphics2D g){
+		g.setColor(new Color(0, 0, 0, .5f));
+		g.fillRect(Window.scale(25), 0, Window.getWidth()-Window.scale(50), Window.getHeight());
+		
+		int dex = 0;
+
+		for(Achievement a : Achievement.achievements.values()){
+			Point p = new Point((int)MouseHandler.mouseX, (int)MouseHandler.mouseY);
+			
+			Rectangle r = new Rectangle(
+					Window.scale(32), 
+					(Window.scale(64) + Window.scale(70)*dex)+ MouseHandler.wheelY,
+					Window.scale(256), Window.scale(64));
+			
+			if(r.contains(p))
+				a.drawAid(g, Window.scale(107), (Window.scale(90) + Window.scale(70)*dex) + MouseHandler.wheelY);
+
+			a.drawInGui(g, Window.scale(32), (Window.scale(64) + Window.scale(70)*dex) + MouseHandler.wheelY);
+			dex ++;
+		}
 	}
 	
 	public static void drawBossCoinCounter(Graphics2D g){
 		if(PlayerData.daysPlayed > 1){
 			g.setFont(font);
 			g.setColor(Color.green.darker().darker());
+			
 			String money = "Boss Coin :" + PlayerData.money;
-			g.drawString(money, 0, g.getFontMetrics().getHeight());
+			g.drawString(money, Window.scale(2), g.getFontMetrics().getHeight());
+			
+			String fans = "Fans :" + PlayerData.fans;
+			g.drawString(fans, Window.getWidth()-g.getFontMetrics().stringWidth(fans) - Window.scale(2), g.getFontMetrics().getHeight());
+			
+		}
+	}
+	
+	public static void drawBicepsCounter(Graphics2D g){
+		if(PlayerData.daysPlayed > 1){
+			g.setFont(font);
+			g.setColor(Color.green.darker().darker());
+			
+			String biceps = "Biceps :" + PlayerData.exercised;
+			g.drawString(biceps, Window.getWidth()-g.getFontMetrics().stringWidth(biceps) - Window.scale(2), g.getFontMetrics().getHeight() * 2 + 10);
 		}
 	}
 	
@@ -83,6 +143,5 @@ public class GameStateDrawHelper {
 	public static void updateBobbingImage(){
 		bobCounter += 0.025D;
 		bobbing = Math.cos(bobCounter)*20;
-
 	}
 }

@@ -11,6 +11,7 @@ import iamjack.engine.input.KeyHandler;
 import iamjack.engine.resources.Music;
 import iamjack.player.PlayerData;
 import iamjack.player.achievements.Achievement;
+import iamjack.player.achievements.AchievementLoader;
 import iamjack.resourceManager.Sounds;
 
 public class GameStateQuit extends GameState {
@@ -67,7 +68,6 @@ public class GameStateQuit extends GameState {
 	
 	@Override
 	public void draw(Graphics2D g) {
-		super.draw(g);
 		
 		g.setColor(Color.black);
 		g.fillRect(0, 0, Window.getWidth(), Window.getHeight());
@@ -86,6 +86,9 @@ public class GameStateQuit extends GameState {
 			int y2 = g.getFontMetrics().getHeight() + Window.scale(2);
 			g.drawString(s, Window.getWidth()/2 - x2/2, (int)offset + y2*i);
 		}
+		
+		for(Achievement a : Achievement.achievements.values())
+			a.draw(g);
 	}
 	
 	@Override
@@ -105,7 +108,7 @@ public class GameStateQuit extends GameState {
 		}
 		
 		if(offset < -Window.scale(1100)){
-			Achievement.trigger("credits");
+			Achievement.trigger(AchievementLoader.credits);
 		}
 	}
 }

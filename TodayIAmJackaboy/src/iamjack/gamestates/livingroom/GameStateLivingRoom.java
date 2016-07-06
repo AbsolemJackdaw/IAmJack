@@ -2,6 +2,7 @@ package iamjack.gamestates.livingroom;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.util.Random;
 
 import iamjack.engine.GameState;
 import iamjack.engine.GameStateHandler;
@@ -11,8 +12,8 @@ import iamjack.engine.input.MouseHandler;
 import iamjack.engine.resources.Music;
 import iamjack.gamestates.GameStateDrawHelper;
 import iamjack.player.Jack;
-import iamjack.player.PlayerData;
 import iamjack.player.achievements.Achievement;
+import iamjack.player.achievements.AchievementLoader;
 import iamjack.resourceManager.Images;
 import iamjack.resourceManager.Sounds;
 
@@ -27,8 +28,22 @@ public class GameStateLivingRoom extends GameState {
 	/**boolean triggered after player has moved. allows for one time only intro logic*/
 	private boolean once = false;
 
+	private String text[] = new String[]{
+			"Oh boy ! Reps !",
+			"can't wait to get buff !",
+			"The dev made this to encourage me exercising !",
+			"Let's get my pot-o-gold's pumpin' !",
+			"Meáchain trom do mo gunnaí álainn !",
+			"Buff Boss from Bossatron, Here I come",
+			"Let's make my arms the second huge thing about me",
+	};
+	private Random rand = new Random();
+	private int randTextIndex=0;
+	
 	public GameStateLivingRoom(GameStateHandler gsh) {
 		super(gsh);
+
+		randTextIndex = rand.nextInt(text.length);
 
 		alpha = 1f;
 
@@ -72,7 +87,7 @@ public class GameStateLivingRoom extends GameState {
 
 		if(!jack.isAnimated())	
 			if(jack.getPosX() > Window.scale(310) && jack.getPosX() < Window.scale(320))
-				Achievement.trigger("seat");
+				Achievement.trigger(AchievementLoader.seat);
 
 		if(alpha > 0)
 			alpha -= 0.0025f;
@@ -81,10 +96,9 @@ public class GameStateLivingRoom extends GameState {
 
 	@Override
 	public void draw(Graphics2D g) {
-		super.draw(g);
 		
-		GameStateDrawHelper.drawLivingRoom(g);
-
+		GameStateDrawHelper.drawLivingRoom(g,0);
+		
 		if(canWorkout)
 			GameStateDrawHelper.drawBobbingImg(g, Images.bubbleWorkout);
 
@@ -112,13 +126,15 @@ public class GameStateLivingRoom extends GameState {
 		if(!jack.isAnimated()){
 			if(jack.getPosX() > Window.scale(600) && jack.getPosX() < Window.scale(750))
 				jack.say("This is a guy from Sonsor'Anarky. Drawn by me roommate !", g);
-			if(!once && PlayerData.daysPlayed < 1 && jack.getPosX() < Window.scale(75) )
-				jack.say("Oh boy, workout !", g);
+			if(!once)
+				jack.say(text[randTextIndex], g);
 		}
 		
 		GameStateDrawHelper.drawBossCoinCounter(g);
-
+		GameStateDrawHelper.drawBicepsCounter(g);
+		
 		g.setColor(new Color(0f,0f,0f,alpha));
 		g.fillRect(0, 0, Window.getWidth(), Window.getHeight());
+		super.draw(g);
 	}
 }

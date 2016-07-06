@@ -34,7 +34,7 @@ public class GameStateEndDay extends GameState{
 		PlayerData.currentlySaying="";
 
 		//2 videos worth of sound
-		if(PlayerData.soundsPlayed.size() > 25)
+		if(PlayerData.soundsPlayed.size() > 63)
 			PlayerData.soundsPlayed.clear();
 
 		text = new Font("SquareFont", Font.PLAIN, Window.scale(100));
@@ -42,7 +42,6 @@ public class GameStateEndDay extends GameState{
 
 	@Override
 	public void draw(Graphics2D g) {
-		super.draw(g);
 
 		g.setColor(new Color(0f, 0f, 0f, Math.min(1, alpha)));
 		g.fillRect(0, 0, Window.getWidth(), Window.getHeight());
@@ -61,6 +60,7 @@ public class GameStateEndDay extends GameState{
 		button1.draw(g);
 		button2.draw(g);
 
+		super.draw(g);
 	}
 
 	@Override

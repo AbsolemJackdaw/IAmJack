@@ -16,7 +16,7 @@ public class GameStateShop extends GameState {
 
 	private ButtonShop[] buttons;
 
-	private ButtonExit exit = new ButtonExit(Window.getWidth() - Window.scale(75), 0 );
+	private ButtonExit exit = new ButtonExit(Window.getWidth() - Window.scale(75), Window.scale(25) );
 
 	public GameStateShop(GameStateHandler gsh) {
 		super(gsh);
@@ -58,5 +58,6 @@ public class GameStateShop extends GameState {
 			b.update(gsh);
 
 		exit.update(gsh);
+
 	}
 }

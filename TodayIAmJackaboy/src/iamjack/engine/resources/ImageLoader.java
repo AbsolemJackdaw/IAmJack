@@ -19,7 +19,7 @@ public class ImageLoader {
 			String path =p+"_"+i+".png";
 
 			System.out.println(path);
-			
+
 			BufferedImage tempImg = null;
 
 			try {
@@ -42,21 +42,18 @@ public class ImageLoader {
 		System.out.println(path);
 
 		InputStream is = ImageLoader.class.getClass().getResourceAsStream(path);
-		
-		if(is == null){
-			
-		}
-		try {
-			tempImg = ImageIO.read(is);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 
-		if(tempImg != null)
-			return tempImg;
+		if(is != null)
+			try {
+				tempImg = ImageIO.read(is);
+			} catch (IOException e) {
+				System.out.println("image " +path+ " could not be loaded");
+				e.printStackTrace();
+			}
+		else
+			System.out.println("no location for " + path);
 
-		System.out.println("image " +path+ " could not be loaded");
-		return null;
+		return tempImg;
 
 	}
 }

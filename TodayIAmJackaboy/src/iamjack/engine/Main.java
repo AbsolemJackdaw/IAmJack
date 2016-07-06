@@ -7,7 +7,6 @@ public class Main{
 	public static GamePanel gamepanel;
 
 	public static void main(String[] args) {
-
 		new Window();
 
 		JFrame frame = new JFrame("IAmJack");
