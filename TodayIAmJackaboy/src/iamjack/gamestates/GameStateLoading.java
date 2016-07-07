@@ -10,6 +10,7 @@ import iamjack.engine.GamePanel;
 import iamjack.engine.GameState;
 import iamjack.engine.GameStateHandler;
 import iamjack.engine.Window;
+import iamjack.engine.resources.Music;
 import iamjack.gamestates.shop.ShopItems;
 import iamjack.player.achievements.AchievementLoader;
 import iamjack.resourceManager.Fonts;
@@ -26,7 +27,7 @@ public class GameStateLoading extends GameState {
 	private boolean counting = false;
 	private float textFade = 0f;
 
-	private boolean resourcesLoaded = false;
+	private static boolean resourcesLoaded = false;
 	private int counter = 0;
 	private int tipIndex = 0;
 
@@ -50,7 +51,11 @@ public class GameStateLoading extends GameState {
 	public GameStateLoading(GameStateHandler gsh) {
 		super(gsh);
 
+		//initialize music class before loading any sounds
+		Music.init();
+		
 		load();
+		
 		Fonts.registerFont();
 		title = new Font("SquareFont", Font.PLAIN, Window.scale(100));
 		subTitle = new Font("SquareFont", Font.PLAIN, Window.scale(25));
@@ -76,7 +81,7 @@ public class GameStateLoading extends GameState {
 		g.drawString(theTitleTop, Window.getWidth()/2 - (sizeXtop/2), Window.getHeight()/2 - (sizeY/2)*2 );
 		g.drawString(theTitle, Window.getWidth()/2 - (sizeX/2), Window.getHeight()/2 + (sizeY/2)- (sizeY/2));
 
-		if(!resourcesLoaded){
+		if(!doneLoading()){
 
 			g.setFont(subTitle);
 
@@ -128,27 +133,26 @@ public class GameStateLoading extends GameState {
 		else
 			textFade-=.005F;
 
-		if(loadTime > 0 && !resourcesLoaded)
+		if(loadTime > 0 && !doneLoading())
 			loadTime++;
 
-		if(resourcesLoaded){
+		if(doneLoading()){
 			gsh.changeGameState(GameStateHandler.MENU);
-			System.out.println("took " + loadTime + " ticks to load resources");
+			System.out.println("took " + loadTime + " ticks to load all resources");
 		}
-
-
 	}
 
 	private void load(){
-
+		
 		new SwingWorker<Integer, Void>() {
 
 			@Override
 			protected Integer doInBackground() {
 				loadTime = 1;
-
+				
 				Images.loadImages();
 				Sounds.loadSounds();
+				Sounds.loadHeavyMusic();
 
 				AchievementLoader.load();
 				ShopItems.load();
@@ -158,15 +162,20 @@ public class GameStateLoading extends GameState {
 				//initialize scale for room drawing
 				new GameStateDrawHelper();
 
+				resourcesLoaded = true;
+				System.out.println("took " + loadTime + " ticks to load first resources");
 				return null;
 			}
 
 			@Override
 			protected void done() {
 				super.done();
-				resourcesLoaded = true;
-				System.out.println("done loading rsrcs");
+				System.out.println("resources done loading or ended unexpectedly");
 			}
 		}.execute();
+	}
+	
+	private static boolean doneLoading(){
+		return resourcesLoaded && Sounds.loadedHeavyMusics;
 	}
 }

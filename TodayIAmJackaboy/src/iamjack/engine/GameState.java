@@ -8,7 +8,11 @@ import iamjack.player.achievements.Achievement;
 
 public abstract class GameState {
 
-	public GameState(GameStateHandler gsh){this.gsh = gsh;};
+	public GameState(GameStateHandler gsh){
+		System.out.println("initiating a game state");
+		this.gsh = gsh;
+		};
+		
 	protected GameStateHandler gsh;
 
 	public void draw (Graphics2D g){

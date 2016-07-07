@@ -1,5 +1,7 @@
 package iamjack.resourceManager;
 
+import javax.swing.SwingWorker;
+
 import iamjack.engine.resources.Music;
 
 public class Sounds {
@@ -29,16 +31,7 @@ public class Sounds {
 	public static final String CHEER = "cheer"; 
 
 	public static void loadSounds(){
-		Music.init();
 
-		loadMusic("/sounds/WeasleyOldWeaselOrchestraComedyRoyaltyFreeMusicByTechnoaxe.mp3", ROOMMUSIC);
-		loadMusic("/sounds/BasicReaperShrapnelRockMetalRoyaltyFreeMusic.mp3", METAL);
-		loadMusic("/sounds/TeknoAXEsRoyaltyFreeMusicRoyaltyFreeMusic198ImEverywhereDubstepFunkstepTechnoFeaturingFarisha2.mp3", EVERYWHERE);
-		loadMusic("/sounds/NewChiptuneQuests8bitEightBitRoyaltyFreeMusic.mp3",QUEST);
-		loadMusic("/sounds/TeknoAXEsRoyaltyFreeMusicRoyaltyFreeCheapHairMetalRockSong.mp3", METALREPS);
-		loadMusic("/sounds/SpaceDockDancePartyElectroHouseRoyaltyFreeMusic.mp3", SHOP);
-		loadMusic("/sounds/TeknoAXEsRoyaltyFreeMusicBackground34TraditionalCelticFestivitiesWorldFestive.mp3", WORKOUT);
-		
 		for(int i = 1; i < 5; i++)
 			loadMusic("/sounds/step_0"+i+".mp3", WALK+(i-1));
 
@@ -71,12 +64,44 @@ public class Sounds {
 
 		for(int i = 0; i < 20; i++)
 			loadMusic("/sounds/reps/reps"+i+".mp3", REPS+i);
-		
-		loadMusic("/sounds/high_five.mp3", HIGH5);
+
 		loadMusic("/sounds/childrencheer.mp3", CHEER);
-		
+
 		loadMusic("/sounds/billy/screwyoubilly1.mp3", screwyoubilly);
 
+	}
+
+	public static boolean loadedHeavyMusics = false;
+	private static int musicsLoaded = 0;
+	
+	/**when done loading, game switches too menu*/
+	public static void loadHeavyMusic(){
+		String[][] s = new String[][]{
+			{"/sounds/high_five.mp3", HIGH5},
+			{"/sounds/WeasleyOldWeaselOrchestraComedyRoyaltyFreeMusicByTechnoaxe.mp3", ROOMMUSIC},
+			{"/sounds/BasicReaperShrapnelRockMetalRoyaltyFreeMusic.mp3", METAL},
+			{"/sounds/TeknoAXEsRoyaltyFreeMusicRoyaltyFreeMusic198ImEverywhereDubstepFunkstepTechnoFeaturingFarisha2.mp3", EVERYWHERE},
+			{"/sounds/NewChiptuneQuests8bitEightBitRoyaltyFreeMusic.mp3",QUEST},
+			{"/sounds/TeknoAXEsRoyaltyFreeMusicRoyaltyFreeCheapHairMetalRockSong.mp3", METALREPS},
+			{"/sounds/SpaceDockDancePartyElectroHouseRoyaltyFreeMusic.mp3", SHOP},
+			{"/sounds/TeknoAXEsRoyaltyFreeMusicBackground34TraditionalCelticFestivitiesWorldFestive.mp3", WORKOUT},
+		};
+
+		
+		for(int i = 0; i < s.length; i++){
+			final int dex = i; //cant use i, for the thread requires a final modifier
+
+			new SwingWorker<Integer, Void>(){
+				@Override
+				protected Integer doInBackground() {
+					loadMusic(s[dex][0], s[dex][1]);//can't use i here, so dex is final and set by i
+					System.out.println(dex + " loaded heavy music for " + s[dex][1]);
+					musicsLoaded++;
+					if(musicsLoaded == s.length)loadedHeavyMusics = true;
+					return null;
+				};
+			}.execute();
+		}
 	}
 
 	private static void loadMusic(String path, String name){

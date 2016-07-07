@@ -84,10 +84,8 @@ public class Music {
 			System.out.println(s + " is not a valid directory or file !");
 			System.out.println("skipping file for name " + n);
 			return;
-		}else{
-			System.out.println(is);
 		}
-		
+
 		try {
 			ais = AudioSystem.getAudioInputStream(is);
 		} catch (UnsupportedAudioFileException | IOException e1) {
@@ -117,8 +115,6 @@ public class Music {
 			if(clip != null)
 				clips.put(n, clip);
 		}
-
-		
 	}
 
 	public static void loop(String s) {
