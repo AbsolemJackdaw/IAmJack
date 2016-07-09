@@ -1,7 +1,7 @@
 package iamjack.buttons;
 
 import iamjack.engine.GameStateHandler;
-import iamjack.engine.resources.Music;
+import iamjack.engine.resources.StreamMusic;
 import iamjack.resourceManager.Sounds;
 
 public class ButtonMenu extends Button {
@@ -13,7 +13,9 @@ public class ButtonMenu extends Button {
 	@Override
 	public void click(GameStateHandler gsh) {
 		if(getName().equals("Start")){
-			Music.stop(Sounds.QUEST);
+			
+			StreamMusic.endStream(Sounds.STREAM_QUEST);
+			
 			gsh.changeGameState(GameStateHandler.GAME_ROOM);
 		}else if(getName().equals("Achievements"))
 			gsh.changeGameState(GameStateHandler.ACHIEVS);

@@ -7,7 +7,7 @@ import iamjack.engine.GameState;
 import iamjack.engine.GameStateHandler;
 import iamjack.engine.Window;
 import iamjack.engine.input.MouseHandler;
-import iamjack.engine.resources.Music;
+import iamjack.engine.resources.StreamMusic;
 import iamjack.gamestates.GameStateDrawHelper;
 import iamjack.player.Jack;
 import iamjack.resourceManager.Images;
@@ -41,7 +41,7 @@ public class GameStateOutside extends GameState {
 		jack.setSportsing(true);
 		jack.setPosY(Window.getHeight() / 2 - Window.scale(15));
 		jack.setPosX(Window.scale(125));
-		Music.loop(Sounds.WORKOUT);
+		StreamMusic.loopStream(Sounds.STREAM_WORKOUT);
 	}
 
 	@Override

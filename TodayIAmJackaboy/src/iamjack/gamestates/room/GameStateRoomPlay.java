@@ -10,6 +10,7 @@ import iamjack.engine.Window;
 import iamjack.engine.input.KeyHandler;
 import iamjack.engine.input.MouseHandler;
 import iamjack.engine.resources.Music;
+import iamjack.engine.resources.StreamMusic;
 import iamjack.gamestates.GameStateDrawHelper;
 import iamjack.gamestates.shop.ShopItems;
 import iamjack.player.Jack;
@@ -61,8 +62,8 @@ public class GameStateRoomPlay extends GameState {
 	public GameStateRoomPlay(GameStateHandler gsh) {
 		super(gsh);
 
-		Music.loop(Sounds.METAL);
-
+		StreamMusic.loopStream(Sounds.STREAM_METAL);
+		
 		jack = new Jack();
 		sitX = Window.scale(852);
 		sitY = Window.scale(240);
@@ -151,7 +152,7 @@ public class GameStateRoomPlay extends GameState {
 		//check for click before button clicked
 		if(MouseHandler.click && stage >= choices.length ){
 			Music.stop(PlayerData.currentlySaying);
-			Music.stop(Sounds.METAL);
+			StreamMusic.endStream(Sounds.STREAM_METAL);
 			gsh.changeGameState(GameStateHandler.GAME_ROOM_VIDEO_DONE);
 		}
 
@@ -186,7 +187,7 @@ public class GameStateRoomPlay extends GameState {
 			jack.setTalking(false);
 
 		if(stage ==	choices.length && speakTimer <= 120d)
-			Music.stop(Sounds.METAL);
+			StreamMusic.endStream(Sounds.STREAM_METAL);
 		if(stage >=	choices.length && speakTimer <= 0d)
 			gsh.changeGameState(GameStateHandler.GAME_ROOM_VIDEO_DONE);
 	}

@@ -10,6 +10,7 @@ import iamjack.engine.GameStateHandler;
 import iamjack.engine.Window;
 import iamjack.engine.input.MouseHandler;
 import iamjack.engine.resources.Music;
+import iamjack.engine.resources.StreamMusic;
 import iamjack.gamestates.GameStateDrawHelper;
 import iamjack.gamestates.outside.EntityPopoff;
 import iamjack.player.Jack;
@@ -54,7 +55,7 @@ public class GameStateLivingRoomPlay extends GameState {
 
 		jack.setBenchPressing(true);
 
-		Music.loop(Sounds.METALREPS);
+		StreamMusic.loopStream(Sounds.STREAM_METALREPS);
 		
 		totalReps = (int) (5f + ((float)PlayerData.exercised / 10f)); //every 2 days of exercise, 1 rep is added
 	}
@@ -80,7 +81,7 @@ public class GameStateLivingRoomPlay extends GameState {
 		
 		if(jack.repsDone() >= totalReps && jack.canPress()){
 			PlayerData.exercised += totalReps;
-			Music.stop(Sounds.METALREPS);
+			StreamMusic.endStream(Sounds.STREAM_METALREPS);
 			gsh.changeGameState(GameStateHandler.GAME_LIVING_END);
 		}
 

@@ -152,7 +152,6 @@ public class GameStateLoading extends GameState {
 				
 				Images.loadImages();
 				Sounds.loadSounds();
-				Sounds.loadHeavyMusic();
 
 				AchievementLoader.load();
 				ShopItems.load();
@@ -163,19 +162,19 @@ public class GameStateLoading extends GameState {
 				new GameStateDrawHelper();
 
 				resourcesLoaded = true;
-				System.out.println("took " + loadTime + " ticks to load first resources");
+				System.out.println("took " + loadTime + " ticks to load resources");
 				return null;
 			}
 
 			@Override
 			protected void done() {
 				super.done();
-				System.out.println("resources done loading or ended unexpectedly");
+				System.out.println("resources are either done loading or ended unexpectedly.");
 			}
 		}.execute();
 	}
 	
 	private static boolean doneLoading(){
-		return resourcesLoaded && Sounds.loadedHeavyMusics;
+		return resourcesLoaded ;
 	}
 }

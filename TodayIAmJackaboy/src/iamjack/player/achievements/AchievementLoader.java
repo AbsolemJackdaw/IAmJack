@@ -27,7 +27,7 @@ public class AchievementLoader {
 		new Achievement(credits, Images.scroll, "Watch Credits").setAid("It's the who, how and why of the game !");
 		new Achievement(erryday, Images.yt, "Everyday Video").setAid("Get very loud, energetic, funny and be yourself in a video");
 		new Achievement(seat, Images.seat, "Take A Seat").setAid("try to sit down in one of the seats in the livingroom");
-		new Achievement(happy, Images.samSmile, "Smile !").setAid("Laugh and Smile a lot in one of your videos !");
+		new Achievement(happy, Images.samSmile, "Smile !").setAid("Laugh and Be Funny a lot in one of your videos !");
 		new Achievement(billy, Images.billyAchievement, "SCREW YOU BILLY!").setAid("Run into a Billy while working out.");
 		new Achievement(coins, Images.bosscoin, "Makin' a Livin'").setAid("Earn 1500 BC !");
 		new Achievement(scary, Images.scary, "Scary Games").setAid("get scared and rage, get comic and loud about it");

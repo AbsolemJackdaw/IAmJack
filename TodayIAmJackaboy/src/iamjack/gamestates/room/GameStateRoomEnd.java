@@ -7,7 +7,7 @@ import java.awt.Graphics2D;
 import iamjack.engine.GameState;
 import iamjack.engine.GameStateHandler;
 import iamjack.engine.Window;
-import iamjack.engine.resources.Music;
+import iamjack.engine.resources.StreamMusic;
 import iamjack.gamestates.GameStateDrawHelper;
 import iamjack.player.Jack;
 import iamjack.player.PlayerData;
@@ -30,7 +30,7 @@ public class GameStateRoomEnd extends GameState {
 		jack.facingRight = false;
 		jack.setPosX(Window.scale(800));
 
-		Music.loop(Sounds.EVERYWHERE);
+		StreamMusic.loopStream(Sounds.STREAM_EVERYWHERE);
 	}
 
 	@Override

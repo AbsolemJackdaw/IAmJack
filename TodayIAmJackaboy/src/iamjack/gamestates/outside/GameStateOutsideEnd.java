@@ -5,7 +5,7 @@ import java.awt.Graphics2D;
 import iamjack.engine.GameState;
 import iamjack.engine.GameStateHandler;
 import iamjack.engine.Window;
-import iamjack.engine.resources.Music;
+import iamjack.engine.resources.StreamMusic;
 import iamjack.gamestates.GameStateDrawHelper;
 import iamjack.player.Jack;
 import iamjack.resourceManager.Images;
@@ -45,7 +45,7 @@ public class GameStateOutsideEnd extends GameState {
 		jack.update();
 
 		if(jack.getPosX() < Window.scale(60)){
-			Music.stop(Sounds.WORKOUT);
+			StreamMusic.endStream(Sounds.STREAM_WORKOUT);
 			gsh.changeGameState(GameStateHandler.GAME_ENDDAY);
 		}
 	}

@@ -9,6 +9,7 @@ import iamjack.engine.GameState;
 import iamjack.engine.GameStateHandler;
 import iamjack.engine.Window;
 import iamjack.engine.resources.Music;
+import iamjack.engine.resources.StreamMusic;
 import iamjack.player.PlayerData;
 import iamjack.resourceManager.Sounds;
 
@@ -31,19 +32,19 @@ public class GameStateMenu extends GameState {
 				new ButtonMenu("Exit", Window.getWidth()/2, Window.getHeight()/2+Window.scale(64*2)),
 		};
 
+		if(!PlayerData.dontDoubleLoop){
+			StreamMusic.loopStream(Sounds.STREAM_QUEST);
+			PlayerData.dontDoubleLoop = false;
+		}		
 		Music.play(Sounds.HIGH5);
 
-		if(!PlayerData.dontDoubleLoop){
-			Music.loop(Sounds.QUEST);
-			PlayerData.dontDoubleLoop = false;
-		}
 	}
 
 	@Override
 	public void draw(Graphics2D g) {
 		g.setColor(Color.black);
 		g.fillRect(0, 0, Window.getWidth(), Window.getHeight());
-		
+
 		g.setColor(Color.white);
 		g.setFont(titleFont);
 		int sizeXtop = g.getFontMetrics().stringWidth(titleHead);

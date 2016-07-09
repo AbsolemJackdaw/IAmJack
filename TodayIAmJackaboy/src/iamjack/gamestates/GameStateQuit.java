@@ -8,7 +8,7 @@ import iamjack.engine.GameState;
 import iamjack.engine.GameStateHandler;
 import iamjack.engine.Window;
 import iamjack.engine.input.KeyHandler;
-import iamjack.engine.resources.Music;
+import iamjack.engine.resources.StreamMusic;
 import iamjack.player.PlayerData;
 import iamjack.player.achievements.Achievement;
 import iamjack.player.achievements.AchievementLoader;
@@ -62,7 +62,9 @@ public class GameStateQuit extends GameState {
 		offset = Window.getHeight();
 		headerFont = new Font("SquareFont", Font.PLAIN, Window.scale(80));
 		creditFont = new Font("SquareFont", Font.PLAIN, Window.scale(40));
-		Music.loop(Sounds.QUEST);
+
+		StreamMusic.loopStream(Sounds.STREAM_QUEST);
+
 		PlayerData.dontDoubleLoop = true;
 	}
 	

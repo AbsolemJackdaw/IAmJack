@@ -9,7 +9,7 @@ import iamjack.engine.GameStateHandler;
 import iamjack.engine.Window;
 import iamjack.engine.input.KeyHandler;
 import iamjack.engine.input.MouseHandler;
-import iamjack.engine.resources.Music;
+import iamjack.engine.resources.StreamMusic;
 import iamjack.gamestates.GameStateDrawHelper;
 import iamjack.player.Jack;
 import iamjack.player.achievements.Achievement;
@@ -47,7 +47,8 @@ public class GameStateLivingRoom extends GameState {
 
 		alpha = 1f;
 
-		Music.loop(Sounds.ROOMMUSIC);
+		StreamMusic.loopStream(Sounds.STREAM_ROOMMUSIC);
+
 	}
 
 	@Override
@@ -73,13 +74,13 @@ public class GameStateLivingRoom extends GameState {
 			double y = MouseHandler.clicked.getY();
 
 			if(x >= Window.scale(850) && x <= Window.scale(914) && y >= Window.scale(180) && y <= Window.scale(290)){
+				StreamMusic.endStream(Sounds.STREAM_ROOMMUSIC);
 				gsh.changeGameState(GameStateHandler.GAME_LIVING_BENCHGAME);
-				Music.stop(Sounds.ROOMMUSIC);
 			}
 		}
 
 		if(jack.getPosX() < -10){
-			Music.stop(Sounds.ROOMMUSIC);
+			StreamMusic.endStream(Sounds.STREAM_ROOMMUSIC);
 			gsh.changeGameState(GameStateHandler.GAME_ENDDAY);
 		}
 

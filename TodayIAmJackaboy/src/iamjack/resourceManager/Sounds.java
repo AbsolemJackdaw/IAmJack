@@ -1,18 +1,18 @@
 package iamjack.resourceManager;
 
-import javax.swing.SwingWorker;
-
 import iamjack.engine.resources.Music;
 
 public class Sounds {
-
-	public static final String METAL = "metal"; 
-	public static final String QUEST = "quest"; 
-	public static final String ROOMMUSIC = "roomMusic"; 
-	public static final String EVERYWHERE = "everywhere"; 
-	public static final String METALREPS = "metalreps"; 
-	public static final String WORKOUT = "workout"; 
-
+	//Music for stream
+	public static final String STREAM_QUEST = "/sounds/NewChiptuneQuests8bitEightBitRoyaltyFreeMusic.mp3";
+	public static final String STREAM_METAL = "/sounds/BasicReaperShrapnelRockMetalRoyaltyFreeMusic.mp3"; 
+	public static final String STREAM_ROOMMUSIC = "/sounds/WeasleyOldWeaselOrchestraComedyRoyaltyFreeMusicByTechnoaxe.mp3"; 
+	public static final String STREAM_EVERYWHERE = "/sounds/TeknoAXEsRoyaltyFreeMusicRoyaltyFreeMusic198ImEverywhereDubstepFunkstepTechnoFeaturingFarisha2.mp3"; 
+	public static final String STREAM_METALREPS = "/sounds/TeknoAXEsRoyaltyFreeMusicRoyaltyFreeCheapHairMetalRockSong.mp3"; 
+	public static final String STREAM_WORKOUT = "/sounds/TeknoAXEsRoyaltyFreeMusicBackground34TraditionalCelticFestivitiesWorldFestive.mp3"; 
+	public static final String STREAM_SHOP = "/sounds/SpaceDockDancePartyElectroHouseRoyaltyFreeMusic.mp3";
+	
+	//Music loaded by clips
 	public static final String HIGH5 = "high5"; 
 	public static final String screwyoubilly = "screwyoubilly"; 
 
@@ -27,7 +27,6 @@ public class Sounds {
 	public static final String INTRO = "intro"; 
 	public static final String OUTRO = "outro"; 
 	public static final String REPS = "reps"; 
-	public static final String SHOP = "shop"; 
 	public static final String CHEER = "cheer"; 
 
 	public static void loadSounds(){
@@ -66,42 +65,10 @@ public class Sounds {
 			loadMusic("/sounds/reps/reps"+i+".mp3", REPS+i);
 
 		loadMusic("/sounds/childrencheer.mp3", CHEER);
+		loadMusic("/sounds/high_five.mp3", HIGH5);
 
 		loadMusic("/sounds/billy/screwyoubilly1.mp3", screwyoubilly);
 
-	}
-
-	public static boolean loadedHeavyMusics = false;
-	private static int musicsLoaded = 0;
-	
-	/**when done loading, game switches too menu*/
-	public static void loadHeavyMusic(){
-		String[][] s = new String[][]{
-			{"/sounds/high_five.mp3", HIGH5},
-			{"/sounds/WeasleyOldWeaselOrchestraComedyRoyaltyFreeMusicByTechnoaxe.mp3", ROOMMUSIC},
-			{"/sounds/BasicReaperShrapnelRockMetalRoyaltyFreeMusic.mp3", METAL},
-			{"/sounds/TeknoAXEsRoyaltyFreeMusicRoyaltyFreeMusic198ImEverywhereDubstepFunkstepTechnoFeaturingFarisha2.mp3", EVERYWHERE},
-			{"/sounds/NewChiptuneQuests8bitEightBitRoyaltyFreeMusic.mp3",QUEST},
-			{"/sounds/TeknoAXEsRoyaltyFreeMusicRoyaltyFreeCheapHairMetalRockSong.mp3", METALREPS},
-			{"/sounds/SpaceDockDancePartyElectroHouseRoyaltyFreeMusic.mp3", SHOP},
-			{"/sounds/TeknoAXEsRoyaltyFreeMusicBackground34TraditionalCelticFestivitiesWorldFestive.mp3", WORKOUT},
-		};
-
-		
-		for(int i = 0; i < s.length; i++){
-			final int dex = i; //cant use i, for the thread requires a final modifier
-
-			new SwingWorker<Integer, Void>(){
-				@Override
-				protected Integer doInBackground() {
-					loadMusic(s[dex][0], s[dex][1]);//can't use i here, so dex is final and set by i
-					System.out.println(dex + " loaded heavy music for " + s[dex][1]);
-					musicsLoaded++;
-					if(musicsLoaded == s.length)loadedHeavyMusics = true;
-					return null;
-				};
-			}.execute();
-		}
 	}
 
 	private static void loadMusic(String path, String name){

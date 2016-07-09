@@ -1,7 +1,6 @@
 package iamjack.engine.resources;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.HashMap;
 
 import javax.sound.sampled.AudioFormat;
@@ -64,58 +63,95 @@ public class Music {
 	}
 
 	public static void load(String s, String n) {
-
+		
 		System.out.println(s + " " + n);
-
+		
 		if (clips.get(n) != null)
 			return;
+		
+		Clip clip;
 
-		Clip clip = null;
-		AudioInputStream ais = null;
-		InputStream is = null;
-
+		AudioInputStream ais;
+		
 		try {
-			is = Music.class.getClass().getResourceAsStream(s);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		if(is == null){
-			System.out.println(s + " is not a valid directory or file !");
-			System.out.println("skipping file for name " + n);
-			return;
-		}
-
-		try {
-			ais = AudioSystem.getAudioInputStream(is);
-		} catch (UnsupportedAudioFileException | IOException e1) {
-			e1.printStackTrace();
-		}
-
-		final AudioFormat baseFormat = ais.getFormat();
-		final AudioFormat decodeFormat = new AudioFormat(
-				AudioFormat.Encoding.PCM_SIGNED,
-				baseFormat.getSampleRate(), 16, baseFormat.getChannels(),
-				baseFormat.getChannels() * 2, baseFormat.getSampleRate(),
-				false);
-		final AudioInputStream dais = AudioSystem.getAudioInputStream(
-				decodeFormat, ais);
-		try {
+			ais = AudioSystem.getAudioInputStream(Music.class.getResourceAsStream(s));
+			final AudioFormat baseFormat = ais.getFormat();
+			final AudioFormat decodeFormat = new AudioFormat(
+					AudioFormat.Encoding.PCM_SIGNED,
+					baseFormat.getSampleRate(), 16, baseFormat.getChannels(),
+					baseFormat.getChannels() * 2, baseFormat.getSampleRate(),
+					false);
+			final AudioInputStream dais = AudioSystem.getAudioInputStream(
+					decodeFormat, ais);
 			clip = AudioSystem.getClip();
-		} catch (LineUnavailableException e) {
-			e.printStackTrace();
-		}
-		try {
 			clip.open(dais);
-		} catch (LineUnavailableException e) {
+			
+			clips.put(n, clip);
+			
+		} catch (UnsupportedAudioFileException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
-		}finally{
-			if(clip != null)
-				clips.put(n, clip);
+		} catch (LineUnavailableException e) {
+			e.printStackTrace();
 		}
 	}
+
+//	public static void oldload(String s, String n) {
+//
+//		System.out.println(s + " " + n);
+//
+//		if (clips.get(n) != null)
+//			return;
+//
+//		Clip clip = null;
+//		AudioInputStream ais = null;
+//		InputStream is = null;
+//
+//		try {
+//			is = Music.class.getClass().getResourceAsStream(s);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//
+//		if(is == null){
+//			System.out.println(s + " is not a valid directory or file !");
+//			System.out.println("skipping file for name " + n);
+//			return;
+//		}
+//
+//		try {
+//			ais = AudioSystem.getAudioInputStream(is);
+//		} catch (UnsupportedAudioFileException | IOException e1) {
+//			e1.printStackTrace();
+//		}
+//
+//		final AudioFormat baseFormat = ais.getFormat();
+//		final AudioFormat decodeFormat = new AudioFormat(
+//				AudioFormat.Encoding.PCM_SIGNED,
+//				baseFormat.getSampleRate(), 16, baseFormat.getChannels(),
+//				baseFormat.getChannels() * 2, baseFormat.getSampleRate(),
+//				false);
+//		final AudioInputStream dais = AudioSystem.getAudioInputStream(
+//				decodeFormat, ais);
+//		try {
+//			clip = AudioSystem.getClip();
+//		} catch (LineUnavailableException e) {
+//			e.printStackTrace();
+//		}
+//
+//
+//		try {
+//			clip.open(dais);
+//		} catch (LineUnavailableException e) {
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}finally{
+//			if(clip != null)
+//				clips.put(n, clip);
+//		}
+//	}
 
 	public static void loop(String s) {
 		loop(s, gap, gap, clips.get(s).getFrameLength() - 1);

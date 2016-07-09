@@ -8,7 +8,7 @@ import iamjack.buttons.ButtonShop;
 import iamjack.engine.GameState;
 import iamjack.engine.GameStateHandler;
 import iamjack.engine.Window;
-import iamjack.engine.resources.Music;
+import iamjack.engine.resources.StreamMusic;
 import iamjack.gamestates.GameStateDrawHelper;
 import iamjack.resourceManager.Sounds;
 
@@ -27,7 +27,7 @@ public class GameStateShop extends GameState {
 		for(int i = 0 ; i < ShopItems.items.size(); i++)
 		buttons[i] = ShopItems.items.get(i);
 		
-		Music.loop(Sounds.SHOP);
+		StreamMusic.loopStream(Sounds.STREAM_SHOP);
 	}
 
 	@Override

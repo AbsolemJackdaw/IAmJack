@@ -1,7 +1,7 @@
 package iamjack.buttons;
 
 import iamjack.engine.GameStateHandler;
-import iamjack.engine.resources.Music;
+import iamjack.engine.resources.StreamMusic;
 import iamjack.resourceManager.SaveManager;
 import iamjack.resourceManager.Sounds;
 
@@ -13,7 +13,8 @@ public class ButtonPick extends Button{
 
 	@Override
 	public void click(GameStateHandler gsh) {
-		Music.stop(Sounds.EVERYWHERE);
+		StreamMusic.endStream(Sounds.STREAM_EVERYWHERE);
+		
 		switch (getName()) {
 		case "Exercise":
 			//augments money and day count when you exit the living room

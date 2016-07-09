@@ -5,7 +5,7 @@ import java.awt.Graphics2D;
 import iamjack.engine.GameState;
 import iamjack.engine.GameStateHandler;
 import iamjack.engine.Window;
-import iamjack.engine.resources.Music;
+import iamjack.engine.resources.StreamMusic;
 import iamjack.gamestates.GameStateDrawHelper;
 import iamjack.player.Jack;
 import iamjack.player.PlayerData;
@@ -24,7 +24,7 @@ public class GameStateLivingRoomEnd extends GameState {
 		jack.facingRight = false;
 		jack.setPosX(Window.scale(800));
 
-		Music.loop(Sounds.ROOMMUSIC);
+		StreamMusic.loopStream(Sounds.STREAM_ROOMMUSIC);
 	}
 
 	@Override
@@ -38,7 +38,7 @@ public class GameStateLivingRoomEnd extends GameState {
 				Achievement.trigger(AchievementLoader.seat);
 
 		if(jack.getPosX() < -10){
-			Music.stop(Sounds.ROOMMUSIC);
+			StreamMusic.endStream(Sounds.STREAM_ROOMMUSIC);
 			if(!PlayerData.hasWorkedOut)
 				PlayerData.hasWorkedOut = true;
 			gsh.changeGameState(GameStateHandler.GAME_ENDDAY);
@@ -72,7 +72,7 @@ public class GameStateLivingRoomEnd extends GameState {
 				jack.say("This is a guy from Sonsor'Anarky. Drawn by me roommate !", g);
 
 			if(jack.getPosX() > Window.scale(750))
-				jack.say("Awesome workout was awesome !", g);
+				jack.say("Workout got me tired...  to bed !", g);
 		}
 
 		g.drawImage(Images.door, 
