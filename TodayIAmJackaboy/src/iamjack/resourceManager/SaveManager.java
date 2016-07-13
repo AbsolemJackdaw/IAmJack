@@ -2,8 +2,8 @@ package iamjack.resourceManager;
 
 import org.json.JSONObject;
 
-import iamjack.engine.save.DataTag;
-import iamjack.engine.save.Save;
+import framework.save.DataTag;
+import framework.save.Save;
 import iamjack.player.PlayerData;
 
 public class SaveManager {

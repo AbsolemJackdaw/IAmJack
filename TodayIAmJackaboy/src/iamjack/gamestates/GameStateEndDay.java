@@ -4,26 +4,26 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 
+import framework.GameStateHandler;
+import framework.window.Window;
 import iamjack.buttons.Button;
 import iamjack.buttons.ButtonDay;
-import iamjack.engine.GameState;
-import iamjack.engine.GameStateHandler;
-import iamjack.engine.Window;
+import iamjack.main.GameStateJack;
 import iamjack.player.PlayerData;
 
-public class GameStateEndDay extends GameState{
+public class GameStateEndDay extends GameStateJack{
 
 	private float alpha = 0f;
 
 	private ButtonDay button1 = new ButtonDay(
 			"Next Day", 
 			Window.getWidth()/2,
-			Window.scale(300));
+			Window.getGameScale(300));
 
 	private ButtonDay button2 = new ButtonDay(
 			"End Gaming", 
 			Window.getWidth()/2,
-			Window.scale(375));
+			Window.getGameScale(375));
 
 	private Font text;
 
@@ -37,7 +37,7 @@ public class GameStateEndDay extends GameState{
 		if(PlayerData.soundsPlayed.size() > 63)
 			PlayerData.soundsPlayed.clear();
 
-		text = new Font("SquareFont", Font.PLAIN, Window.scale(100));
+		text = new Font("SquareFont", Font.PLAIN, Window.getGameScale(100));
 	}
 
 	@Override
@@ -53,9 +53,9 @@ public class GameStateEndDay extends GameState{
 		String day = ""+PlayerData.daysPlayed;
 		String days = "Days";
 
-		g.drawString(yt, Window.getWidth()/2 - g.getFontMetrics().stringWidth(yt)/2, Window.scale(100));
-		g.drawString(day, Window.getWidth()/2 - g.getFontMetrics().stringWidth(day)/2, Window.scale(100) + g.getFontMetrics().getHeight()/2+ g.getFontMetrics().getHeight()/4);
-		g.drawString(days, Window.getWidth()/2 - g.getFontMetrics().stringWidth(days)/2, Window.scale(100)+ g.getFontMetrics().getHeight()+ g.getFontMetrics().getHeight()/2);
+		g.drawString(yt, Window.getWidth()/2 - g.getFontMetrics().stringWidth(yt)/2, Window.getGameScale(100));
+		g.drawString(day, Window.getWidth()/2 - g.getFontMetrics().stringWidth(day)/2, Window.getGameScale(100) + g.getFontMetrics().getHeight()/2+ g.getFontMetrics().getHeight()/4);
+		g.drawString(days, Window.getWidth()/2 - g.getFontMetrics().stringWidth(days)/2, Window.getGameScale(100)+ g.getFontMetrics().getHeight()+ g.getFontMetrics().getHeight()/2);
 
 		button1.draw(g);
 		button2.draw(g);

@@ -4,21 +4,18 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 
-import javax.swing.SwingWorker;
-
-import iamjack.engine.GamePanel;
-import iamjack.engine.GameState;
-import iamjack.engine.GameStateHandler;
-import iamjack.engine.Window;
-import iamjack.engine.resources.Music;
+import framework.GameStateHandler;
+import framework.gamestate.LoadState;
+import framework.window.Window;
 import iamjack.gamestates.shop.ShopItems;
+import iamjack.main.GameStateHandlerJack;
 import iamjack.player.achievements.AchievementLoader;
 import iamjack.resourceManager.Fonts;
 import iamjack.resourceManager.Images;
 import iamjack.resourceManager.SaveManager;
 import iamjack.resourceManager.Sounds;
 
-public class GameStateLoading extends GameState {
+public class GameStateLoading extends LoadState {
 
 	private final Font title ;
 	private final Font subTitle ;
@@ -27,12 +24,7 @@ public class GameStateLoading extends GameState {
 	private boolean counting = false;
 	private float textFade = 0f;
 
-	private static boolean resourcesLoaded = false;
-	private int counter = 0;
 	private int tipIndex = 0;
-
-	/**coutns how many ticks it took to load all resources*/
-	private int loadTime = 0;
 
 	private String tips[] = new String[]{
 			"Did you know sounds take a long time to load ?",
@@ -51,21 +43,16 @@ public class GameStateLoading extends GameState {
 	public GameStateLoading(GameStateHandler gsh) {
 		super(gsh);
 
-		//initialize music class before loading any sounds
-		Music.init();
-		
-		load();
-		
 		Fonts.registerFont();
-		title = new Font("SquareFont", Font.PLAIN, Window.scale(100));
-		subTitle = new Font("SquareFont", Font.PLAIN, Window.scale(25));
+		title = new Font("SquareFont", Font.PLAIN, Window.getGameScale(100));
+		subTitle = new Font("SquareFont", Font.PLAIN, Window.getGameScale(25));
 
 	}
 
 	@Override
 	public void draw(Graphics2D g) {
 		g.setColor(Color.black);
-		g.fillRect(0, 0, GamePanel.W, GamePanel.H);
+		g.fillRect(0, 0, Window.getWidth(), Window.getHeight());
 
 		g.setColor(Color.white);
 		g.setFont(title);
@@ -81,7 +68,7 @@ public class GameStateLoading extends GameState {
 		g.drawString(theTitleTop, Window.getWidth()/2 - (sizeXtop/2), Window.getHeight()/2 - (sizeY/2)*2 );
 		g.drawString(theTitle, Window.getWidth()/2 - (sizeX/2), Window.getHeight()/2 + (sizeY/2)- (sizeY/2));
 
-		if(!doneLoading()){
+		if(!isDoneLoadingResources()){
 
 			g.setFont(subTitle);
 
@@ -98,20 +85,19 @@ public class GameStateLoading extends GameState {
 			g.setFont(subTitle);
 			g.setColor(Color.green.darker().darker().darker());
 			int startSizeX2 = g.getFontMetrics().stringWidth(tips[tipIndex]);
-			g.drawString(tips[tipIndex], Window.getWidth()/2 - startSizeX2/2, Window.getHeight() - Window.scale(40));
+			g.drawString(tips[tipIndex], Window.getWidth()/2 - startSizeX2/2, Window.getHeight() - Window.getGameScale(40));
 
 		}
 
 		g.setColor(new Color(0f,0f,0f, fadeAlpha));
-		g.fillRect(0, 0, GamePanel.W, GamePanel.H);
+		g.fillRect(0, 0, Window.getWidth(), Window.getHeight());
 	}
 
 	@Override
 	public void update() {
-
-		counter++;
-
-		if(counter % 240 == 0)
+		super.update();
+		
+		if(getPassedTime() % 240 == 0)
 			tipIndex++;
 
 		if(tipIndex >= tips.length)
@@ -133,48 +119,24 @@ public class GameStateLoading extends GameState {
 		else
 			textFade-=.005F;
 
-		if(loadTime > 0 && !doneLoading())
-			loadTime++;
-
-		if(doneLoading()){
-			gsh.changeGameState(GameStateHandler.MENU);
-			System.out.println("took " + loadTime + " ticks to load all resources");
+		if(isDoneLoadingResources()){
+			gsh.changeGameState(GameStateHandlerJack.MENU);
 		}
 	}
 
-	private void load(){
-		
-		new SwingWorker<Integer, Void>() {
+	@Override
+	protected void loadResources() {
 
-			@Override
-			protected Integer doInBackground() {
-				loadTime = 1;
-				
-				Images.loadImages();
-				Sounds.loadSounds();
+		Images.loadImages();
+		Sounds.loadSounds();
 
-				AchievementLoader.load();
-				ShopItems.load();
+		AchievementLoader.load();
+		ShopItems.load();
 
-				SaveManager.readPlayerData();
+		SaveManager.readPlayerData();
 
-				//initialize scale for room drawing
-				new GameStateDrawHelper();
+		//initialize scale for room drawing
+		new GameStateDrawHelper();
 
-				resourcesLoaded = true;
-				System.out.println("took " + loadTime + " ticks to load resources");
-				return null;
-			}
-
-			@Override
-			protected void done() {
-				super.done();
-				System.out.println("resources are either done loading or ended unexpectedly.");
-			}
-		}.execute();
-	}
-	
-	private static boolean doneLoading(){
-		return resourcesLoaded ;
 	}
 }

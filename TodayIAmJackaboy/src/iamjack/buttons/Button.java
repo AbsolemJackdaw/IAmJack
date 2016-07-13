@@ -5,9 +5,9 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
-import iamjack.engine.GameStateHandler;
-import iamjack.engine.Window;
-import iamjack.engine.input.MouseHandler;
+import framework.GameStateHandler;
+import framework.input.MouseHandler;
+import framework.window.Window;
 import iamjack.resourceManager.Images;
 
 public class Button {
@@ -27,9 +27,9 @@ public class Button {
 		posX=x;
 		posY=y;
 
-		text = new Font("SquareFont", Font.PLAIN, Window.scale(35));
+		text = new Font("SquareFont", Font.PLAIN, Window.getGameScale(35));
 
-		box = new Rectangle((int)posX - Window.scale(64), (int)posY+Window.scale(64/2), Window.scale(128), Window.scale(64));
+		box = new Rectangle((int)posX - Window.getGameScale(64), (int)posY+Window.getGameScale(64/2), Window.getGameScale(128), Window.getGameScale(64));
 	}
 
 	public void draw(Graphics2D g){
@@ -40,11 +40,11 @@ public class Button {
 		int h = g.getFontMetrics().getHeight();
 		int w = g.getFontMetrics().stringWidth(name);
 
-		g.drawImage(isLit ? Images.buttonLit : Images.button , (int)posX- Window.scale(64), (int)posY, Window.scale(128), Window.scale(128), null);
+		g.drawImage(isLit ? Images.buttonLit : Images.button , (int)posX- Window.getGameScale(64), (int)posY, Window.getGameScale(128), Window.getGameScale(128), null);
 
 		g.drawString(name, 
-				((int)posX - Window.scale(64)) - w/2 + Window.scale(64),
-				(int)posY + h + Window.scale(34) );
+				((int)posX - Window.getGameScale(64)) - w/2 + Window.getGameScale(64),
+				(int)posY + h + Window.getGameScale(34) );
 
 	}
 

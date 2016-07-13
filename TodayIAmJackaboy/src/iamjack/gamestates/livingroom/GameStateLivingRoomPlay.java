@@ -5,20 +5,21 @@ import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.Random;
 
-import iamjack.engine.GameState;
-import iamjack.engine.GameStateHandler;
-import iamjack.engine.Window;
-import iamjack.engine.input.MouseHandler;
-import iamjack.engine.resources.Music;
-import iamjack.engine.resources.StreamMusic;
+import framework.GameStateHandler;
+import framework.input.MouseHandler;
+import framework.resourceLoaders.Music;
+import framework.resourceLoaders.StreamMusic;
+import framework.window.Window;
 import iamjack.gamestates.GameStateDrawHelper;
 import iamjack.gamestates.outside.EntityPopoff;
+import iamjack.main.GameStateHandlerJack;
+import iamjack.main.GameStateJack;
 import iamjack.player.Jack;
 import iamjack.player.PlayerData;
 import iamjack.resourceManager.Images;
 import iamjack.resourceManager.Sounds;
 
-public class GameStateLivingRoomPlay extends GameState {
+public class GameStateLivingRoomPlay extends GameStateJack {
 
 	private Jack jack = new Jack();
 
@@ -50,8 +51,8 @@ public class GameStateLivingRoomPlay extends GameState {
 	public GameStateLivingRoomPlay(GameStateHandler gsh) {
 		super(gsh);
 
-		jack.setPosX(Window.scale(882));
-		jack.setPosY(Window.scale(256));
+		jack.setPosX(Window.getGameScale(882));
+		jack.setPosY(Window.getGameScale(256));
 
 		jack.setBenchPressing(true);
 
@@ -76,13 +77,13 @@ public class GameStateLivingRoomPlay extends GameState {
 
 		if(prevReps < currentReps){
 			prevReps++;
-			popoffs.add(new EntityPopoff(EntityPopoff.PLUS1BICEPS, (int)jack.getPosX(), (int)jack.getPosY()+ Window.scale(64), 4d));
+			popoffs.add(new EntityPopoff(EntityPopoff.PLUS1BICEPS, (int)jack.getPosX(), (int)jack.getPosY()+ Window.getGameScale(64), 4d));
 		}
 		
 		if(jack.repsDone() >= totalReps && jack.canPress()){
 			PlayerData.exercised += totalReps;
 			StreamMusic.endStream(Sounds.STREAM_METALREPS);
-			gsh.changeGameState(GameStateHandler.GAME_LIVING_END);
+			gsh.changeGameState(GameStateHandlerJack.GAME_LIVING_END);
 		}
 
 		if(MouseHandler.clicked != null && MouseHandler.click){
@@ -93,7 +94,7 @@ public class GameStateLivingRoomPlay extends GameState {
 					String song = Sounds.REPS+rand.nextInt(20);
 					Music.play(song);
 
-					int songlength = Music.getFrames(song);
+					int songlength = Music.getFrameLength(song);
 					float secs = (float)songlength/Music.getFrameRate(song);
 					double frames = ((double)secs) * 60d;
 					speakTimer = Math.floor(frames); 
@@ -126,8 +127,8 @@ public class GameStateLivingRoomPlay extends GameState {
 	public void draw(Graphics2D g) {
 		GameStateDrawHelper.drawLivingRoom(g,0);
 		g.drawImage(Images.livingroomBenchPress,
-				Window.scale(732),
-				Window.scale(288),
+				Window.getGameScale(732),
+				Window.getGameScale(288),
 				(int)(64f*GameStateDrawHelper.scale),(int)(32f*GameStateDrawHelper.scale), null);
 
 		jack.draw(g);

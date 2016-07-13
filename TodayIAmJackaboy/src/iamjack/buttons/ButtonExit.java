@@ -1,7 +1,8 @@
 package iamjack.buttons;
 
-import iamjack.engine.GameStateHandler;
-import iamjack.engine.resources.Music;
+import framework.GameStateHandler;
+import framework.resourceLoaders.Music;
+import iamjack.main.GameStateHandlerJack;
 
 public class ButtonExit extends Button {
 
@@ -11,6 +12,6 @@ public class ButtonExit extends Button {
 
 	public void click(GameStateHandler gsh) {
 		Music.stopAll();
-		gsh.changeGameState(GameStateHandler.GAME_ENDDAY);
+		gsh.changeGameState(GameStateHandlerJack.GAME_ENDDAY);
 	}
 }

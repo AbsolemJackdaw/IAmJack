@@ -1,6 +1,6 @@
 package iamjack.buttons;
 
-import iamjack.engine.GameStateHandler;
+import framework.GameStateHandler;
 import iamjack.player.PlayerData;
 import iamjack.resourceManager.SoundPool;
 

@@ -1,7 +1,8 @@
 package iamjack.buttons;
 
-import iamjack.engine.GameStateHandler;
-import iamjack.engine.resources.StreamMusic;
+import framework.GameStateHandler;
+import framework.resourceLoaders.StreamMusic;
+import iamjack.main.GameStateHandlerJack;
 import iamjack.resourceManager.SaveManager;
 import iamjack.resourceManager.Sounds;
 
@@ -19,16 +20,16 @@ public class ButtonPick extends Button{
 		case "Exercise":
 			//augments money and day count when you exit the living room
 			SaveManager.writePlayerData();
-			gsh.changeGameState(GameStateHandler.GAME_LIVING);break;
+			gsh.changeGameState(GameStateHandlerJack.GAME_LIVING);break;
 		case "Go Jog":
-			gsh.changeGameState(GameStateHandler.GAME_EXTERIOR);
+			gsh.changeGameState(GameStateHandlerJack.GAME_EXTERIOR);
 			break;
 		case "Shop": 
-			gsh.changeGameState(GameStateHandler.GAME_SHOP);
+			gsh.changeGameState(GameStateHandlerJack.GAME_SHOP);
 			break;
 		case "End Day":
 			SaveManager.writePlayerData();
-			gsh.changeGameState(GameStateHandler.GAME_ENDDAY);
+			gsh.changeGameState(GameStateHandlerJack.GAME_ENDDAY);
 			break;
 
 		default:

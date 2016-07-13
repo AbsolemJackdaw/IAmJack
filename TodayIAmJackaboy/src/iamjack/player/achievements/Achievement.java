@@ -6,8 +6,8 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
 
-import iamjack.engine.Window;
-import iamjack.engine.save.DataTag;
+import framework.save.DataTag;
+import framework.window.Window;
 import iamjack.player.PlayerData;
 import iamjack.resourceManager.Images;
 import iamjack.resourceManager.SaveManager;
@@ -79,17 +79,17 @@ public class Achievement {
 		else
 			icon = Images.locked;
 		
-		g.drawImage(icon, x, y , Window.scale(64), Window.scale(64), null);
+		g.drawImage(icon, x, y , Window.getGameScale(64), Window.getGameScale(64), null);
 		
-		g.setFont(new Font("SquareFont", Font.PLAIN, Window.scale(25)));
+		g.setFont(new Font("SquareFont", Font.PLAIN, Window.getGameScale(25)));
 		
 		g.setColor(Color.white);
-		g.drawString(text, x + Window.scale(75), y+Window.scale(32)+g.getFontMetrics().getHeight()/2);
+		g.drawString(text, x + Window.getGameScale(75), y+Window.getGameScale(32)+g.getFontMetrics().getHeight()/2);
 	}
 	
 	public void drawAid(Graphics2D g, int x, int y){
 		g.setColor(Color.green.brighter());
-		g.setFont(new Font("SquareFont", Font.PLAIN, Window.scale(25)));
+		g.setFont(new Font("SquareFont", Font.PLAIN, Window.getGameScale(25)));
 		g.drawString(getAid(), x, y);
 	}
 	

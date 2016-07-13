@@ -4,8 +4,8 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-import iamjack.engine.GameStateHandler;
-import iamjack.engine.Window;
+import framework.GameStateHandler;
+import framework.window.Window;
 import iamjack.gamestates.shop.ShopItems;
 import iamjack.player.PlayerData;
 import iamjack.player.achievements.Achievement;
@@ -32,15 +32,15 @@ public class ButtonShop extends Button {
 		g.setFont(text);
 
 		int h = g.getFontMetrics().getHeight();
-		g.drawImage(isLit && canBuy() ? Images.buttonLit : Images.button , (int)posX- Window.scale(64), (int)posY, Window.scale(128), Window.scale(128), null);
+		g.drawImage(isLit && canBuy() ? Images.buttonLit : Images.button , (int)posX- Window.getGameScale(64), (int)posY, Window.getGameScale(128), Window.getGameScale(128), null);
 
-		g.drawImage(img, (int)posX - Window.scale(40), (int)posY+ Window.scale(20), Window.scale(64), Window.scale(64), null);
+		g.drawImage(img, (int)posX - Window.getGameScale(40), (int)posY+ Window.getGameScale(20), Window.getGameScale(64), Window.getGameScale(64), null);
 
 		g.setColor(isLit && canBuy() ? Color.green.darker() : canBuy() ? Color.WHITE : Color.red.darker());
 
 		g.drawString(itemName(), 
-				(int)posX + Window.scale(64),
-				(int)posY + h + Window.scale(35) );
+				(int)posX + Window.getGameScale(64),
+				(int)posY + h + Window.getGameScale(35) );
 	}
 
 	@Override

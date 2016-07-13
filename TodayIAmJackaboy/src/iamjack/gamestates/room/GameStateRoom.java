@@ -4,14 +4,15 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.Random;
 
-import iamjack.engine.GameState;
-import iamjack.engine.GameStateHandler;
-import iamjack.engine.Window;
-import iamjack.engine.input.KeyHandler;
-import iamjack.engine.input.MouseHandler;
-import iamjack.engine.resources.StreamMusic;
+import framework.GameStateHandler;
+import framework.input.KeyHandler;
+import framework.input.MouseHandler;
+import framework.resourceLoaders.StreamMusic;
+import framework.window.Window;
 import iamjack.gamestates.GameStateDrawHelper;
 import iamjack.gamestates.shop.ShopItems;
+import iamjack.main.GameStateHandlerJack;
+import iamjack.main.GameStateJack;
 import iamjack.player.Jack;
 import iamjack.player.PlayerData;
 import iamjack.player.achievements.Achievement;
@@ -19,7 +20,7 @@ import iamjack.player.achievements.AchievementLoader;
 import iamjack.resourceManager.Images;
 import iamjack.resourceManager.Sounds;
 
-public class GameStateRoom extends GameState {
+public class GameStateRoom extends GameStateJack {
 
 	private Jack jack = new Jack();
 
@@ -72,33 +73,33 @@ public class GameStateRoom extends GameState {
 		if(canGame)
 			GameStateDrawHelper.drawBobbingImg(g, Images.bubbleGame);
 
-		g.drawImage(Images.chair, Window.scale(824), Window.scale(260), (int)(64f*GameStateDrawHelper.scale), (int)(64f*GameStateDrawHelper.scale), null);
+		g.drawImage(Images.chair, Window.getGameScale(824), Window.getGameScale(260), (int)(64f*GameStateDrawHelper.scale), (int)(64f*GameStateDrawHelper.scale), null);
 
 		if(!jack.isAnimated()){
-			if(jack.getPosX() < Window.scale(20)){
+			if(jack.getPosX() < Window.getGameScale(20)){
 				jack.say("Nope, nothing to see here !", g);
 				discoverRoom[0] = true;
 			}
-			else if(jack.getPosX() > Window.scale(150) && jack.getPosX() < Window.scale(250)){
+			else if(jack.getPosX() > Window.getGameScale(150) && jack.getPosX() < Window.getGameScale(250)){
 				jack.say("Dis ma jack-Shelf! Full of Awesome!",g);
 				discoverRoom[1] = true;
 			}
-			else if(jack.getPosX() > Window.scale(400) && jack.getPosX() < Window.scale(600)){
+			else if(jack.getPosX() > Window.getGameScale(400) && jack.getPosX() < Window.getGameScale(600)){
 				jack.say("Bed's gathering dust... SLEEP IS FOR THE WEAK !",g);
 				discoverRoom[2] = true;
 			}
-			else if(jack.getPosX() > Window.scale(700) && jack.getPosX() < Window.scale(750)){
+			else if(jack.getPosX() > Window.getGameScale(700) && jack.getPosX() < Window.getGameScale(750)){
 				jack.say("This is my Beautiful Bonzaï !",g);
 				discoverRoom[3] = true;
 			}
-			else if(jack.getPosX() > Window.scale(800)){
+			else if(jack.getPosX() > Window.getGameScale(800)){
 				jack.say("ooh boy ! work ! :D",g);
 				discoverRoom[4] = true;
 			}
 			
 			else if(PlayerData.itemsBought.contains(ShopItems.tank) &&
-					jack.getPosX() > Window.scale(200) && 
-					jack.getPosX() < Window.scale(400)){
+					jack.getPosX() > Window.getGameScale(200) && 
+					jack.getPosX() < Window.getGameScale(400)){
 				jack.say("Our Sam, given birth by my fans <3",g);
 				discoverRoom[4] = true;
 			}
@@ -142,23 +143,23 @@ public class GameStateRoom extends GameState {
 
 		GameStateDrawHelper.updateBobbingImage();
 
-		if(jack.getPosX() > Window.scale(800))
+		if(jack.getPosX() > Window.getGameScale(800))
 			canGame = true;
 		else
 			canGame = false;
 
 		if(canGame && KeyHandler.isPressed(KeyHandler.ENTER)){
 			StreamMusic.endStream(Sounds.STREAM_ROOMMUSIC);
-			gsh.changeGameState(GameStateHandler.GAME_ROOM_VIDEO);
+			gsh.changeGameState(GameStateHandlerJack.GAME_ROOM_VIDEO);
 		}
 
 		if(canGame && MouseHandler.clicked != null && MouseHandler.click){
 			double x = MouseHandler.clicked.getX();
 			double y = MouseHandler.clicked.getY();
 
-			if(x >= Window.scale(850) && x <= Window.scale(914) && y >= Window.scale(180) && y <= Window.scale(290)){
+			if(x >= Window.getGameScale(850) && x <= Window.getGameScale(914) && y >= Window.getGameScale(180) && y <= Window.getGameScale(290)){
 				StreamMusic.endStream(Sounds.STREAM_ROOMMUSIC);
-				gsh.changeGameState(GameStateHandler.GAME_ROOM_VIDEO);
+				gsh.changeGameState(GameStateHandlerJack.GAME_ROOM_VIDEO);
 			}
 		}
 		jack.update();

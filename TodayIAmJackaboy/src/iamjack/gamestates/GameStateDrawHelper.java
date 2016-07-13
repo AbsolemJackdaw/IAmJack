@@ -7,10 +7,10 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
+import framework.GameStateHandler;
+import framework.input.MouseHandler;
+import framework.window.Window;
 import iamjack.buttons.ButtonDay;
-import iamjack.engine.GameStateHandler;
-import iamjack.engine.Window;
-import iamjack.engine.input.MouseHandler;
 import iamjack.gamestates.shop.ShopItems;
 import iamjack.player.PlayerData;
 import iamjack.player.achievements.Achievement;
@@ -21,7 +21,7 @@ public class GameStateDrawHelper {
 	public static float scale;
 	public static float sizeX;
 	public static float sizeY;
-	private static Font font = new Font("SquareFont", Font.PLAIN, Window.scale(35));
+	private static Font font = new Font("SquareFont", Font.PLAIN, Window.getGameScale(35));
 	
 	public GameStateDrawHelper() {
 		BufferedImage img = Images.room; //standard size
@@ -41,7 +41,7 @@ public class GameStateDrawHelper {
 				(int)sizeX, (int)sizeY, null);
 		
 		if(PlayerData.itemsBought.contains(ShopItems.tank))
-			g.drawImage(Images.tank, Window.scale(300), Window.scale(200),(int)(54*scale), (int)(54*scale), null);
+			g.drawImage(Images.tank, Window.getGameScale(300), Window.getGameScale(200),(int)(54*scale), (int)(54*scale), null);
 		
 	}
 	
@@ -71,7 +71,7 @@ public class GameStateDrawHelper {
 				(int)sizeX, (int)sizeY, null);
 	}
 	
-	private static ButtonDay b = new ButtonDay("Quit Game", Window.getWidth() - Window.scale(250), Window.scale(25));
+	private static ButtonDay b = new ButtonDay("Quit Game", Window.getWidth() - Window.getGameScale(250), Window.getGameScale(25));
 	
 	public static void drawMenu(Graphics2D g){
 
@@ -86,7 +86,7 @@ public class GameStateDrawHelper {
 	
 	public static void drawAchievements(Graphics2D g){
 		g.setColor(new Color(0, 0, 0, .5f));
-		g.fillRect(Window.scale(25), 0, Window.getWidth()-Window.scale(50), Window.getHeight());
+		g.fillRect(Window.getGameScale(25), 0, Window.getWidth()-Window.getGameScale(50), Window.getHeight());
 		
 		int dex = 0;
 
@@ -94,14 +94,14 @@ public class GameStateDrawHelper {
 			Point p = new Point((int)MouseHandler.mouseX, (int)MouseHandler.mouseY);
 			
 			Rectangle r = new Rectangle(
-					Window.scale(32), 
-					(Window.scale(64) + Window.scale(70)*dex)+ MouseHandler.wheelY,
-					Window.scale(256), Window.scale(64));
+					Window.getGameScale(32), 
+					(Window.getGameScale(64) + Window.getGameScale(70)*dex)+ MouseHandler.wheelY,
+					Window.getGameScale(256), Window.getGameScale(64));
 			
 			if(r.contains(p))
-				a.drawAid(g, Window.scale(107), (Window.scale(90) + Window.scale(70)*dex) + MouseHandler.wheelY);
+				a.drawAid(g, Window.getGameScale(107), (Window.getGameScale(90) + Window.getGameScale(70)*dex) + MouseHandler.wheelY);
 
-			a.drawInGui(g, Window.scale(32), (Window.scale(64) + Window.scale(70)*dex) + MouseHandler.wheelY);
+			a.drawInGui(g, Window.getGameScale(32), (Window.getGameScale(64) + Window.getGameScale(70)*dex) + MouseHandler.wheelY);
 			dex ++;
 		}
 	}
@@ -112,10 +112,10 @@ public class GameStateDrawHelper {
 			g.setColor(Color.green.darker().darker());
 			
 			String money = "Boss Coin :" + PlayerData.money;
-			g.drawString(money, Window.scale(2), g.getFontMetrics().getHeight());
+			g.drawString(money, Window.getGameScale(2), g.getFontMetrics().getHeight());
 			
 			String fans = "Fans :" + PlayerData.fans;
-			g.drawString(fans, Window.getWidth()-g.getFontMetrics().stringWidth(fans) - Window.scale(2), g.getFontMetrics().getHeight());
+			g.drawString(fans, Window.getWidth()-g.getFontMetrics().stringWidth(fans) - Window.getGameScale(2), g.getFontMetrics().getHeight());
 			
 		}
 	}
@@ -126,7 +126,7 @@ public class GameStateDrawHelper {
 			g.setColor(Color.green.darker().darker());
 			
 			String biceps = "Biceps :" + PlayerData.exercised;
-			g.drawString(biceps, Window.getWidth()-g.getFontMetrics().stringWidth(biceps) - Window.scale(2), g.getFontMetrics().getHeight() * 2 + 10);
+			g.drawString(biceps, Window.getWidth()-g.getFontMetrics().stringWidth(biceps) - Window.getGameScale(2), g.getFontMetrics().getHeight() * 2 + 10);
 		}
 	}
 	
@@ -135,9 +135,9 @@ public class GameStateDrawHelper {
 	
 	public static void drawBobbingImg(Graphics2D g, BufferedImage img){
 		g.drawImage(img, 
-				Window.scale(850),
-				Window.scale(200) + (int)bobbing,
-				Window.scale(64), Window.scale(64), null);
+				Window.getGameScale(850),
+				Window.getGameScale(200) + (int)bobbing,
+				Window.getGameScale(64), Window.getGameScale(64), null);
 	}
 	
 	public static void updateBobbingImage(){

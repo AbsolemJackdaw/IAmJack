@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 
-import iamjack.engine.Window;
+import framework.window.Window;
 import iamjack.player.Jack;
 
 public class EntityPopoff extends EntityPickUps {
@@ -12,7 +12,7 @@ public class EntityPopoff extends EntityPickUps {
 	private int lifetime = 4*60;
 	private int randSpud = rand.nextInt(2);
 
-	private static Font font = new Font("SquareFont", Font.PLAIN, Window.scale(35));
+	private static Font font = new Font("SquareFont", Font.PLAIN, Window.getGameScale(35));
 
 	public static final int PLUS1BICEPS = 4;
 

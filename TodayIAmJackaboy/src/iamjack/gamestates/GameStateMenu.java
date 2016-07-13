@@ -4,16 +4,16 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 
+import framework.GameStateHandler;
+import framework.resourceLoaders.Music;
+import framework.resourceLoaders.StreamMusic;
+import framework.window.Window;
 import iamjack.buttons.ButtonMenu;
-import iamjack.engine.GameState;
-import iamjack.engine.GameStateHandler;
-import iamjack.engine.Window;
-import iamjack.engine.resources.Music;
-import iamjack.engine.resources.StreamMusic;
+import iamjack.main.GameStateJack;
 import iamjack.player.PlayerData;
 import iamjack.resourceManager.Sounds;
 
-public class GameStateMenu extends GameState {
+public class GameStateMenu extends GameStateJack {
 
 	private final Font titleFont ;
 	private String titleHead = "Today,";
@@ -24,12 +24,12 @@ public class GameStateMenu extends GameState {
 	public GameStateMenu(GameStateHandler gsh) {
 		super(gsh);
 
-		titleFont = new Font("SquareFont", Font.PLAIN, Window.scale(100));
+		titleFont = new Font("SquareFont", Font.PLAIN, Window.getGameScale(100));
 
 		buttons = new ButtonMenu[]{
 				new ButtonMenu("Start", Window.getWidth()/2 , Window.getHeight()/2),
-				new ButtonMenu("Achievements", Window.getWidth()/2, Window.getHeight()/2+Window.scale(64)),
-				new ButtonMenu("Exit", Window.getWidth()/2, Window.getHeight()/2+Window.scale(64*2)),
+				new ButtonMenu("Achievements", Window.getWidth()/2, Window.getHeight()/2+Window.getGameScale(64)),
+				new ButtonMenu("Exit", Window.getWidth()/2, Window.getHeight()/2+Window.getGameScale(64*2)),
 		};
 
 		if(!PlayerData.dontDoubleLoop){

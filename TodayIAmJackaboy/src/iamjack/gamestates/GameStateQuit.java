@@ -4,17 +4,18 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 
-import iamjack.engine.GameState;
-import iamjack.engine.GameStateHandler;
-import iamjack.engine.Window;
-import iamjack.engine.input.KeyHandler;
-import iamjack.engine.resources.StreamMusic;
+import framework.GameStateHandler;
+import framework.input.KeyHandler;
+import framework.resourceLoaders.StreamMusic;
+import framework.window.Window;
+import iamjack.main.GameStateHandlerJack;
+import iamjack.main.GameStateJack;
 import iamjack.player.PlayerData;
 import iamjack.player.achievements.Achievement;
 import iamjack.player.achievements.AchievementLoader;
 import iamjack.resourceManager.Sounds;
 
-public class GameStateQuit extends GameState {
+public class GameStateQuit extends GameStateJack {
 
 	private String header ="Today, I Am Jackaboy";
 	
@@ -60,8 +61,8 @@ public class GameStateQuit extends GameState {
 		super(gsh);
 		
 		offset = Window.getHeight();
-		headerFont = new Font("SquareFont", Font.PLAIN, Window.scale(80));
-		creditFont = new Font("SquareFont", Font.PLAIN, Window.scale(40));
+		headerFont = new Font("SquareFont", Font.PLAIN, Window.getGameScale(80));
+		creditFont = new Font("SquareFont", Font.PLAIN, Window.getGameScale(40));
 
 		StreamMusic.loopStream(Sounds.STREAM_QUEST);
 
@@ -85,7 +86,7 @@ public class GameStateQuit extends GameState {
 		for(int i = 0; i < credits.length; i++){
 			String s = credits[i];
 			int x2 = g.getFontMetrics().stringWidth(s);
-			int y2 = g.getFontMetrics().getHeight() + Window.scale(2);
+			int y2 = g.getFontMetrics().getHeight() + Window.getGameScale(2);
 			g.drawString(s, Window.getWidth()/2 - x2/2, (int)offset + y2*i);
 		}
 		
@@ -104,12 +105,12 @@ public class GameStateQuit extends GameState {
 		credits[credits.length-1] = percent+"%";
 		offset -= 1D;
 		
-		if(offset < -Window.scale(1500) || KeyHandler.isPressed(KeyHandler.ENTER)){
+		if(offset < -Window.getGameScale(1500) || KeyHandler.isPressed(KeyHandler.ENTER)){
 			PlayerData.soundsPlayed.clear();
-			gsh.changeGameState(GameStateHandler.MENU);
+			gsh.changeGameState(GameStateHandlerJack.MENU);
 		}
 		
-		if(offset < -Window.scale(1100)){
+		if(offset < -Window.getGameScale(1100)){
 			Achievement.trigger(AchievementLoader.credits);
 		}
 	}

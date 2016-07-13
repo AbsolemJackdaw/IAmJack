@@ -3,22 +3,23 @@ package iamjack.gamestates.room;
 import java.awt.AlphaComposite;
 import java.awt.Graphics2D;
 
+import framework.GameStateHandler;
+import framework.input.KeyHandler;
+import framework.input.MouseHandler;
+import framework.resourceLoaders.Music;
+import framework.resourceLoaders.StreamMusic;
+import framework.window.Window;
 import iamjack.buttons.ButtonGamePlay;
-import iamjack.engine.GameState;
-import iamjack.engine.GameStateHandler;
-import iamjack.engine.Window;
-import iamjack.engine.input.KeyHandler;
-import iamjack.engine.input.MouseHandler;
-import iamjack.engine.resources.Music;
-import iamjack.engine.resources.StreamMusic;
 import iamjack.gamestates.GameStateDrawHelper;
 import iamjack.gamestates.shop.ShopItems;
+import iamjack.main.GameStateHandlerJack;
+import iamjack.main.GameStateJack;
 import iamjack.player.Jack;
 import iamjack.player.PlayerData;
 import iamjack.resourceManager.Images;
 import iamjack.resourceManager.Sounds;
 
-public class GameStateRoomPlay extends GameState {
+public class GameStateRoomPlay extends GameStateJack {
 
 	private int sitX ;
 	private int sitY ;
@@ -65,8 +66,8 @@ public class GameStateRoomPlay extends GameState {
 		StreamMusic.loopStream(Sounds.STREAM_METAL);
 		
 		jack = new Jack();
-		sitX = Window.scale(852);
-		sitY = Window.scale(240);
+		sitX = Window.getGameScale(852);
+		sitY = Window.getGameScale(240);
 
 		jack.setPosX(sitX);
 		jack.setPosY(sitY);
@@ -106,8 +107,8 @@ public class GameStateRoomPlay extends GameState {
 			for(int i = 0; i < choices[j].length; i++){
 				buttons[j][i] = new ButtonGamePlay(
 						text[choices[j][i]],
-						Window.scale(550),
-						Window.scale(150) + (Window.scale(75) * i));
+						Window.getGameScale(550),
+						Window.getGameScale(150) + (Window.getGameScale(75) * i));
 			}
 	}
 
@@ -118,7 +119,7 @@ public class GameStateRoomPlay extends GameState {
 
 		jack.draw(g);
 
-		g.drawImage(Images.chairLow, Window.scale(824), Window.scale(272), (int)(64f*GameStateDrawHelper.scale), (int)(64f*GameStateDrawHelper.scale), null);
+		g.drawImage(Images.chairLow, Window.getGameScale(824), Window.getGameScale(272), (int)(64f*GameStateDrawHelper.scale), (int)(64f*GameStateDrawHelper.scale), null);
 
 		g.setComposite(AlphaComposite.SrcOver);
 
@@ -153,7 +154,7 @@ public class GameStateRoomPlay extends GameState {
 		if(MouseHandler.click && stage >= choices.length ){
 			Music.stop(PlayerData.currentlySaying);
 			StreamMusic.endStream(Sounds.STREAM_METAL);
-			gsh.changeGameState(GameStateHandler.GAME_ROOM_VIDEO_DONE);
+			gsh.changeGameState(GameStateHandlerJack.GAME_ROOM_VIDEO_DONE);
 		}
 
 		if(speakTimer <= 0 && stage < buttons.length)
@@ -173,7 +174,7 @@ public class GameStateRoomPlay extends GameState {
 		if(buttonClicked){
 			buttonClicked = false;
 			if(PlayerData.currentlySaying.length() > 0){
-				int songlength = Music.getFrames(PlayerData.currentlySaying);
+				int songlength = Music.getFrameLength(PlayerData.currentlySaying);
 				float secs = (float)songlength/Music.getFrameRate(PlayerData.currentlySaying);
 				double frames = ((double)secs) * 60d;
 				speakTimer = Math.floor(frames); 
@@ -189,6 +190,6 @@ public class GameStateRoomPlay extends GameState {
 		if(stage ==	choices.length && speakTimer <= 120d)
 			StreamMusic.endStream(Sounds.STREAM_METAL);
 		if(stage >=	choices.length && speakTimer <= 0d)
-			gsh.changeGameState(GameStateHandler.GAME_ROOM_VIDEO_DONE);
+			gsh.changeGameState(GameStateHandlerJack.GAME_ROOM_VIDEO_DONE);
 	}
 }

@@ -4,11 +4,12 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 
-import iamjack.engine.GameState;
-import iamjack.engine.GameStateHandler;
-import iamjack.engine.Window;
-import iamjack.engine.resources.StreamMusic;
+import framework.GameStateHandler;
+import framework.resourceLoaders.StreamMusic;
+import framework.window.Window;
 import iamjack.gamestates.GameStateDrawHelper;
+import iamjack.main.GameStateHandlerJack;
+import iamjack.main.GameStateJack;
 import iamjack.player.Jack;
 import iamjack.player.PlayerData;
 import iamjack.player.achievements.Achievement;
@@ -16,7 +17,7 @@ import iamjack.player.achievements.AchievementLoader;
 import iamjack.resourceManager.Images;
 import iamjack.resourceManager.Sounds;
 
-public class GameStateRoomEnd extends GameState {
+public class GameStateRoomEnd extends GameStateJack {
 
 	private Jack jack = new Jack();
 
@@ -25,10 +26,10 @@ public class GameStateRoomEnd extends GameState {
 	public GameStateRoomEnd(GameStateHandler gsh) {
 		super(gsh);
 
-		text = new Font("SquareFont", Font.PLAIN, Window.scale(35));
+		text = new Font("SquareFont", Font.PLAIN, Window.getGameScale(35));
 
 		jack.facingRight = false;
-		jack.setPosX(Window.scale(800));
+		jack.setPosX(Window.getGameScale(800));
 
 		StreamMusic.loopStream(Sounds.STREAM_EVERYWHERE);
 	}
@@ -46,25 +47,25 @@ public class GameStateRoomEnd extends GameState {
 
 		String gj = "Good job Jack ! Today you made a";
 
-		g.drawString(gj, Window.getWidth()/2 - g.getFontMetrics().stringWidth(gj)/2, Window.scale(70));
-		g.drawString(video, Window.getWidth()/2 - g.getFontMetrics().stringWidth(video)/2, Window.scale(100));
-		g.drawString("video !", Window.getWidth()/2 - g.getFontMetrics().stringWidth("video !")/2, Window.scale(130));
+		g.drawString(gj, Window.getWidth()/2 - g.getFontMetrics().stringWidth(gj)/2, Window.getGameScale(70));
+		g.drawString(video, Window.getWidth()/2 - g.getFontMetrics().stringWidth(video)/2, Window.getGameScale(100));
+		g.drawString("video !", Window.getWidth()/2 - g.getFontMetrics().stringWidth("video !")/2, Window.getGameScale(130));
 
 		float scale = GameStateDrawHelper.scale;
 
-		g.drawImage(Images.chair, Window.scale(824), Window.scale(260), (int)(64f*scale), (int)(64f*scale), null);
+		g.drawImage(Images.chair, Window.getGameScale(824), Window.getGameScale(260), (int)(64f*scale), (int)(64f*scale), null);
 
-		g.drawImage(Images.door, 0, Window.scale(160), (int)(64f*scale), (int)(64f*scale), null);
+		g.drawImage(Images.door, 0, Window.getGameScale(160), (int)(64f*scale), (int)(64f*scale), null);
 
 		g.setColor(Color.green.darker().darker().darker());
 		g.setFont(text);
 
 		if(!jack.isAnimated()){
-			if(jack.getPosX() > Window.scale(400) && jack.getPosX() < Window.scale(600))
+			if(jack.getPosX() > Window.getGameScale(400) && jack.getPosX() < Window.getGameScale(600))
 				jack.say("No time to sleep yet... I should go out and Exercise !", g);
-			else if(jack.getPosX() > Window.scale(750))
+			else if(jack.getPosX() > Window.getGameScale(750))
 				jack.say("Done for today !", g);
-			else if(jack.getPosX() > Window.scale(150) && jack.getPosX() < Window.scale(250))
+			else if(jack.getPosX() > Window.getGameScale(150) && jack.getPosX() < Window.getGameScale(250))
 				jack.say("This is for looking at. Fan made, very Fancy stuff!", g);
 		}
 		
@@ -80,7 +81,7 @@ public class GameStateRoomEnd extends GameState {
 		jack.update();
 
 		if(jack.getPosX() < -10){
-			gsh.changeGameState(GameStateHandler.GAME_WHERETO);
+			gsh.changeGameState(GameStateHandlerJack.GAME_WHERETO);
 		}
 	}
 

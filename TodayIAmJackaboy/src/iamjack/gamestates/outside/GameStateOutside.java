@@ -3,17 +3,18 @@ package iamjack.gamestates.outside;
 import java.awt.Graphics2D;
 import java.util.Random;
 
-import iamjack.engine.GameState;
-import iamjack.engine.GameStateHandler;
-import iamjack.engine.Window;
-import iamjack.engine.input.MouseHandler;
-import iamjack.engine.resources.StreamMusic;
+import framework.GameStateHandler;
+import framework.input.MouseHandler;
+import framework.resourceLoaders.StreamMusic;
+import framework.window.Window;
 import iamjack.gamestates.GameStateDrawHelper;
+import iamjack.main.GameStateHandlerJack;
+import iamjack.main.GameStateJack;
 import iamjack.player.Jack;
 import iamjack.resourceManager.Images;
 import iamjack.resourceManager.Sounds;
 
-public class GameStateOutside extends GameState {
+public class GameStateOutside extends GameStateJack {
 
 	private Jack jack = new Jack();
 
@@ -39,8 +40,8 @@ public class GameStateOutside extends GameState {
 		randTextIndex = rand.nextInt(text.length);
 
 		jack.setSportsing(true);
-		jack.setPosY(Window.getHeight() / 2 - Window.scale(15));
-		jack.setPosX(Window.scale(125));
+		jack.setPosY(Window.getHeight() / 2 - Window.getGameScale(15));
+		jack.setPosX(Window.getGameScale(125));
 		StreamMusic.loopStream(Sounds.STREAM_WORKOUT);
 	}
 
@@ -69,7 +70,7 @@ public class GameStateOutside extends GameState {
 		if(jack.isAnimated() && !once)
 			once = true;
 
-		if(jack.getPosX() > Window.scale(800))
+		if(jack.getPosX() > Window.getGameScale(800))
 			canSport = true;
 		else
 			canSport = false;
@@ -81,9 +82,9 @@ public class GameStateOutside extends GameState {
 			double x = MouseHandler.clicked.getX();
 			double y = MouseHandler.clicked.getY();
 
-			if(x >= Window.scale(850) && x <= Window.scale(914) && y >= Window.scale(180) && y <= Window.scale(290)){
+			if(x >= Window.getGameScale(850) && x <= Window.getGameScale(914) && y >= Window.getGameScale(180) && y <= Window.getGameScale(290)){
 				//Music.stop(Sounds.ROOMMUSIC);
-				gsh.changeGameState(GameStateHandler.GAME_WORKOUT);
+				gsh.changeGameState(GameStateHandlerJack.GAME_WORKOUT);
 			}
 		}
 

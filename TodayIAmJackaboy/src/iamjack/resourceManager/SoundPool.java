@@ -2,7 +2,7 @@ package iamjack.resourceManager;
 
 import java.util.Random;
 
-import iamjack.engine.resources.Music;
+import framework.resourceLoaders.Music;
 import iamjack.player.PlayerData;
 import iamjack.player.achievements.Achievement;
 import iamjack.player.achievements.AchievementLoader;

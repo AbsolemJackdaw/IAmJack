@@ -4,20 +4,21 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.Random;
 
-import iamjack.engine.GameState;
-import iamjack.engine.GameStateHandler;
-import iamjack.engine.Window;
-import iamjack.engine.input.KeyHandler;
-import iamjack.engine.input.MouseHandler;
-import iamjack.engine.resources.StreamMusic;
+import framework.GameStateHandler;
+import framework.input.KeyHandler;
+import framework.input.MouseHandler;
+import framework.resourceLoaders.StreamMusic;
+import framework.window.Window;
 import iamjack.gamestates.GameStateDrawHelper;
+import iamjack.main.GameStateHandlerJack;
+import iamjack.main.GameStateJack;
 import iamjack.player.Jack;
 import iamjack.player.achievements.Achievement;
 import iamjack.player.achievements.AchievementLoader;
 import iamjack.resourceManager.Images;
 import iamjack.resourceManager.Sounds;
 
-public class GameStateLivingRoom extends GameState {
+public class GameStateLivingRoom extends GameStateJack {
 
 	private Jack jack = new Jack();
 
@@ -60,34 +61,34 @@ public class GameStateLivingRoom extends GameState {
 		if(jack.isAnimated() && !once)
 			once = true;
 		
-		if(jack.getPosX() > Window.scale(750))
+		if(jack.getPosX() > Window.getGameScale(750))
 			canWorkout = true;
 		else
 			canWorkout = false;
 
 		if(canWorkout && KeyHandler.isPressed(KeyHandler.ENTER)){
-			gsh.changeGameState(GameStateHandler.GAME_LIVING_BENCHGAME);
+			gsh.changeGameState(GameStateHandlerJack.GAME_LIVING_BENCHGAME);
 		}
 
 		if(canWorkout && MouseHandler.clicked != null && MouseHandler.click){
 			double x = MouseHandler.clicked.getX();
 			double y = MouseHandler.clicked.getY();
 
-			if(x >= Window.scale(850) && x <= Window.scale(914) && y >= Window.scale(180) && y <= Window.scale(290)){
+			if(x >= Window.getGameScale(850) && x <= Window.getGameScale(914) && y >= Window.getGameScale(180) && y <= Window.getGameScale(290)){
 				StreamMusic.endStream(Sounds.STREAM_ROOMMUSIC);
-				gsh.changeGameState(GameStateHandler.GAME_LIVING_BENCHGAME);
+				gsh.changeGameState(GameStateHandlerJack.GAME_LIVING_BENCHGAME);
 			}
 		}
 
 		if(jack.getPosX() < -10){
 			StreamMusic.endStream(Sounds.STREAM_ROOMMUSIC);
-			gsh.changeGameState(GameStateHandler.GAME_ENDDAY);
+			gsh.changeGameState(GameStateHandlerJack.GAME_ENDDAY);
 		}
 
 		jack.update();
 
 		if(!jack.isAnimated())	
-			if(jack.getPosX() > Window.scale(310) && jack.getPosX() < Window.scale(320))
+			if(jack.getPosX() > Window.getGameScale(310) && jack.getPosX() < Window.getGameScale(320))
 				Achievement.trigger(AchievementLoader.seat);
 
 		if(alpha > 0)
@@ -106,26 +107,26 @@ public class GameStateLivingRoom extends GameState {
 		jack.draw(g);
 
 		g.drawImage(Images.livingroomChair,
-				Window.scale(280),
-				Window.scale(160),
+				Window.getGameScale(280),
+				Window.getGameScale(160),
 				(int)(64f*GameStateDrawHelper.scale),(int)(64f*GameStateDrawHelper.scale), null);
 
 		g.drawImage(Images.livingroomBenchPress,
-				Window.scale(732),
-				Window.scale(288),
+				Window.getGameScale(732),
+				Window.getGameScale(288),
 				(int)(64f*GameStateDrawHelper.scale),(int)(32f*GameStateDrawHelper.scale), null);
 		g.drawImage(Images.livingroomBenchPressWeight,
-				Window.scale(732),
-				Window.scale(288),
+				Window.getGameScale(732),
+				Window.getGameScale(288),
 				(int)(64f*GameStateDrawHelper.scale),(int)(32f*GameStateDrawHelper.scale), null);
 
 		g.drawImage(Images.door, 
 				0,
-				Window.scale(160), 
+				Window.getGameScale(160), 
 				(int)(64f*GameStateDrawHelper.scale), (int)(64f*GameStateDrawHelper.scale), null);
 
 		if(!jack.isAnimated()){
-			if(jack.getPosX() > Window.scale(600) && jack.getPosX() < Window.scale(750))
+			if(jack.getPosX() > Window.getGameScale(600) && jack.getPosX() < Window.getGameScale(750))
 				jack.say("This is a guy from Sonsor'Anarky. Drawn by me roommate !", g);
 			if(!once)
 				jack.say(text[randTextIndex], g);

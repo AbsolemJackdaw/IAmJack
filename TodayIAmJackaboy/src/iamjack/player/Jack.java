@@ -6,10 +6,10 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 
-import iamjack.engine.Window;
-import iamjack.engine.input.KeyHandler;
-import iamjack.engine.input.MouseHandler;
-import iamjack.engine.resources.Music;
+import framework.input.KeyHandler;
+import framework.input.MouseHandler;
+import framework.resourceLoaders.Music;
+import framework.window.Window;
 import iamjack.resourceManager.Images;
 import iamjack.resourceManager.Sounds;
 
@@ -39,7 +39,7 @@ public class Jack {
 	private BufferedImage[] animationRepMouth ;
 	private BufferedImage[] animationSportsing ;
 
-	private double speed = Window.scale(5D);
+	private double speed = Window.getGameScale(5D);
 
 	private Random rand = new Random();
 
@@ -52,9 +52,9 @@ public class Jack {
 
 	public Jack() {
 
-		subTitle = new Font("SquareFont", Font.PLAIN, Window.scale(35));
+		subTitle = new Font("SquareFont", Font.PLAIN, Window.getGameScale(35));
 
-		posX = Window.scale(50);
+		posX = Window.getGameScale(50);
 		posY = Window.getHeight() / 2;
 
 		animation = new BufferedImage[]{
@@ -169,8 +169,8 @@ public class Jack {
 	private void doMovement(){
 
 		if(MouseHandler.clicked != null){
-			if(MouseHandler.clicked.getX() > Window.getWidth() - Window.scale(175))
-				MouseHandler.clicked.x = Window.getWidth() - Window.scale(175)-1;
+			if(MouseHandler.clicked.getX() > Window.getWidth() - Window.getGameScale(175))
+				MouseHandler.clicked.x = Window.getWidth() - Window.getGameScale(175)-1;
 
 			if(MouseHandler.clicked.getX() < 50)
 				MouseHandler.clicked.x = -50;
@@ -181,7 +181,7 @@ public class Jack {
 			}
 		}
 
-		if(KeyHandler.keyState[KeyHandler.RIGHT] && posX < Window.getWidth() - Window.scale(175)){
+		if(KeyHandler.keyState[KeyHandler.RIGHT] && posX < Window.getWidth() - Window.getGameScale(175)){
 			posX += speed;
 			facingRight = true;
 			animated = true;
@@ -216,7 +216,7 @@ public class Jack {
 				Music.play(Sounds.WALK+rand.nextInt(4));
 		}
 
-		if(MouseHandler.clicked != null && posX < MouseHandler.clicked.getX() && posX < Window.getWidth() - Window.scale(175)){
+		if(MouseHandler.clicked != null && posX < MouseHandler.clicked.getX() && posX < Window.getWidth() - Window.getGameScale(175)){
 			double speedMod = speed;
 			if(MouseHandler.clicked.getX() - posX < speed)
 				speedMod =  MouseHandler.clicked.getX() - posX;
@@ -245,7 +245,7 @@ public class Jack {
 			drawJack(animationRepMouth[animTalking], g);
 		}
 
-		g.drawImage(Images.jackPressArms, (int)posX - Window.scale(32), (int)posY - (int)armPress, Window.scale(128), Window.scale(128), null);
+		g.drawImage(Images.jackPressArms, (int)posX - Window.getGameScale(32), (int)posY - (int)armPress, Window.getGameScale(128), Window.getGameScale(128), null);
 	}
 
 	private void drawSitting(Graphics2D g){
@@ -273,9 +273,9 @@ public class Jack {
 
 	private void drawJack(BufferedImage img, Graphics2D g){
 		if(facingRight)
-			g.drawImage(img, (int)posX - Window.scale(32), (int)posY, Window.scale(128), Window.scale(128), null);
+			g.drawImage(img, (int)posX - Window.getGameScale(32), (int)posY, Window.getGameScale(128), Window.getGameScale(128), null);
 		else
-			g.drawImage(img, (int)posX+Window.scale(128)- Window.scale(32), (int)posY, -Window.scale(128), Window.scale(128), null);
+			g.drawImage(img, (int)posX+Window.getGameScale(128)- Window.getGameScale(32), (int)posY, -Window.getGameScale(128), Window.getGameScale(128), null);
 	}
 
 	public double getPosX() {

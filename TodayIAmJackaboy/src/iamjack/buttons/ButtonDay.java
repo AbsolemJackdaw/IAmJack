@@ -1,8 +1,9 @@
 package iamjack.buttons;
 
-import iamjack.engine.GameStateHandler;
-import iamjack.engine.resources.Music;
-import iamjack.engine.resources.StreamMusic;
+import framework.GameStateHandler;
+import framework.resourceLoaders.Music;
+import framework.resourceLoaders.StreamMusic;
+import iamjack.main.GameStateHandlerJack;
 import iamjack.player.PlayerData;
 import iamjack.resourceManager.SaveManager;
 
@@ -22,13 +23,13 @@ public class ButtonDay extends Button {
 			PlayerData.fans += PlayerData.daysPlayed/5;
 			PlayerData.daysPlayed++;
 			SaveManager.writePlayerData();
-			gsh.changeGameState(GameStateHandler.GAME_ROOM);
+			gsh.changeGameState(GameStateHandlerJack.GAME_ROOM);
 		}else{
 			PlayerData.money += payOut();
 			PlayerData.fans += PlayerData.daysPlayed/5;
 			PlayerData.daysPlayed++;
 			SaveManager.writePlayerData();
-			gsh.changeGameState(GameStateHandler.GAME_QUIT);
+			gsh.changeGameState(GameStateHandlerJack.GAME_QUIT);
 		}
 	}
 	

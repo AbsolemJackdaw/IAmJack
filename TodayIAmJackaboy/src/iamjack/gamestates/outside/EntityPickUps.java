@@ -5,8 +5,8 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 
-import iamjack.engine.Window;
-import iamjack.engine.resources.Music;
+import framework.resourceLoaders.Music;
+import framework.window.Window;
 import iamjack.player.Jack;
 import iamjack.player.PlayerData;
 import iamjack.player.achievements.Achievement;
@@ -37,9 +37,9 @@ public class EntityPickUps {
 		this.moveSpeed = moveSpeed;
 
 		if(index != BILLY)
-			box = new Rectangle(startX, startY, Window.scale(64), Window.scale(64));
+			box = new Rectangle(startX, startY, Window.getGameScale(64), Window.getGameScale(64));
 		else
-			box = new Rectangle(startX, startY+ Window.scale(32), Window.scale(64), Window.scale(32));
+			box = new Rectangle(startX, startY+ Window.getGameScale(32), Window.getGameScale(64), Window.getGameScale(32));
 
 	}
 
@@ -51,11 +51,11 @@ public class EntityPickUps {
 		if(imgIndex == BILLY){
 			billyTimer++;
 			if(billyTimer % 2 == 0){
-				if(posY  > jack.getPosY() + Window.scale(70))
+				if(posY  > jack.getPosY() + Window.getGameScale(70))
 					posY--;
 				else 
 					posY++;
-				box.setLocation((int)posX, (int)posY+Window.scale(32));
+				box.setLocation((int)posX, (int)posY+Window.getGameScale(32));
 			}
 		}
 	}
@@ -65,7 +65,7 @@ public class EntityPickUps {
 //		g.setColor(Color.black);
 //		g.draw(getBox());
 		
-		g.drawImage(getImg(), (int)posX, (int)posY, Window.scale(64), Window.scale(64), null);
+		g.drawImage(getImg(), (int)posX, (int)posY, Window.getGameScale(64), Window.getGameScale(64), null);
 	}
 
 	private BufferedImage getImg(){

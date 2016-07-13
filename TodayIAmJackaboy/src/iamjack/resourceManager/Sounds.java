@@ -1,6 +1,6 @@
 package iamjack.resourceManager;
 
-import iamjack.engine.resources.Music;
+import framework.resourceLoaders.Music;
 
 public class Sounds {
 	//Music for stream

@@ -3,13 +3,14 @@ package iamjack.gamestates;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-import iamjack.engine.GameState;
-import iamjack.engine.GameStateHandler;
-import iamjack.engine.Window;
-import iamjack.engine.input.MouseHandler;
+import framework.GameStateHandler;
+import framework.input.MouseHandler;
+import framework.window.Window;
+import iamjack.main.GameStateHandlerJack;
+import iamjack.main.GameStateJack;
 import iamjack.player.PlayerData;
 
-public class GameStateAchievements extends GameState {
+public class GameStateAchievements extends GameStateJack {
 
 	public GameStateAchievements(GameStateHandler gsh) {
 		super(gsh);
@@ -29,7 +30,7 @@ public class GameStateAchievements extends GameState {
 		if(MouseHandler.click){
 			PlayerData.dontDoubleLoop = true;
 			MouseHandler.wheelY = 0;
-			gsh.changeGameState(GameStateHandler.MENU);
+			gsh.changeGameState(GameStateHandlerJack.MENU);
 		}
 	}
 }
