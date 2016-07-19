@@ -67,7 +67,6 @@ public class GameStateHandlerJack extends GameStateHandler{
 		addGameState(GameStateOutside.class, GAME_EXTERIOR);
 		addGameState(GameStateOutsideEnd.class, GAME_EXTERIOR_END);
 
-		changeGameState(LOAD);
 	}
 
 	@Override

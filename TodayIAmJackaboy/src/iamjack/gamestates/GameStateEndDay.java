@@ -6,7 +6,6 @@ import java.awt.Graphics2D;
 
 import framework.GameStateHandler;
 import framework.window.Window;
-import iamjack.buttons.Button;
 import iamjack.buttons.ButtonDay;
 import iamjack.main.GameStateJack;
 import iamjack.player.PlayerData;
@@ -73,7 +72,7 @@ public class GameStateEndDay extends GameStateJack{
 			alpha = 1f;
 
 		for(int i = 0; i < 2 ; i++){
-			Button b = i == 0 ? button1 : button2;
+			ButtonDay b = i == 0 ? button1 : button2;
 			b.update(gsh);
 		}	
 	}
